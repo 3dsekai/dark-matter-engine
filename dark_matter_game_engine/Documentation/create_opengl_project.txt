@@ -1,0 +1,47 @@
+How to Setup an OpenGL Project in Visual Studio 2015
+author: 3dsekai
+reference video:
+https://www.youtube.com/watch?v=8p76pJsUP44
+
+Folder containing FreeGlut files:
+..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\freeglut
+Folder containing Glew files:
+..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\glew
+
+1. Create the project
+	a. Open a new project in Visual Studio.
+	b. Under the 'Installed' pane, select 'Visual C++'.
+	c. Select 'Empty Project'.
+	d. Name the project.
+	e. Click, 'OK'.
+	
+2. Add Necessary Files to the Project
+	a. In the Solution Explorer, right-click [your project].
+	   Click 'Add', and create new .cpp file for the project.
+	b. In the Solution Explorer, right-click [your project], then
+	   click 'Properties'.
+	c. Under 'C/C++' -> 'General' -> 'Additional Include Directories',
+	   add the following include folders:
+	   ..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\freeglut\include
+	   ..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\glew\include
+	d. Under 'Linker' -> 'Input' -> 'Additional Dependencies',
+	   type the following file names to the list:
+	   freeglut.lib
+	   glew32.lib
+	e. Under 'Linker' -> 'General' -> 'Additional Library Directories',
+	   add the following library folders:
+	   ..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\freeglut\lib
+	   ..\dark_matter_game_engine\dark_matter_game_engine\OpenGL\glew\lib\Release\Win32
+	f. In the Solution Explorer, right-click [your project], and
+	   select 'Open Folder in File Explorer'.
+	g. Place the following files into the project folder:
+	   freeglut.dll
+	   glew32.dll
+
+3. Add code to the main source file, and build the program.
+
+*note:
+The following lines of code need to be in written in the main source file
+to access the GLUT and GLEW libraries:
+#include <GL\glew.h>
+#include <GL\freeglut.h>

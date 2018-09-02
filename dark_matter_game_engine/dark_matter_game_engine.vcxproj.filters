@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4c140c79-c126-450f-8a77-8401d3449d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\input">
+      <UniqueIdentifier>{18a0f9ea-71a8-4935-8b12-a20c42881bb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\meshes">
+      <UniqueIdentifier>{86f67c9c-3534-4d11-bcb7-73735641aee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\camera">
+      <UniqueIdentifier>{40c2a467-122d-4773-a42d-8e5d9f60ecc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\define">
+      <UniqueIdentifier>{2000f180-6d51-43fe-855c-4c3b01fc2c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\draw">
+      <UniqueIdentifier>{21e30189-02e6-49d3-8928-c945318983d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\game_main">
+      <UniqueIdentifier>{8558adb9-7eb5-483d-a077-e10ffb95bf98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\game_object">
+      <UniqueIdentifier>{911354e4-34a8-4b07-b617-d6a5c8b12dbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\game_object\objects">
+      <UniqueIdentifier>{3fc8321d-6634-40ba-84e2-7305e47c1c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\math_lib">
+      <UniqueIdentifier>{cc534f70-9bd6-4143-9bad-8523e4470746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\shaders">
+      <UniqueIdentifier>{4715eb5f-0b2c-4e5b-a9f0-6be1d684b93f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\shaders\solid_cube">
+      <UniqueIdentifier>{4e99e1cb-1071-4011-9de1-330de6cd66ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\shaders\color_cube">
+      <UniqueIdentifier>{9a5629ad-dbbf-4b29-9b42-96637a5525be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Camera\camera.h">
+      <Filter>source\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\mathUtil.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\vec2.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\vec3.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\vec4.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\mat3.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\math_lib\mat4.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\gameObjFactory.h">
+      <Filter>source\game_object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\gameObjMan.h">
+      <Filter>source\game_object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\createGameObjId.h">
+      <Filter>source\game_object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\gameObjBase.h">
+      <Filter>source\game_object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\objects\coloredCube.h">
+      <Filter>source\game_object\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input\mouse.h">
+      <Filter>source\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input\inputCodes.h">
+      <Filter>source\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input\keyboard.h">
+      <Filter>source\input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_main\gameMain.h">
+      <Filter>source\game_main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\draw\shaderManager.h">
+      <Filter>source\draw</Filter>
+    </ClInclude>
+    <ClInclude Include="source\draw\shader.h">
+      <Filter>source\draw</Filter>
+    </ClInclude>
+    <ClInclude Include="source\define\shader_define.h">
+      <Filter>source\define</Filter>
+    </ClInclude>
+    <ClInclude Include="source\define\draw_define.h">
+      <Filter>source\define</Filter>
+    </ClInclude>
+    <ClInclude Include="source\meshes\cube.h">
+      <Filter>source\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\meshes\meshBase.h">
+      <Filter>source\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\objects\multBoxes.h">
+      <Filter>source\game_object\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="source\main.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Camera\camera.cpp">
+      <Filter>source\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\gameObjFactory.cpp">
+      <Filter>source\game_object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\gameObjMan.cpp">
+      <Filter>source\game_object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\objects\coloredCube.cpp">
+      <Filter>source\game_object\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input\keyboard.cpp">
+      <Filter>source\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input\mouse.cpp">
+      <Filter>source\input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_main\gameMain.cpp">
+      <Filter>source\game_main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\draw\shader.cpp">
+      <Filter>source\draw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\draw\shaderManager.cpp">
+      <Filter>source\draw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\meshes\meshBase.cpp">
+      <Filter>source\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\meshes\cube.cpp">
+      <Filter>source\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\objects\multBoxes.cpp">
+      <Filter>source\game_object\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\shaders\solid_cube\solid_cube.frag">
+      <Filter>source\shaders\solid_cube</Filter>
+    </None>
+    <None Include="source\shaders\solid_cube\solid_cube.vert">
+      <Filter>source\shaders\solid_cube</Filter>
+    </None>
+    <None Include="source\shaders\color_cube\colored_cube.vert">
+      <Filter>source\shaders\color_cube</Filter>
+    </None>
+    <None Include="source\shaders\color_cube\colored_cube.frag">
+      <Filter>source\shaders\color_cube</Filter>
+    </None>
+  </ItemGroup>
+</Project>

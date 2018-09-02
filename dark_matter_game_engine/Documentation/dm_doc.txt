@@ -1,0 +1,94 @@
+************************************************************************************
+
+Dark Matter Game Engine Doc
+Author: 3dsekai
+
+************************************************************************************
+
+************************************************************************************
+1.0 On Matrices
+************************************************************************************
+
+On matrix transformations in OpenGL:
+//https://www.opengl.org/archives/resources/faq/technical/transformations.htm
+https://learnopengl.com/Getting-started/Transformations
+
+
+************************************************************************************
+1.1 Matrices Order
+************************************************************************************
+
+On transposing matrices in C to stay consistent with OpenGL conventions:
+https://stackoverflow.com/questions/13293469/why-does-my-translation-matrix-needs-to-be-transposed#13294326
+
+
+Matrix order is purely a notational convention.
+However, the OpenGL specification assumes column-major order.
+Therefore, I use column-major to order matrices within the math library.
+
+A common point of confusion often arises around how to order the matrices in
+memory to stay consistent with the column-major convention.
+
+C arrays are in row-major order - opposite of OpenGL's order.
+Therefore, to successfully pass matrices in the correct order to
+OpenGL, they first must be transposed.
+
+For instance, according to the OpenGL docs, the translation matrix
+is ordered as so:
+
+1  0  0  x
+0  1  0  y
+0  0  1  z
+0  0  0  1
+
+This is column-major order.
+Since C arrays are row-major, the above matrix must be transposed to
+be used by OpenGL:
+
+1  0  0  0
+0  1  0  0
+0  0  1  0
+x  y  z  1
+
+Another example, here is the OpenGL perspective projection matrix:
+
+f/aspect  0   0                      0
+0         f   0                      0
+0         0   zFar+zNear/zNear-zFar  2*zFar*zNear/zNear-zFar
+0         0  -1                      0
+
+And here is how it is ordered in C:
+
+f/aspect  0  0                        0
+0         f  0                        0
+0         0  zFar+zNear/zNear-zFar   -1
+0         0  2*zFar*zNear/zNear-zFar  0
+
+************************************************************************************
+1.2 Multiplying Matrices
+************************************************************************************
+
+On matrix multiplication in C:
+https://stackoverflow.com/questions/22145037/matrix-multiplication-as-column-major
+
+
+Matrix A is pre-multiplied to matrix B to calculate matrix C.
+
+AB = C
+
+The dot-product of mat A column j by mat B row i is calculated to
+get the corresponding value for mat C. Multiply the A column by B row,
+then move down a row in B and multiply it by the same column in A until
+every column of A has been multiplied by every row of B.
+
+Each product is inserted into mat C in column-major order.
+In other words, insert each value into the corresponding column of mat c from top-to-bottom.
+
+           ------>
+|{a11 a21}{b11 b21}  = |{c11 c21}
+v{a12 a22}{b12 b22}    v{c12 c22}
+
+Example:
+
+{1 2}{5 6}  =  {((1*5) + (3*6)) ((2*5) + (4*6))}  =  {23 34}
+{3 4}{7 8}     {((1*7) + (3*8)) ((2*7) + (4*8))}     {31 46}
