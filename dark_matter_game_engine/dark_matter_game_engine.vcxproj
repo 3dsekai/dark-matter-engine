@@ -38,6 +38,7 @@
     <ClInclude Include="source\math_lib\mat3.h" />
     <ClInclude Include="source\math_lib\mat4.h" />
     <ClInclude Include="source\math_lib\mathUtil.h" />
+    <ClInclude Include="source\math_lib\quat.h" />
     <ClInclude Include="source\math_lib\vec2.h" />
     <ClInclude Include="source\math_lib\vec3.h" />
     <ClInclude Include="source\math_lib\vec4.h" />

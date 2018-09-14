@@ -118,6 +118,9 @@
     <ClInclude Include="source\main.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="source\math_lib\quat.h">
+      <Filter>source\math_lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
