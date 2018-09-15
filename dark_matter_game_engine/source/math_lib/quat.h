@@ -33,80 +33,155 @@
 
 //*************************************************************************
 // Class
+//On quaternion arithmetic:
+//http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/notations/scalarAndVector/index.htm
 //*************************************************************************
 class Quat
 {
 public:
-	Quat() = default;
-	~Quat() = default;
+	//constructors
+	Quat() :
+		w(1.0f),
+		x(0.0f),
+		y(0.0f),
+		z(0.0f)
+	{};
 
-	//overload: addition by scalar operator (+)
-	Quat operator +(float k) const
+	Quat(float deg)
 	{
 	};
+
+	Quat(float X, float Y, float Z, float W) :
+		w(W),
+		x(X),
+		y(Y),
+		z(Z)
+	{};
+
+
+//	//overload: addition by scalar operator (+)
+//	Quat operator +(float k) const
+//	{
+//	};
 	//overload: addition by quaternion operator (+)
 	Quat operator +(Quat q) const
 	{
+		//(w1,v1) + (w2,v2) = (w1+w2,v1+v2)
+		return Quat((this->w + q.w),
+					(this->x + q.x),
+					(this->y + q.y),
+					(this->z + q.z));
 	};
-	//overload: subtraction by scalar operator (-)
-	Quat operator -(float k) const
-	{
-	};
+//	//overload: subtraction by scalar operator (-)
+//	Quat operator -(float k) const
+//	{
+//	};
 	//overload: subtraction by quaternion operator (-)
 	Quat operator -(Quat q) const
 	{
+		//(w1,v1) - (w2,v2) = (w1-w2,v1-v2)
+		return Quat((this->w - q.w),
+					(this->x - q.x),
+					(this->y - q.y),
+					(this->z - q.z));
 	};
 	//overload: multiplication by scalar operator (*)
 	Quat operator *(float k) const
 	{
+		//quaternion/scalar product: [kw kv]
+		return Quat((k * this->w),
+					(k * this->x),
+					(k * this->y),
+					(k * this->z));
 	};
 	//overload: multiplication by quaternion operator (*)
 	Quat operator *(Quat q) const
 	{
+		//quaternion product: [w1 v1][w2 v2] = [w1w2 - v1 ? v2   w1v2 + w2v1 + v1 ? v2]
+		return Quat((this->w * q.w) - (this->x * q.x) - (this->y * q.y) - (this->z * q.z),
+					(this->w * q.x) + (this->x * q.w) + (this->y * q.z) - (this->z * q.y),
+					(this->w * q.y) + (this->y * q.w) + (this->z * q.x) - (this->x * q.z),
+					(this->w * q.z) + (this->z * q.w) + (this->x * q.y) - (this->y * q.x));
 	}
 	//overload: equals operator
 	Quat& operator =(Quat q)
 	{
+		*this = q;
+		return *this;
 	};
-	//overload: addition/assignment by scalar operator (+=)
-	Quat& operator +=(float k)
-	{
-	};
+//	//overload: addition/assignment by scalar operator (+=)
+//	Quat& operator +=(float k)
+//	{
+//	};
 	//overload: addition/assignment by quaternion operator (+=)
 	Quat& operator +=(Quat q)
 	{
+		*this = *this + q;
+		return *this;
 	};
-	//overload: subtraction/assignment by scalar operator (-=)
-	Quat& operator -=(float k)
-	{
-	};
+//	//overload: subtraction/assignment by scalar operator (-=)
+//	Quat& operator -=(float k)
+//	{
+//	};
 	//overload: subtraction/assignment by quaternion operator (-=)
 	Quat& operator -=(Quat q)
 	{
+		*this = *this - q;
+		return *this;
 	};
 	//overload: multiplication/assignment by scalar operator (*=)
 	Quat& operator *=(float k)
 	{
+		*this = *this * k;
+		return *this;
 	};
 	//overload: multiplication/assignment by quaternion operator (*=)
 	Quat& operator *=(Quat q)
 	{
+		*this = *this * q;
+		return *this;
 	};
-	//get the normalizeed quaternion
+	//get the normalized quaternion
 	Quat GetNormalizedQuat() const
 	{
+		Quat norm = *this;
+		norm.Normalize();
+		return norm;
 	};
 	//normalize quaternion
 	Quat& Normalize()
+	{
+		float n = sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+		x /= n;
+		y /= n;
+		z /= n;
+		w /= n;
+
+		return *this;
+	};
+	//dot product
+	float Dot(Quat q) const
+	{
+		(this->w * q.w) +
+		(this->x * q.x) +
+		(this->y * q.y) +
+		(this->z * q.z);
+	};
+	//cross product
+	Quat Cross() const
 	{
 	};
 	//identity quaternion
 	static Quat Identity()
 	{
+		//the identity quaternion: [1, 0]
+		return Quat(1.0f, 0.0f, 0.0f, 0.0f);
 	};
 	//set identity quaternion
 	Quat& SetIdentity()
 	{
+		*this = Identity();
+		return *this;
 	};
 	//inverse of the quaternion, using classical adjoint method
 	Quat GetInverse()
@@ -115,6 +190,7 @@ public:
 	//get the conjugate of the quaternion
 	Quat GetConjugate()
 	{
+		return Quat(this->w, -(this->x), -(this->y), -(this->z));
 	};
 	//calculate exponentiation of a quaternion
 	Quat CalcExp(float exp)
@@ -143,6 +219,9 @@ public:
 
 public:
 	//quaternion geometry. (angle of displacement, axis-angle vector [w, (x,y,z)])
-	Vec4 _q;
+	float w; //angle of displacement: cos(theta/2)
+	float x; // x-axis of rotation: sin(theta/2)nx
+	float y; // y-axis of rotation: sin(theta/2)ny
+	float z; // z-axis of rotation: sin(theta/2)nz
 };
 #endif
