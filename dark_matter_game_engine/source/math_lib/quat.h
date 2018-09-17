@@ -47,10 +47,6 @@ public:
 		z(0.0f)
 	{};
 
-	Quat(float deg)
-	{
-	};
-
 	Quat(float X, float Y, float Z, float W) :
 		w(W),
 		x(X),
@@ -58,11 +54,6 @@ public:
 		z(Z)
 	{};
 
-
-//	//overload: addition by scalar operator (+)
-//	Quat operator +(float k) const
-//	{
-//	};
 	//overload: addition by quaternion operator (+)
 	Quat operator +(Quat q) const
 	{
@@ -72,10 +63,6 @@ public:
 					(this->y + q.y),
 					(this->z + q.z));
 	};
-//	//overload: subtraction by scalar operator (-)
-//	Quat operator -(float k) const
-//	{
-//	};
 	//overload: subtraction by quaternion operator (-)
 	Quat operator -(Quat q) const
 	{
@@ -109,20 +96,12 @@ public:
 		*this = q;
 		return *this;
 	};
-//	//overload: addition/assignment by scalar operator (+=)
-//	Quat& operator +=(float k)
-//	{
-//	};
 	//overload: addition/assignment by quaternion operator (+=)
 	Quat& operator +=(Quat q)
 	{
 		*this = *this + q;
 		return *this;
 	};
-//	//overload: subtraction/assignment by scalar operator (-=)
-//	Quat& operator -=(float k)
-//	{
-//	};
 	//overload: subtraction/assignment by quaternion operator (-=)
 	Quat& operator -=(Quat q)
 	{
@@ -167,10 +146,6 @@ public:
 		(this->y * q.y) +
 		(this->z * q.z);
 	};
-	//cross product
-	Quat Cross() const
-	{
-	};
 	//identity quaternion
 	static Quat Identity()
 	{
@@ -183,9 +158,28 @@ public:
 		*this = Identity();
 		return *this;
 	};
-	//inverse of the quaternion, using classical adjoint method
+	//magnitude of the quaternion
+	float GetMagnitude()
+	{
+		//quaternion magnitude: sqrt(w^2 + x^2 + y^2 + z^2)
+		//note: rotation quaternions have unit magnitude (1)
+		return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+	};
+	//inverse of the quaternion
 	Quat GetInverse()
 	{
+		//quaternion inverse: conjugate of q / magnitude of q
+		//note: for rotation quaternions (which are unit quaternions),
+		//inverse is equivalent to the conjugate.
+		Quat inverse = Quat(0.0f, 0.0f, 0.0f, 0.0f);
+		float mag = this->GetMagnitude();
+		if (mag > 0.0f)
+		{
+			float div = 1.0f / mag;
+			inverse = Quat(this->w*div, -(this->x*div), -(this->y*div), -(this->z*div));
+
+		}
+		return inverse;
 	};
 	//get the conjugate of the quaternion
 	Quat GetConjugate()
