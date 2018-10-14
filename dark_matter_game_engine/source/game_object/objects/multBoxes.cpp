@@ -1,12 +1,47 @@
+//*************************************************************************
+// DarkMatter OpenGL 3D Engine Framework
+// Class Name: MultBoxes
+// Source File: [multBoxes.cpp]
+//
+// License:
+// Copyright(C) <2018>  <https://github.com/3dsekai/>
+//
+// This program is free software : you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see <https://www.gnu.org/licenses/>.
+//*************************************************************************
+//
+//*************************************************************************
+// Includes
+//*************************************************************************
 #include "multBoxes.h"
 #include "../../define/shader_define.h"
 
-//constructor
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: MulBoxes
+// Argument{s}: -
+// Explanation: MultBoxes constructor
+//*************************************************************************
 MultBoxes::MultBoxes()
 {
 }
 
-//constructor
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: MulBoxes
+// Argument{s}: -
+// Explanation: MultBoxes destructor
+//*************************************************************************
 MultBoxes::~MultBoxes()
 {
 	for (auto it = _cubes.begin(); it != _cubes.end(); it++)
@@ -17,36 +52,56 @@ MultBoxes::~MultBoxes()
 	_cubes.clear();
 }
 
-//initialize game object
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: Init
+// Argument{s}: -
+// Explanation: initialize game object
+//*************************************************************************
 void MultBoxes::Init()
 {
 	//cube 1
 	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
 					 		  Vec3(0.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
-							  Vec3(0.0f, 0.0f, 0.0f),
+							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(1.0f, 0.0f, 0.0f, 1.0f)));
 	//cube 2 
 	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
 					 		  Vec3(5.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
-							  Vec3(0.0f, 0.0f, 0.0f),
+							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 1.0f, 0.0f, 1.0f)));
 
 	//cube 3
 	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
 					 		  Vec3(2.5f, 5.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
-							  Vec3(0.0f, 0.0f, 0.0f),
+							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 0.0f, 1.0f, 1.0f)));
 }
 
-//update game object
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: Update
+// Argument{s}: -
+// Explanation: update game object
+//*************************************************************************
 void MultBoxes::Update(float time, const Mouse& mouse, const Keyboard& keyboard)
 {
+	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
+	{
+		(*it)->SetRotation(Quat::Euler2Quat(_rot));
+	}
+	_rot.y += 0.6f;
 }
 
-//draw game object
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: Draw
+// Argument{s}: -
+// Explanation: draw game object
+//*************************************************************************
 void MultBoxes::Draw(Camera& cam)
 {
 	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
@@ -55,7 +110,12 @@ void MultBoxes::Draw(Camera& cam)
 	}
 }
 
-//delete game object
+//*************************************************************************
+// Class: MultiBoxes
+// Function Name: Release
+// Argument{s}: -
+// Explanation: delete game object
+//*************************************************************************
 void MultBoxes::Release()
 {
 	_is_kill = true;

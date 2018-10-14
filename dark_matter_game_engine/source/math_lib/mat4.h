@@ -26,7 +26,7 @@
 //*************************************************************************
 #include <math.h>
 #include <string.h>
-#include "vec3.h"
+#include "quat.h"
 #include "mathUtil.h"
 
 //*************************************************************************
@@ -179,10 +179,27 @@ public:
 	{
 		return (*this * ScaleMat(vec));
 	};
-	//generate rotation matrix
+	//generate rotation matrix from 3d vector
 	Mat4 Rotate(const Vec3 vec)
 	{
 		return (*this * RotXMat(vec.x) * RotYMat(vec.y) * RotZMat(vec.z));
+	};
+	//quaternion to rotation matrix
+	Mat4 Rotate(const Quat& q)
+	{
+		Mat3 q2m = Quat::Quat2Mat(q);
+		Mat4 rMat = Identity();
+		rMat.elem[0]  = q2m.elem[0];
+		rMat.elem[1]  = q2m.elem[1];
+		rMat.elem[2]  = q2m.elem[2];
+		rMat.elem[4]  = q2m.elem[3];
+		rMat.elem[5]  = q2m.elem[4];
+		rMat.elem[6]  = q2m.elem[5];
+		rMat.elem[8]  = q2m.elem[6];
+		rMat.elem[9]  = q2m.elem[7];
+		rMat.elem[10] = q2m.elem[8];
+
+		return *this * rMat;
 	};
 	//rotate around X axis by {deg} degrees
 	Mat4 RotateXAxis(const float deg)

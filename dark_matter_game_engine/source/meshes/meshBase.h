@@ -28,6 +28,7 @@
 #include <GL/glew.h>
 #include "../camera/camera.h"
 #include "../math_lib/vec4.h"
+#include "../math_lib/quat.h"
 
 //*************************************************************************
 // MeshBase Class
@@ -42,7 +43,7 @@ protected:
 	MeshBase(const char* shader_name,
 		const Vec3& pos,
 		const Vec3& scale,
-		const Vec3& rot,
+		const Quat& rot,
 		const Vec4& color,
 		GLuint vao);
 
@@ -55,12 +56,12 @@ public:
 
 public:
 	void SetPosition(const Vec3& pos);
-	void SetRotation(const Vec3& rot);
+	void SetRotation(const Quat& rot);
 	void SetScale(const Vec3& scale);
 	void SetColor(const Vec4& color);
 
 	const Vec3 GetPosition() const;
-	const Vec3 GetRotation() const;
+	const Quat GetRotation() const;
 	const Vec3 GetScale() const;
 	const Vec4 GetColor() const;
 
@@ -70,7 +71,7 @@ protected:
 
 	Vec3 _pos;					//position
 	Vec3 _scale;				//scale
-	Vec3 _rot;					//rotation
+	Quat _rot;					//rotation
 	Vec4 _color;				//color
 };
 

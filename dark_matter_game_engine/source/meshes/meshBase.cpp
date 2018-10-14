@@ -31,7 +31,7 @@
 // Argument{s}: -
 // Explanation: MeshBase constructor
 //*************************************************************************
-MeshBase::MeshBase(const char* shader_name, const Vec3& pos, const Vec3& scale, const Vec3& rot, const Vec4& color, GLuint vao) :
+MeshBase::MeshBase(const char* shader_name, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
 	_shader_name(shader_name),
 	_pos(pos),
 	_scale(scale),
@@ -56,10 +56,10 @@ void MeshBase::SetPosition(const Vec3& pos)
 // Class: MeshBase
 // Function Name: SetRotation
 // Argument{s}:
-// const Vec& rot: new rotation
+// const Quat& rot: new rotation
 // Explanation: set the mesh's rotation
 //*************************************************************************
-void MeshBase::SetRotation(const Vec3& rot)
+void MeshBase::SetRotation(const Quat& rot)
 {
 	_rot = rot;
 }
@@ -105,7 +105,7 @@ const Vec3 MeshBase::GetPosition() const
 // Argument{s}: -
 // Explanation: get the mesh's rotation
 //*************************************************************************
-const Vec3 MeshBase::GetRotation() const
+const Quat MeshBase::GetRotation() const
 {
 	return _rot;
 }

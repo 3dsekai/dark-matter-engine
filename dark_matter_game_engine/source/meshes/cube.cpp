@@ -91,7 +91,7 @@ namespace
 // Argument{s}: -
 // Explanation: Cube constructor
 //*************************************************************************
-Cube::Cube(const char* shader_name, const Vec3& pos, const Vec3& scale, const Vec3& rot, const Vec4& color) :
+Cube::Cube(const char* shader_name, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color) :
 	MeshBase(shader_name, pos, scale, rot, color, 0)
 {
 	Init();
