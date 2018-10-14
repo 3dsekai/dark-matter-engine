@@ -153,7 +153,7 @@ public:
 	static Quat Identity()
 	{
 		//the identity quaternion: [1, 0]
-		return Quat(1.0f, 0.0f, 0.0f, 0.0f);
+		return Quat(0.0f, 0.0f, 0.0f, 1.0f);
 	};
 	//set identity quaternion
 	Quat& SetIdentity()
