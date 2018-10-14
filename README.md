@@ -1,5 +1,4 @@
-# dark-matter-engine
-Dark Matter 3D OpenGL Game Engine
+# DarkMatter OpenGL 3D Game Engine
 
 This is my own homemade OpenGL game engine!
 It's only a hobby project, but I plan on making games with it.
