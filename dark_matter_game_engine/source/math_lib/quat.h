@@ -247,7 +247,73 @@ public:
 	//rotation matrix to quaternion
 	static Quat Mat2Quat(const Mat3& m)
 	{
-	}
+		// matrix to quaternion conversion as defined in
+		//Dunn/Parberry's "3D Math Primer for Graphics and Game Development"
+
+		Quat m2q;
+		float absVal[4];
+		float m11 = m.elem[0];
+		float m12 = m.elem[1];
+		float m13 = m.elem[2];
+		float m21 = m.elem[3];
+		float m22 = m.elem[4];
+		float m23 = m.elem[5];
+		float m31 = m.elem[6];
+		float m32 = m.elem[7];
+		float m33 = m.elem[8];
+
+		//determine which component has the largest absolute value
+		absVal[0] = m11 + m22 + m33; //W component
+		absVal[1] = m11 - m22 - m33;
+		absVal[2] = m22 - m11 - m33;
+		absVal[3] = m33 - m11 - m22;
+
+		int idx = 0; //index of component with the largest value
+		float bigVal = absVal[0]; //holds the largest value
+		for(int i = 1; i < 4; i++)
+		{
+			if(absVal[i] > bigVal)
+			{
+				bigVal = absVal[i];
+				idx = i;
+			}
+		}
+
+		//perform square root and division to extract the
+		//quaternion value from the matrix
+		bigVal = sqrtf(bigVal + 1.0f) * 0.5f;
+		float div = 0.25f / bigVal;
+
+		//apply the table to calculate the quaternion
+		switch(idx)
+		{
+		case 0:		//W component is largest
+			m2q.w = bigVal;
+			m2q.x = (m23 - m32) * div;
+			m2q.y = (m31 - m13) * div;
+			m2q.z = (m12 - m21) * div;
+			break;
+		case 1:		//X component is largest
+			m2q.w = (m23 - m32) * div;
+			m2q.x = bigVal;
+			m2q.y = (m12 + m21) * div;
+			m2q.z = (m31 + m13) * div;
+			break;
+		case 2:		//Y component is largest
+			m2q.w = (m31 - m13) * div;
+			m2q.x = (m12 + m21) * div;
+			m2q.y = bigVal;
+			m2q.z = (m23 + m32) * div;
+			break;
+		case 3:		//Z component is largest
+			m2q.w = (m12 - m21) * div;
+			m2q.x = (m31 + m13) * div;
+			m2q.y = (m23 + m32) * div;
+			m2q.z = bigVal;
+			break;
+		}
+		return m2q;
+	};
 	//quaternion to rotation matrix
 	static Mat3 Quat2Mat(const Quat& q)
 	{
@@ -267,18 +333,21 @@ public:
 
 		return q2m;
 	};
-	//euler angle (degrees) to quaternion
+	//euler angle (radians) to quaternion
 	static Quat Euler2Quat(const Vec3& v)
 	{
-		float p = MathUtil::Deg2Rad(v.x/2);		//pitch
-		float y = MathUtil::Deg2Rad(v.y/2);		//yaw
-		float r = MathUtil::Deg2Rad(v.z/2);		//roll
-		float cosP = cosf(p);					//cosine pitch/2
-		float sinP = sinf(p);					//sine pitch/2
-		float cosY = cosf(y);					//cosine yaw/2
-		float sinY = sinf(y);					//sine yaw/2
-		float cosR = cosf(r);					//cosine roll/2
-		float sinR = sinf(r);					//sine roll/2
+		//euler angle to quaternion as defined in
+		//Dunn/Parberry's "3D Math Primer for Graphics and Game Development"
+
+		float p = v.x/2;		//pitch
+		float y = v.y/2;		//yaw
+		float r = v.z/2;		//roll
+		float cosP = cosf(p);	//cosine pitch/2
+		float sinP = sinf(p);	//sine pitch/2
+		float cosY = cosf(y);	//cosine yaw/2
+		float sinY = sinf(y);	//sine yaw/2
+		float cosR = cosf(r);	//cosine roll/2
+		float sinR = sinf(r);	//sine roll/2
 
 		//convert the euler angle to a quaternion
 		Quat e2q;
@@ -290,23 +359,59 @@ public:
 		return e2q;
 	};
 	//quaternion to euler angle
-	static Vec3 QuatToEuler(const Quat& q)
+	static Vec3 Quat2Euler(const Quat& q)
 	{
+		//euler angle to quaternion as defined in
+		//Dunn/Parberry's "3D Math Primer for Graphics and Game Development"
+		//p. 288 - 290
+
+		float x = q.x;
+		float y = q.y;
+		float z = q.z;
+		float w = q.w;
+
+		Vec3 q2e;
+
+		//get sin(pitch)
+		float sinP = -2.0f * ((y*z) - (w*x));
+
+		//check for gimbal lock
+		if(fabs(sinP) > 0.9999f)
+		{
+			//looking straight up or down (x-axis)
+			//pi/2 * sin(pitch)
+			q2e.x = (PI*0.5f) * sinP;
+
+			//calculate yaw (y-axis)
+			q2e.y = atan2f((-x*z) + (w*y), 0.5f - (y*y) - (z*z));
+
+			//set roll (z-axis) to 0
+			q2e.z = 0.0f;
+		}
+		else
+		{
+			//calculate angles
+			q2e.x = asinf(sinP);
+			q2e.y = atan2f((x*z) + (w*y), 0.5f - (x*x) - (y*y));
+			q2e.z = atan2f((x*y) + (w*z), 0.5f - (x*x) - (z*z));
+		}
+
+		return q2e;
 	};
 	//rotate quaternion by a 3d vector
 	Quat Rotate(const Vec3& vec)
 	{
 	};
-	//get quaternion rotated around X axis by {deg} degrees
-	Quat RotationXAxis(const float deg)
+	//get quaternion rotated around X axis by {rad} degrees
+	Quat RotationXAxis(const float rad)
 	{
 	};
-	//get quaternion rotated around Y axis by {deg} degrees
-	Quat RotationYAxis(const float deg)
+	//get quaternion rotated around Y axis by {rad} degrees
+	Quat RotationYAxis(const float rad)
 	{
 	};
-	//get quaternion rotated around Z axis by {deg} degrees
-	Quat RotationZAxis(const float deg)
+	//get quaternion rotated around Z axis by {rad} degrees
+	Quat RotationZAxis(const float rad)
 	{
 	};
 

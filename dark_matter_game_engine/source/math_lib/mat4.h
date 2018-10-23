@@ -201,26 +201,25 @@ public:
 
 		return *this * rMat;
 	};
-	//rotate around X axis by {deg} degrees
-	Mat4 RotateXAxis(const float deg)
+	//rotate around X axis by {rad} degrees
+	Mat4 RotateXAxis(const float rad)
 	{
-		return (*this * RotXMat(deg));
+		return (*this * RotXMat(rad));
 	};
-	//rotate around Y axis by {deg} degrees
-	Mat4 RotateYAxis(const float deg)
+	//rotate around Y axis by {rad} degrees
+	Mat4 RotateYAxis(const float rad)
 	{
-		return (*this * RotYMat(deg));
+		return (*this * RotYMat(rad));
 	};
-	//rotate around Z axis by {deg} degrees
-	Mat4 RotateZAxis(const float deg)
+	//rotate around Z axis by {rad} degrees
+	Mat4 RotateZAxis(const float rad)
 	{
-		return (*this * RotZMat(deg));
+		return (*this * RotZMat(rad));
 	};
 	//calculate a matrix for perspective projection. gluPerspective implementation.
 	Mat4 Perspective(const float fovy, const float aspect, const float zNear, const float zFar)
 	{
-		float fov_rad = MathUtil::Deg2Rad(fovy);
-		float zoom = 1/tanf(fov_rad/2);
+		float zoom = 1/tanf(fovy/2);
 
 		Mat4 proj_mat = 
 		{
@@ -296,9 +295,8 @@ public:
 		};
 	};
 	//rotation: X
-	static Mat4 RotXMat(const float angle)
+	static Mat4 RotXMat(const float rad)
 	{
-		float rad = MathUtil::Deg2Rad(angle);
 		float cosAng = cosf(rad);
 		float sinAng = sinf(rad);
 		return
@@ -310,9 +308,8 @@ public:
 		};
 	};
 	//rotation: Y
-	static Mat4 RotYMat(const float angle)
+	static Mat4 RotYMat(const float rad)
 	{
-		float rad = MathUtil::Deg2Rad(angle);
 		float cosAng = cosf(rad);
 		float sinAng = sinf(rad);
 		return
@@ -324,9 +321,8 @@ public:
 		};
 	};
 	//rotation: Z
-	static Mat4 RotZMat(const float angle)
+	static Mat4 RotZMat(const float rad)
 	{
-		float rad = MathUtil::Deg2Rad(angle);
 		float cosAng = cosf(rad);
 		float sinAng = sinf(rad);
 		return

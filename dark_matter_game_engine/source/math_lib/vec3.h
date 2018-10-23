@@ -227,6 +227,22 @@ public:
 					this->x * vec.y - this->y * vec.x);
 	};
 
+	//convert degrees to radians (for Vec3)
+	static Vec3 Deg2RadVec3(const Vec3& v)
+	{
+		return Vec3(v.x * (PI / 180.0f),
+					v.y * (PI / 180.0f),
+					v.z * (PI / 180.0f));
+	};
+
+	//convert radians to degrees (for Vec3)
+	static Vec3 Rad2DegVec3(const Vec3& v)
+	{
+		return (Vec3(v.x * (180.0f / PI),
+					 v.y * (180.0f / PI),
+					 v.z * (180.0f / PI)));
+	};
+
 public:
 	float x;
 	float y;

@@ -220,11 +220,11 @@ void ColoredCube::Update(const Keyboard& keyboard, const Mouse& mouse)
 void ColoredCube::Draw()
 {
 	//prepare model matrix
-	Mat4 model = Mat4::Identity().RotateYAxis(45.0f);
+	Mat4 model = Mat4::Identity().RotateYAxis(MathUtil::Deg2Rad(45.0f));
 	//get view matrix
 	Mat4 view = _cam.GetViewMatrix();
 	//prepare projection matrix.
-	Mat4 proj = Mat4::Identity().Perspective(_cam.GetFieldOfView(), 1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
+	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(_cam.GetFieldOfView()), 1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
 	//model-view-projection transform
 	Mat4 mvp = proj * view * model;
 	//set the model-view-projection matrix to the shader
