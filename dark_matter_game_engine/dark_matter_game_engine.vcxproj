@@ -57,6 +57,12 @@
     <ClCompile Include="source\input\keyboard.cpp" />
     <ClCompile Include="source\input\mouse.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\math_lib\mat3.cpp" />
+    <ClCompile Include="source\math_lib\mat4.cpp" />
+    <ClCompile Include="source\math_lib\quat.cpp" />
+    <ClCompile Include="source\math_lib\vec2.cpp" />
+    <ClCompile Include="source\math_lib\vec3.cpp" />
+    <ClCompile Include="source\math_lib\vec4.cpp" />
     <ClCompile Include="source\meshes\cube.cpp" />
     <ClCompile Include="source\meshes\meshBase.cpp" />
   </ItemGroup>

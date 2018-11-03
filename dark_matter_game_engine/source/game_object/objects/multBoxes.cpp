@@ -93,7 +93,7 @@ void MultBoxes::Update(float time, const Mouse& mouse, const Keyboard& keyboard)
 	{
 		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
 	}
-	_rot.y += 0.6f;
+	_rot.y += 0.5f;
 }
 
 //*************************************************************************

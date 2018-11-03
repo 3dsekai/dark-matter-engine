@@ -24,7 +24,8 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "vec3.h"
+#include "mat3.h"
+#include "mat4.h"
 
 //*************************************************************************
 // macros
@@ -38,159 +39,40 @@
 class Quat
 {
 public:
+
 	//constructors
-	Quat() :
-		x(0.0f),
-		y(0.0f),
-		z(0.0f),
-		w(1.0f)
-	{};
+	Quat();
+	Quat(float X, float Y, float Z, float W);
 
-	Quat(float X, float Y, float Z, float W) :
-		x(X),
-		y(Y),
-		z(Z),
-		w(W)
-	{};
+	//operator overloads
+	Quat operator +(const Quat& q) const;
+	Quat operator -(const Quat& q) const;
+	Quat operator *(float k) const;
+	Quat operator *(const Quat& q) const;
+	Quat& operator =(const Quat& q);
+	Quat& operator +=(const Quat& q);
+	Quat& operator -=(const Quat& q);
+	Quat& operator *=(float k);
+	Quat& operator *=(const Quat& q);
 
-	//overload: addition by quaternion operator (+)
-	Quat operator +(Quat q) const
-	{
-		//(w1,v1) + (w2,v2) = (w1+w2,v1+v2)
-		return Quat((this->w + q.w),
-					(this->x + q.x),
-					(this->y + q.y),
-					(this->z + q.z));
-	};
-	//overload: subtraction by quaternion operator (-)
-	Quat operator -(Quat q) const
-	{
-		//(w1,v1) - (w2,v2) = (w1-w2,v1-v2)
-		return Quat((this->w - q.w),
-					(this->x - q.x),
-					(this->y - q.y),
-					(this->z - q.z));
-	};
-	//overload: multiplication by scalar operator (*)
-	Quat operator *(float k) const
-	{
-		//quaternion/scalar product: [kw kv]
-		return Quat((k * this->w),
-					(k * this->x),
-					(k * this->y),
-					(k * this->z));
-	};
-	//overload: multiplication by quaternion operator (*)
-	Quat operator *(Quat q) const
-	{
-		//quaternion product: [w1 v1][w2 v2] = [w1w2 - v1 ? v2   w1v2 + w2v1 + v1 ? v2]
-		return Quat((this->w * q.w) - (this->x * q.x) - (this->y * q.y) - (this->z * q.z),
-					(this->w * q.x) + (this->x * q.w) + (this->y * q.z) - (this->z * q.y),
-					(this->w * q.y) + (this->y * q.w) + (this->z * q.x) - (this->x * q.z),
-					(this->w * q.z) + (this->z * q.w) + (this->x * q.y) - (this->y * q.x));
-	}
-	//overload: equals operator
-	Quat& operator =(Quat q)
-	{
-		this->w = q.w;
-		this->x = q.x;
-		this->y = q.y;
-		this->z = q.z;
+	//general purpose functions
+	Quat GetNormalizedQuat() const;
+	Quat& Normalize();
+	float Dot(const Quat& q) const;
+	Quat& SetIdentity();
+	float GetMagnitude();
+	Quat GetInverse();
+	Quat GetConjugate();
+	Quat Rotate(const Vec3& vec);
 
-		return *this;
-	};
-	//overload: addition/assignment by quaternion operator (+=)
-	Quat& operator +=(Quat q)
-	{
-		*this = *this + q;
-		return *this;
-	};
-	//overload: subtraction/assignment by quaternion operator (-=)
-	Quat& operator -=(Quat q)
-	{
-		*this = *this - q;
-		return *this;
-	};
-	//overload: multiplication/assignment by scalar operator (*=)
-	Quat& operator *=(float k)
-	{
-		*this = *this * k;
-		return *this;
-	};
-	//overload: multiplication/assignment by quaternion operator (*=)
-	Quat& operator *=(Quat q)
-	{
-		*this = *this * q;
-		return *this;
-	};
-	//get the normalized quaternion
-	Quat GetNormalizedQuat() const
-	{
-		Quat norm = *this;
-		norm.Normalize();
-		return norm;
-	};
-	//normalize quaternion
-	Quat& Normalize()
-	{
-		float n = sqrtf((x * x) + (y * y) + (z * z) + (w * w));
-		x /= n;
-		y /= n;
-		z /= n;
-		w /= n;
-
-		return *this;
-	};
-	//dot product
-	float Dot(Quat q) const
-	{
-		return this->w * q.w +
-			   this->x * q.x +
-			   this->y * q.y +
-			   this->z * q.z;
-	};
 	//identity quaternion
 	static Quat Identity()
 	{
 		//the identity quaternion: [1, 0]
 		return Quat(0.0f, 0.0f, 0.0f, 1.0f);
 	};
-	//set identity quaternion
-	Quat& SetIdentity()
-	{
-		*this = Identity();
-		return *this;
-	};
-	//magnitude of the quaternion
-	float GetMagnitude()
-	{
-		//quaternion magnitude: sqrt(w^2 + x^2 + y^2 + z^2)
-		//note: rotation quaternions have unit magnitude (1)
-		return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
-	};
-	//inverse of the quaternion
-	Quat GetInverse()
-	{
-		//quaternion inverse: conjugate of q / magnitude of q
-		//note: for rotation quaternions (which are unit quaternions),
-		//inverse is equivalent to the conjugate.
-		Quat inverse = Quat(0.0f, 0.0f, 0.0f, 0.0f);
-		float mag = this->GetMagnitude();
-		if (mag > 0.0f)
-		{
-			float div = 1.0f / mag;
-			inverse = Quat(this->w*div, -(this->x*div), -(this->y*div), -(this->z*div));
-
-		}
-		return inverse;
-	};
-	//get the conjugate of the quaternion
-	Quat GetConjugate()
-	{
-		return Quat(this->w, -(this->x), -(this->y), -(this->z));
-	};
 	//Calculate slerp
-	Quat CalcSlerp(float t, const Quat& Q0, const Quat& Q1)
+	static Quat CalcSlerp(float t, const Quat& Q0, const Quat& Q1)
 	{
 		Quat q0 = Q0;
 		Quat q1 = Q1;
@@ -245,22 +127,23 @@ public:
 		};
 	};
 	//rotation matrix to quaternion
-	static Quat Mat2Quat(const Mat3& m)
+	static Quat Mat2Quat(const Mat4& m)
 	{
 		// matrix to quaternion conversion as defined in
 		//Dunn/Parberry's "3D Math Primer for Graphics and Game Development"
+		//p. 284 - 287
 
 		Quat m2q;
 		float absVal[4];
 		float m11 = m.elem[0];
 		float m12 = m.elem[1];
 		float m13 = m.elem[2];
-		float m21 = m.elem[3];
-		float m22 = m.elem[4];
-		float m23 = m.elem[5];
-		float m31 = m.elem[6];
-		float m32 = m.elem[7];
-		float m33 = m.elem[8];
+		float m21 = m.elem[4];
+		float m22 = m.elem[5];
+		float m23 = m.elem[6];
+		float m31 = m.elem[8];
+		float m32 = m.elem[9];
+		float m33 = m.elem[10];
 
 		//determine which component has the largest absolute value
 		absVal[0] = m11 + m22 + m33; //W component
@@ -338,6 +221,7 @@ public:
 	{
 		//euler angle to quaternion as defined in
 		//Dunn/Parberry's "3D Math Primer for Graphics and Game Development"
+		//p. 287 - 288
 
 		float p = v.x/2;		//pitch
 		float y = v.y/2;		//yaw
@@ -398,20 +282,16 @@ public:
 
 		return q2e;
 	};
-	//rotate quaternion by a 3d vector
-	Quat Rotate(const Vec3& vec)
-	{
-	};
 	//get quaternion rotated around X axis by {rad} degrees
-	Quat RotationXAxis(const float rad)
+	static Quat RotationXAxis(const float rad)
 	{
 	};
 	//get quaternion rotated around Y axis by {rad} degrees
-	Quat RotationYAxis(const float rad)
+	static Quat RotationYAxis(const float rad)
 	{
 	};
 	//get quaternion rotated around Z axis by {rad} degrees
-	Quat RotationZAxis(const float rad)
+	static Quat RotationZAxis(const float rad)
 	{
 	};
 

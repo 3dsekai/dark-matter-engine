@@ -26,13 +26,10 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "../../draw/shader.h"
-#include "../../define/draw_define.h"
-#include "../../math_lib/vec3.h"
 #include "../../camera/camera.h"
-#include "../../input/keyboard.h"
-#include "../../input/mouse.h"
 
+class Mouse;
+class Keyboard;
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************

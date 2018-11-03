@@ -26,11 +26,12 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "../math_lib/vec2.h"
-#include "../math_lib/vec3.h"
-#include "../math_lib/vec4.h"
-#include "../math_lib/mat3.h"
-#include "../math_lib/mat4.h"
+
+class Vec2;
+class Vec3;
+class Vec4;
+class Mat3;
+class Mat4;
 
 //*************************************************************************
 // Shader Class
@@ -64,11 +65,11 @@ public:
 	void SetUniformInt(int val, const char* name);
 	void SetUniformUint(unsigned int val, const char* name);
 	void SetUniformBool(bool val, const char* name);
-	void SetUniformVec2(Vec2 val, const char* name);
-	void SetUniformVec3(Vec3 val, const char* name);
-	void SetUniformVec4(Vec4 val, const char* name);
-	void SetUniformMat3(Mat3 val, const char* name);
-	void SetUniformMat4(Mat4 val, const char* name);
+	void SetUniformVec2(const Vec2& val, const char* name);
+	void SetUniformVec3(const Vec3& val, const char* name);
+	void SetUniformVec4(const Vec4& val, const char* name);
+	void SetUniformMat3(const Mat3& val, const char* name);
+	void SetUniformMat4(const Mat4& val, const char* name);
 
 private:
 	char* ReadShaderFile(const char* dir);

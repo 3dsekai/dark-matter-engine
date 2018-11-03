@@ -162,6 +162,24 @@
     <ClCompile Include="source\main.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\math_lib\vec4.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\math_lib\vec3.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\math_lib\vec2.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\math_lib\mat4.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\math_lib\mat3.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\math_lib\quat.cpp">
+      <Filter>source\math_lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\shaders\solid_cube\solid_cube.frag">

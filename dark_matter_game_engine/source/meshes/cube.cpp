@@ -28,6 +28,7 @@
 #include "../draw/shaderManager.h"
 #include "../draw/shader.h"
 #include "../define/draw_define.h"
+#include "../math_lib/mat4.h"
 
 //*************************************************************************
 // Macro Definitions

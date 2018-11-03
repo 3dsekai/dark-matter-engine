@@ -25,6 +25,7 @@
 //*************************************************************************
 #include "camera.h"
 #include "../main.h"
+#include "../math_lib/mat4.h"
 #include "../math_lib/mathUtil.h"
 //*************************************************************************
 // Macro Definitions
@@ -54,7 +55,7 @@ Camera::Camera() :
 {
 };
 
-Camera::Camera(Vec3 pos, Vec3 target, float fov, float yaw, float pitch) :
+Camera::Camera(const Vec3& pos, const Vec3& target, float fov, float yaw, float pitch) :
 		_pos(pos),
 		_target(target),
 		_yaw(yaw),

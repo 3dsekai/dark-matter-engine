@@ -21,10 +21,6 @@
 //*************************************************************************
 #ifndef _VEC2_H_
 #define _VEC2_H_
-//*************************************************************************
-// Includes
-//*************************************************************************
-#include <math.h>
 
 //*************************************************************************
 // Class
@@ -34,140 +30,30 @@ class Vec2
 public:
 
 	//constructors
-	Vec2() :
-		x(0.0f),
-		y(0.0f)
-	{};
+	Vec2();
+	Vec2(float X, float Y);
 
-	Vec2(float X, float Y) :
-		x(X),
-		y(Y)
-	{};
+	//operator overloads
+	Vec2 operator +(Vec2 vec) const;
+	Vec2 operator -(Vec2 vec) const;
+	Vec2 operator *(Vec2 vec) const;
+	Vec2 operator /(Vec2 vec) const;
+	Vec2 operator *(float scalar) const;
+	Vec2 operator /(float scalar) const;
+	Vec2& operator =(Vec2 vec);
+	bool operator ==(Vec2 vec) const;
+	bool operator !=(Vec2 vec) const;
+	Vec2& operator +=(Vec2 vec);
+	Vec2& operator -=(Vec2 vec);
+	Vec2& operator *=(Vec2 vec);
+	Vec2& operator /=(Vec2 vec);
+	Vec2 operator -();
 
-	//overload: addition to vec operator (+)
-	Vec2 operator +(Vec2 vec) const
-	{
-		return Vec2(this->x + vec.x,
-					this->y + vec.y);
-	};
-	//overload: subtraction from vec operator (-)
-	Vec2 operator -(Vec2 vec) const
-	{
-		return Vec2(this->x - vec.x, 
-					this->y - vec.y);
-	};
-	//overload: multiplication by vec operator (*)
-	Vec2 operator *(Vec2 vec) const
-	{
-		return Vec2(this->x * vec.x,
-					this->y * vec.y);
-	};
-	//overload: division by vec operator (/)
-	Vec2 operator /(Vec2 vec) const
-	{
-		return Vec2(this->x / vec.x,
-					this->y / vec.y);
-	};
-	//overload: multiplication by scalar operator (*)
-	Vec2 operator *(float scalar) const
-	{
-		return Vec2(this->x * scalar,
-					this->y * scalar);
-	};
-	//overload: division by scalar operator (/)
-	Vec2 operator /(float scalar) const
-	{
-		return Vec2(this->x / scalar,
-					this->y / scalar);
-	};
-	//overload: modulus operator (%)
-	//overload: assignment operator (=)
-	Vec2& operator =(Vec2 vec)
-	{
-		x = vec.x;
-		y = vec.y;
-		return *this;
-	};
-	//overload: equality for vectors operator (==)
-	//NOTE: comparing floats is bad. Probably shouldn't use this.
-	bool operator ==(Vec2 vec) const
-	{
-		return (this->x == vec.x &&
-				this->y == vec.y);
-	};
-	//overload: inequality for vectors operator (!=)
-	//NOTE: comparing floats is bad. Probably shouldn't use this.
-	bool operator !=(Vec2 vec) const
-	{
-		return (this->x != vec.x ||
-				this->y != vec.y);
-	};
-	//overload: addition/assignment by vec operator (+=)
-	Vec2& operator +=(Vec2 vec)
-	{
-		x += vec.x;
-		y += vec.y;
-		return *this;
-	};
-	//overload: subtraction/assignment by vec operator (-=)
-	Vec2& operator -=(Vec2 vec)
-	{
-		x -= vec.x;
-		y -= vec.y;
-		return *this;
-	};
-	//overload: multiplication/assignment by vec operator (*=)
-	Vec2& operator *=(Vec2 vec)
-	{
-		x *= vec.x;
-		y *= vec.y;
-		return *this;
-	};
-	//overload: division/assignment by vec operator (/=)
-	Vec2& operator /=(Vec2 vec)
-	{
-		x /= vec.x;
-		y /= vec.y;
-		return *this;
-	};
-	//overload: vector negation (-vec)
-	Vec2 operator -()
-	{
-		return Vec2(-x, -y);
-	};
-
-	//vector length
-	float Length() const
-	{
-		float len_sqr = this->x * this->x +
-						this->y * this->y;
-		return sqrtf(len_sqr);
-	};
-
-	//normalize vector
-	Vec2& Normalize()
-	{
-		float len = this->Length();
-		x /= len;
-		y /= len;
-
-		return *this;
-	};
-
-	//get normalized vector
-	Vec2 GetNormalizedVec() const
-	{
-		Vec2 norm_vec = *this;
-		norm_vec.Normalize();
-		return norm_vec;
-	};
-
-	//dot product
-	float Dot(Vec2 vec) const
-	{
-		return this->x * vec.x +
-			   this->y * vec.y;
-	};
+	//general purpose functions
+	float Length() const;
+	Vec2& Normalize();
+	Vec2 GetNormalizedVec() const;
+	float Dot(Vec2 vec) const;
 
 public:
 	float x;

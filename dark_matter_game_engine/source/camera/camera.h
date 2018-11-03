@@ -26,8 +26,9 @@
 // Include
 //*************************************************************************
 #include "../math_lib/vec3.h"
-#include "../math_lib/mat4.h"
 #include "../input/mouse.h"
+
+class Mat4;
 
 //*************************************************************************
 // Camera Class
@@ -45,7 +46,7 @@ public:
 	};
 public:
 	Camera();
-	Camera(Vec3 pos, Vec3 target, float fov, float yaw, float pitch);
+	Camera(const Vec3& pos, const Vec3& target, float fov, float yaw, float pitch);
 	~Camera() = default;
 
 	Mat4 GetViewMatrix() const;

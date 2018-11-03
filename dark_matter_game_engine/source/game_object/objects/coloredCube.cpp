@@ -26,9 +26,12 @@
 #include "../../main.h"
 #include "ColoredCube.h"
 #include "../../input/inputCodes.h"
+#include "../../define/draw_define.h"
 #include "../../draw/shaderManager.h"
 #include "../../define/shader_define.h"
-#include "../../camera/camera.h"
+#include "../../input/keyboard.h"
+#include "../../input/mouse.h"
+#include "../../math_lib/mat4.h"
 
 //*************************************************************************
 // constants definitions

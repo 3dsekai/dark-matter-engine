@@ -30,6 +30,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "shader.h"
+#include "../math_lib/vec2.h"
+#include "../math_lib/vec3.h"
+#include "../math_lib/vec4.h"
+#include "../math_lib/mat3.h"
+#include "../math_lib/mat4.h"
 
 //*************************************************************************
 // Class: Shader
@@ -338,7 +343,7 @@ void Shader::SetUniformBool(bool val, const char* name)
 // const char* name: the name of the uniform variable
 // Explanation: sets a 2d vector value [val] to the uniform variable [name]
 //*************************************************************************
-void Shader::SetUniformVec2(Vec2 val, const char* name)
+void Shader::SetUniformVec2(const Vec2& val, const char* name)
 {
 	glUniform2f(glGetUniformLocation(_program, name), val.x, val.y);
 }
@@ -350,7 +355,7 @@ void Shader::SetUniformVec2(Vec2 val, const char* name)
 // const char* name: the name of the uniform variable
 // Explanation: sets a 3d vector value [val] to the uniform variable [name]
 //*************************************************************************
-void Shader::SetUniformVec3(Vec3 val, const char* name)
+void Shader::SetUniformVec3(const Vec3& val, const char* name)
 {
 	glUniform3f(glGetUniformLocation(_program, name), val.x, val.y, val.z);
 }
@@ -362,7 +367,7 @@ void Shader::SetUniformVec3(Vec3 val, const char* name)
 // const char* name: the name of the uniform variable
 // Explanation: sets a 4d vector value [val] to the uniform variable [name]
 //*************************************************************************
-void Shader::SetUniformVec4(Vec4 val, const char* name)
+void Shader::SetUniformVec4(const Vec4& val, const char* name)
 {
 	glUniform4f(glGetUniformLocation(_program, name), val.x, val.y, val.z, val.w);
 }
@@ -374,7 +379,7 @@ void Shader::SetUniformVec4(Vec4 val, const char* name)
 // const char* name: the name of the uniform variable
 // Explanation: sets a 3x3 matrix [val] to the uniform variable [name]
 //*************************************************************************
-void Shader::SetUniformMat3(Mat3 val, const char* name)
+void Shader::SetUniformMat3(const Mat3& val, const char* name)
 {
 	glUniformMatrix3fv(glGetUniformLocation(_program, name), 1, GL_FALSE, val.elem);
 }
@@ -386,7 +391,7 @@ void Shader::SetUniformMat3(Mat3 val, const char* name)
 // const char* name: the name of the uniform variable
 // Explanation: sets a 4x4 matrix [val] to the uniform variable [name]
 //*************************************************************************
-void Shader::SetUniformMat4(Mat4 val, const char* name)
+void Shader::SetUniformMat4(const Mat4& val, const char* name)
 {
 	glUniformMatrix4fv(glGetUniformLocation(_program, name), 1, GL_FALSE, val.elem);
 }
