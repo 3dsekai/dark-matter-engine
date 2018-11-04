@@ -57,9 +57,6 @@ GameMain::GameMain()
 //*************************************************************************
 GameMain::~GameMain()
 {
-	//delete cube
-	delete _cube;
-	_cube = nullptr;
 	//delete mouse
 	delete _mouse;
 	_mouse = nullptr;

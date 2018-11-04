@@ -29,6 +29,7 @@
 #include "../draw/shader.h"
 #include "../define/draw_define.h"
 #include "../math_lib/mat4.h"
+#include "../camera/camera.h"
 
 //*************************************************************************
 // Macro Definitions

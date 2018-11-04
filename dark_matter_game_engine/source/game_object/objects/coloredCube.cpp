@@ -32,7 +32,7 @@
 #include "../../input/keyboard.h"
 #include "../../input/mouse.h"
 #include "../../math_lib/mat4.h"
-
+#include "../../draw/shader.h"
 //*************************************************************************
 // constants definitions
 //*************************************************************************

@@ -26,11 +26,15 @@
 // Includes
 //*************************************************************************
 #include <vector>
-#include "gameObjBase.h"
-#include "../input/mouse.h"
-#include "../input/keyboard.h"
-#include "../camera/camera.h"
 
+class GameObjBase;
+class Mouse;
+class Keyboard;
+class Camera;
+
+//*************************************************************************
+// Class
+//*************************************************************************
 class GameObjManager
 {
 public:

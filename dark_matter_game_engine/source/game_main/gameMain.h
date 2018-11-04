@@ -25,7 +25,6 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "../meshes/cube.h"
 #include "../input/mouse.h"
 #include "../input/keyboard.h"
 #include "../camera/camera.h"
@@ -62,7 +61,6 @@ public:
 	static void AddGameObject(GameObjBase* obj);
 
 private:
-	Cube* _cube;
 	Keyboard* _keyboard;
 	Mouse* _mouse;
 	Camera* _cam;

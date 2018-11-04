@@ -26,9 +26,10 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "../camera/camera.h"
 #include "../math_lib/vec4.h"
 #include "../math_lib/quat.h"
+
+class Camera;
 
 //*************************************************************************
 // MeshBase Class
