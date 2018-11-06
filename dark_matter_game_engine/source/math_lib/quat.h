@@ -49,6 +49,7 @@ public:
 	Quat operator -(const Quat& q) const;
 	Quat operator *(float k) const;
 	Quat operator *(const Quat& q) const;
+	Quat operator -() const;
 	Quat& operator =(const Quat& q);
 	Quat& operator +=(const Quat& q);
 	Quat& operator -=(const Quat& q);
@@ -63,7 +64,6 @@ public:
 	float GetMagnitude();
 	Quat GetInverse();
 	Quat GetConjugate();
-	Quat Rotate(const Vec3& vec);
 
 	//identity quaternion
 	static Quat Identity()
@@ -71,6 +71,12 @@ public:
 		//the identity quaternion: [1, 0]
 		return Quat(0.0f, 0.0f, 0.0f, 1.0f);
 	};
+	//Calculate lerp
+	static Quat CalcLerp(float t, const Quat& Q0, const Quat& Q1)
+	{
+		Quat delta = Q1 - Q0;
+		return (Q0 + delta*t);
+	}
 	//Calculate slerp
 	static Quat CalcSlerp(float t, const Quat& Q0, const Quat& Q1)
 	{
@@ -282,17 +288,42 @@ public:
 
 		return q2e;
 	};
+	//rotate quaternion by a 3d vector
+	static Quat Rotation(const float rad, const Vec3& uvec)
+	{
+		float ang = rad * 0.5f;
+		float sin = sinf(ang);
+		float cos = cosf(ang);
+		Vec3 v = uvec * sin;
+
+		return (Quat(v.x, v.y, v.z, cos));
+	}
 	//get quaternion rotated around X axis by {rad} degrees
 	static Quat RotationXAxis(const float rad)
 	{
+		float ang = rad * 0.5f;
+		float sin = sinf(ang);
+		float cos = cosf(ang);
+
+		return (Quat(sin, 0.0f, 0.0f, cos));
 	};
 	//get quaternion rotated around Y axis by {rad} degrees
 	static Quat RotationYAxis(const float rad)
 	{
+		float ang = rad * 0.5f;
+		float sin = sinf(ang);
+		float cos = cosf(ang);
+
+		return (Quat(0.0f, sin, 0.0f, cos));
 	};
 	//get quaternion rotated around Z axis by {rad} degrees
 	static Quat RotationZAxis(const float rad)
 	{
+		float ang = rad * 0.5f;
+		float sin = sinf(ang);
+		float cos = cosf(ang);
+
+		return (Quat(0.0f, 0.0f, sin, cos));
 	};
 
 public:

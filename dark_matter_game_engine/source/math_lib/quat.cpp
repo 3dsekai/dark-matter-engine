@@ -48,37 +48,42 @@ Quat::Quat(float X, float Y, float Z, float W) :
 Quat Quat::operator +(const Quat& q) const
 {
 	//(w1,v1) + (w2,v2) = (w1+w2,v1+v2)
-	return Quat((this->w + q.w),
-				(this->x + q.x),
+	return Quat((this->x + q.x),
 				(this->y + q.y),
-				(this->z + q.z));
+				(this->z + q.z),
+				(this->w + q.w));
 }
 //overload: subtraction by quaternion operator (-)
 Quat Quat::operator -(const Quat& q) const
 {
 	//(w1,v1) - (w2,v2) = (w1-w2,v1-v2)
-	return Quat((this->w - q.w),
-				(this->x - q.x),
+	return Quat((this->x - q.x),
 				(this->y - q.y),
-				(this->z - q.z));
+				(this->z - q.z),
+				(this->w - q.w));
 }
 //overload: multiplication by scalar operator (*)
 Quat Quat::operator *(float k) const
 {
 	//quaternion/scalar product: [kw kv]
-	return Quat((k * this->w),
-				(k * this->x),
+	return Quat((k * this->x),
 				(k * this->y),
-				(k * this->z));
+				(k * this->z),
+				(k * this->w));
 }
 //overload: multiplication by quaternion operator (*)
 Quat Quat::operator *(const Quat& q) const
 {
 	//quaternion product: [w1 v1][w2 v2] = [w1w2 - v1 ? v2   w1v2 + w2v1 + v1 ? v2]
-	return Quat((this->w * q.w) - (this->x * q.x) - (this->y * q.y) - (this->z * q.z),
-				(this->w * q.x) + (this->x * q.w) + (this->y * q.z) - (this->z * q.y),
+	return Quat((this->w * q.x) + (this->x * q.w) + (this->y * q.z) - (this->z * q.y),
 				(this->w * q.y) + (this->y * q.w) + (this->z * q.x) - (this->x * q.z),
-				(this->w * q.z) + (this->z * q.w) + (this->x * q.y) - (this->y * q.x));
+				(this->w * q.z) + (this->z * q.w) + (this->x * q.y) - (this->y * q.x),
+				(this->w * q.w) - (this->x * q.x) - (this->y * q.y) - (this->z * q.z));
+}
+//overload: quaternion negation operator (-)
+Quat Quat::operator -() const
+{
+	return Quat(-this->x, -this->y, -this->z, -this->w);
 }
 //overload: equals operator
 Quat& Quat::operator =(const Quat& q)
@@ -125,10 +130,11 @@ Quat Quat::GetNormalizedQuat() const
 Quat& Quat::Normalize()
 {
 	float n = sqrtf((x * x) + (y * y) + (z * z) + (w * w));
-	x /= n;
-	y /= n;
-	z /= n;
-	w /= n;
+	float invN = 1.0f / n;
+	x *= invN;
+	y *= invN;
+	z *= invN;
+	w *= invN;
 
 	return *this;
 }
@@ -164,7 +170,7 @@ Quat Quat::GetInverse()
 	if (mag > 0.0f)
 	{
 		float div = 1.0f / mag;
-		inverse = Quat(this->w*div, -(this->x*div), -(this->y*div), -(this->z*div));
+		inverse = Quat(-(this->x*div), -(this->y*div), -(this->z*div), this->w*div);
 
 	}
 	return inverse;
@@ -172,11 +178,5 @@ Quat Quat::GetInverse()
 //get the conjugate of the quaternion
 Quat Quat::GetConjugate()
 {
-	return Quat(this->w, -(this->x), -(this->y), -(this->z));
-}
-//rotate quaternion by a 3d vector
-Quat Quat::Rotate(const Vec3& vec)
-{
-	//ONLY TEMPORARY!! HAVE TO COMPLETE THIS FUNCTION!!
-	return Quat::Identity();
+	return Quat(-(this->x), -(this->y), -(this->z), this->w);
 }
