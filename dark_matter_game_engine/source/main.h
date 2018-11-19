@@ -27,6 +27,11 @@
 //*************************************************************************
 // Macros
 //*************************************************************************
+//ms = 1000 / fps
+#define FPS_TO_MS_120 (8.33) 
+#define FPS_TO_MS_60 (16.66) 
+#define FPS_TO_MS_30 (33.33)
+//window dimensions
 #define SCREEN_WIDTH (1920)
 #define SCREEN_HEIGHT (1080)
 #define SCREEN_POS_X (0)

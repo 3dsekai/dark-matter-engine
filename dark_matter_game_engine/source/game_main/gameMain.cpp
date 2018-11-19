@@ -43,6 +43,7 @@ GameObjManager* GameMain::_game_obj = nullptr;
 //*************************************************************************
 GameMain::GameMain()
 {
+	_isQuit = false;
 	_cam = new Camera;
 	_keyboard = new Keyboard;
 	_mouse = new Mouse;
@@ -233,7 +234,18 @@ void GameMain::ProcessMouseMotion(int x, int y)
 void GameMain::Terminate()
 {
 	//quit application
-	glutLeaveMainLoop();
+	_isQuit = true;
+}
+
+//*************************************************************************
+// Class: GameMain
+// Function Name: IsTerminate
+// Explanation: checks if the game has been terminated
+// Other: -
+//*************************************************************************
+bool GameMain::IsTerminate()
+{
+	return _isQuit;
 }
 
 //*************************************************************************

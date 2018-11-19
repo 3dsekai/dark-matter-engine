@@ -56,11 +56,13 @@ public:
 
 	//game termination
 	void Terminate();
+	bool IsTerminate();
 	
 	//add a new game object to the game
 	static void AddGameObject(GameObjBase* obj);
 
 private:
+	bool _isQuit; //check if user quit game
 	Keyboard* _keyboard;
 	Mouse* _mouse;
 	Camera* _cam;

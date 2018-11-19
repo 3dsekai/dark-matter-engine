@@ -32,13 +32,17 @@
 //*************************************************************************
 // Function Declarations
 //*************************************************************************
-void RenderScene();
-void ResizeWindow(int width, int height);
-void KeyboardPress(unsigned char key, int x, int y);
-void KeyboardRelease(unsigned char key, int x, int y);
-void MouseButtonInput(int button, int state, int x, int y);
-void MouseMotionInput(int x, int y);
-void DeleteGame();
+int  mainGameLoop();
+void updateGame();
+void renderGame();
+void resizeWindow(int width, int height);
+void keyboardPress(unsigned char key, int x, int y);
+void keyboardRelease(unsigned char key, int x, int y);
+void mouseButtonInput(int button, int state, int x, int y);
+void mouseMotionInput(int x, int y);
+void deleteGame();
+void idleProc();
+void closeProc();
 
 //*************************************************************************
 // Global Variables
@@ -76,20 +80,21 @@ int main(int argc, char **argv)
 	glutCreateWindow("DarkMatter OpenGL Game Engine"); //sets the text in the window's title bar
 
 	//register draw callbacks
-	glutDisplayFunc(RenderScene); //calls draw function everytime the screen needs to be redrawn
-	glutReshapeFunc(ResizeWindow); //manages the height and width of a window when it is resized
-	glutIdleFunc(RenderScene); //sets idle callback function to perform background processing when window system events aren't being received
+	glutDisplayFunc(idleProc); //calls draw function everytime the screen needs to be redrawn
+	glutReshapeFunc(resizeWindow); //manages the height and width of a window when it is resized
+	glutIdleFunc(idleProc); //sets idle callback function to perform background processing when window system events aren't being received
+	glutCloseFunc(closeProc); //callback for when a glut window is closed
 
 	//mouse and keyboard callbacks
-	glutKeyboardFunc(KeyboardPress); //processes keyboard key press
-	glutKeyboardUpFunc(KeyboardRelease); //processes keyboard key release
-	glutMouseFunc(MouseButtonInput); //processes mouse click events
-	glutMotionFunc(MouseMotionInput); //processes mouse motion when a button is being pressed
+	glutKeyboardFunc(keyboardPress); //processes keyboard key press
+	glutKeyboardUpFunc(keyboardRelease); //processes keyboard key release
+	glutMouseFunc(mouseButtonInput); //processes mouse click events
+	glutMotionFunc(mouseMotionInput); //processes mouse motion when a button is being pressed
 	//glutPassiveMotionFunc(MouseMotionInput); //processes mouse motion without button press
 	//glutMouseWheelFunc(mouseWheel); //processes mouse wheel events (this function isn't portable and maybe shouldn't be used)
 
 	//return from main loop when the window is closed
-	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
 	//initialize glew
 	glewExperimental = GL_TRUE;
@@ -100,25 +105,83 @@ int main(int argc, char **argv)
 	printf("Renderer: %s\n", glGetString(GL_RENDERER));
 	printf("Version: %s\n", glGetString(GL_VERSION));
 	printf("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
+ 
 	//create the main game object
 	game = new GameMain;
 
 	//start the engine!
 	game->Start();
 
-	// enter GLUT event processing cycle
-	glutMainLoop();
+	// enter the game loop
+	mainGameLoop();
 
-	//delete the main game object
-	DeleteGame();
+	//delete the entire game object
+	deleteGame();
 
 	return 0;
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] RenderScene
+// [Function Name] mainGameLoop
+// [Argument{s}]: -
+// [Explanation] The main game loop. Implements a fixed time step for
+// updating with variable rendering
+// [Other] -
+// [Resources]
+// cudos to Bob Nystrom's excellent chapter on the Game Loop pattern:
+// http://gameprogrammingpatterns.com/game-loop.html
+//*************************************************************************
+int mainGameLoop()
+{
+	double prevTime = glutGet(GLUT_ELAPSED_TIME) * 1.0;
+	double lag = 0.0;
+
+	//commence the game loop
+	while (1)
+	{
+		//break out of game loop if user quit the game
+		if (game->IsTerminate())
+		{
+			glutLeaveMainLoop();
+			break;
+		}
+
+		double crntTime = glutGet(GLUT_ELAPSED_TIME) * 1.0;	//get current real world time
+		double elapTime = crntTime - prevTime;				//get the elapsed time from the previous update cycle to now
+		prevTime = crntTime;								//record the previous real world time
+		lag += elapTime;									//get lag between real world time and game time
+
+		//update the game enough times to make up for lag
+		while (lag >= FPS_TO_MS_60)
+		{
+			updateGame();
+			lag -= FPS_TO_MS_60;
+		}
+		renderGame();
+		//renderGame(lag / FPS_TO_MS_60);
+
+		//process window events (keyboard, mouse, win resize, etc)
+		glutMainLoopEvent();
+	}
+	return 0;
+}
+
+//*************************************************************************
+// [Class] -
+// [Function Name] updateGame
+// [Argument{s}]: -
+// [Explanation] Updates the entire game.
+// [Other] -
+// [Resources] -
+//*************************************************************************
+void updateGame()
+{
+	game->Update();
+}
+//*************************************************************************
+// [Class] -
+// [Function Name] renderGame
 // [Argument{s}]: -
 // [Explanation] Calls the draw function from the game loop to draw
 // the current scene.
@@ -127,16 +190,15 @@ int main(int argc, char **argv)
 // [Resources]
 // https://www.opengl.org/resources/libraries/glut/spec3/node46.html
 //*************************************************************************
-void RenderScene()
+void renderGame()
 {
-	game->Update();
 	game->Draw();
 	glutSwapBuffers();
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] ResizeWindow
+// [Function Name] resizeWindow
 // [Argument{s}]
 // int width: window width
 // int height: window height
@@ -146,13 +208,13 @@ void RenderScene()
 // [Resources]
 // https://www.opengl.org/resources/libraries/glut/spec3/node48.html
 //*************************************************************************
-void ResizeWindow(int width, int height)
+void resizeWindow(int width, int height)
 {
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] KeyboardPress
+// [Function Name] keyboardPress
 // [Argument{s}]
 // unsigned char key: the pressed ASCII character key
 // int x: x position of the mouse when the key was pressed
@@ -163,14 +225,14 @@ void ResizeWindow(int width, int height)
 // [Resources]
 // https://www.opengl.org/resources/libraries/glut/spec3/node49.html
 //*************************************************************************
-void KeyboardPress(unsigned char key, int x, int y)
+void keyboardPress(unsigned char key, int x, int y)
 {
 	game->ProcessKeys(1, key);
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] KeyboardRelease
+// [Function Name] keyboardRelease
 // [Argument{s}]
 // unsigned char key: the released ASCII character key
 // int x: x position of the mouse when the key was released
@@ -181,14 +243,14 @@ void KeyboardPress(unsigned char key, int x, int y)
 // [Resources]
 // http://dindinx.net/OpenGL/Introduction/glutKeyboardUpFunc.php
 //*************************************************************************
-void KeyboardRelease(unsigned char key, int x, int y)
+void keyboardRelease(unsigned char key, int x, int y)
 {
 	game->ProcessKeys(0, key);
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] MouseButtonInput
+// [Function Name] mouseButtonInput
 // [Argument{s}]
 // int button: The button being pressed (GLUT_LEFT_BUTTON,GLUT_MIDDLE_BUTTON,GLUT_RIGHT_BUTTON)
 // int state: The state of the button input (GLUT_UP,GLUT_DOWN)
@@ -200,14 +262,14 @@ void KeyboardRelease(unsigned char key, int x, int y)
 // [Resources]
 // https://www.opengl.org/resources/libraries/glut/spec3/node50.html
 //*************************************************************************
-void MouseButtonInput(int button, int state, int x, int y)
+void mouseButtonInput(int button, int state, int x, int y)
 {
 	game->ProcessMouseButtons(button, state, x, y);
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] MouseMotionInput
+// [Function Name] mouseMotionInput
 // [Argument{s}]
 // int x: the mouse x position relative to the window
 // int y: the mouse y position relative to the window
@@ -217,21 +279,50 @@ void MouseButtonInput(int button, int state, int x, int y)
 // [Resources]
 // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
 //*************************************************************************
-void MouseMotionInput(int x, int y)
+void mouseMotionInput(int x, int y)
 {
 	game->ProcessMouseMotion(x, y);
 }
 
 //*************************************************************************
 // [Class] -
-// [Function Name] DeleteGame
+// [Function Name] deleteGame
 // [Argument{s}] -
 // [Explanation] Delete the main game object
 // [Other] -
 // [Resources] -
 //*************************************************************************
-void DeleteGame()
+void deleteGame()
 {
 	delete game;
 	game = nullptr;
+}
+
+//*************************************************************************
+// [Class] -
+// [Function Name] idleProc
+// [Argument{s}] -
+// [Explanation]
+// [Other] glutIdleFunc processes this function when no other
+// events have been registered
+// [Resources]
+// https://www.opengl.org/resources/libraries/glut/spec3/node63.html
+//*************************************************************************
+void idleProc()
+{
+}
+
+//*************************************************************************
+// [Class] -
+// [Function Name] closeProc
+// [Argument{s}] -
+// [Explanation]
+// [Other] glutCloseFunc processes this function when a glut window has
+// been closed
+// [Resources]
+// http://freeglut.sourceforge.net/docs/api.php
+//*************************************************************************
+void closeProc()
+{
+	game->Terminate();
 }
