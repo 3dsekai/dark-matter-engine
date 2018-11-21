@@ -1,15 +1,21 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Engine Framework
+// Author: Christopher Tall (https://github.com/3dsekai)
 // Class Name: Shader
 // Source File: [shader.cpp]
 //
 // License:
-// Copyright(C) <2018>  <https://github.com/3dsekai/>
+// Copyright(C) <2018>  <Christopher Tall>
 //
-// This program is free software : you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
+// This is software is copyrighted.
+// The copyright notice and license information in this document must be
+// preserved in every copy of the document AS IS. Attribution to the
+// original author of this software (see name/website next to "Author:")
+// must be given in either the modified source OR in the
+// product's documentation.
+//
+// This software is licensed under the terms of the GNU General Public License
+// version 3, as published by the Free Software Foundation.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,16 +25,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-
 #define	_CRT_SECURE_NO_WARNINGS
 //*************************************************************************
 // Includes
 //*************************************************************************
 #include <iostream>
 #include <algorithm>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <sstream>
+#include <fstream>
 #include "shader.h"
 #include "../math_lib/vec2.h"
 #include "../math_lib/vec3.h"
@@ -97,11 +101,11 @@ void Shader::InitializeShader(ShaderType type, const char* path)
 	if(_program == 0) return;
 	if(type >= ALL_SHADERS) return;
 
-	char* src = ReadShaderFile(path);	//get the shader source code
+	std::string str = ReadShaderFile(path);	//get the shader source code
 
-	if(src != nullptr)
+	if(!str.empty())
 	{
-		const GLchar* src_cpy = src;
+		const GLchar* src = str.c_str();
 		GLint compiled;
 		GLchar info_log[256];
 		GLenum gl_shader = GetGLShaderType(type);
@@ -119,7 +123,7 @@ void Shader::InitializeShader(ShaderType type, const char* path)
 			std::cout << "error: shader object compilation failed\n" << info_log << std::endl;
 		}
 	}
-	free(src);
+//	free(src);
 };
 
 //*************************************************************************
@@ -221,43 +225,40 @@ void Shader::Compile(const char* vertex_source, const char* fragment_source, con
 // Explanation: read and store the contents of the specified shader file
 // Other: -
 //*************************************************************************
-char* Shader::ReadShaderFile(const char* path)
+std::string Shader::ReadShaderFile(const char* path)
 {
-	FILE *file_ptr = nullptr;
-	char* buff = nullptr;
-	size_t size = 0;
-	size_t read_size = 0;
+	std::ifstream file;		//file io stream object
+	std::string shaderStr;	//shader code
 
-	if(path != "")
+	//set exceptions for file read failure
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+	try
 	{
-		//open the file for reading
-		file_ptr = fopen(path, "rt");
-		if(file_ptr != nullptr)
+		if (path != "")
 		{
-			//get the file's size
-			fseek(file_ptr, 0, SEEK_END);
-			size = ftell(file_ptr);
-			rewind(file_ptr);
+			//open the file for reading
+			file.open(path);
+			std::stringstream buffer;
 
-			if(size > 0)
+			if (file.is_open())
 			{
-				//allocate enough memory for the file's contents
-				buff = (char*)calloc(1, size + 1);
-				if(buff != nullptr)
-				{
-					//copy file contents into buffer
-					read_size = fread(buff, 1, size, file_ptr);
-					if(read_size != size)
-					{
-						buff = nullptr;
-					}
-				}
+				//read the shader code from the buffer
+				buffer << file.rdbuf();
+				file.close();
+
+				//convert buffer stream to string
+				shaderStr = buffer.str();
 			}
 		}
-		fclose(file_ptr);
 	}
-	return buff;
-};
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "ERROR: Could not read the shader file" << std::endl;
+	}
+
+	return shaderStr;
+}
 
 //*************************************************************************
 // Class: Shader

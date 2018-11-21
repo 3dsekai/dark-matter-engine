@@ -1,15 +1,21 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Engine Framework
+// Author: Christopher Tall (https://github.com/3dsekai)
 // Class Name: MultBoxes
 // Source File: [multBoxes.h]
 //
 // License:
-// Copyright(C) <2018>  <https://github.com/3dsekai/>
+// Copyright(C) <2018>  <Christopher Tall>
 //
-// This program is free software : you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
+// This is software is copyrighted.
+// The copyright notice and license information in this document must be
+// preserved in every copy of the document AS IS. Attribution to the
+// original author of this software (see name/website next to "Author:")
+// must be given in either the modified source OR in the
+// product's documentation.
+//
+// This software is licensed under the terms of the GNU General Public License
+// version 3, as published by the Free Software Foundation.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
