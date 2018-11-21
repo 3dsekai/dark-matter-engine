@@ -39,7 +39,7 @@
 //*************************************************************************
 // Function Declarations
 //*************************************************************************
-int  mainGameLoop();
+int mainGameLoop();
 void updateGame();
 void renderGame();
 void resizeWindow(int width, int height);
@@ -199,6 +199,12 @@ void updateGame()
 //*************************************************************************
 void renderGame()
 {
+	//clear the color buffer/depth buffer, and make the background grey
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//set opengl viewport dimensions
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	game->Draw();
 	glutSwapBuffers();
 }

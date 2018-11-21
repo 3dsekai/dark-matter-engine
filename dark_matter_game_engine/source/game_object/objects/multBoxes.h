@@ -43,7 +43,7 @@ public:
 	~MultBoxes();
 
 	void Init() override;
-	void Update(float time, const Mouse& mouse, const Keyboard& keyboard) override;
+	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
 	void Draw(Camera& cam) override;
 	void Release() override;
 	//set position

@@ -49,7 +49,7 @@ public:
 	//initialize game object
 	virtual void Init() = 0;
 	//update game object
-	virtual void Update(float time, const Mouse& mouse, const Keyboard& keyboard) = 0;
+	virtual void Update(const Mouse& mouse, const Keyboard& keyboard) = 0;
 	//draw game object
 	virtual void Draw(Camera& cam) = 0;
 	//delete game object

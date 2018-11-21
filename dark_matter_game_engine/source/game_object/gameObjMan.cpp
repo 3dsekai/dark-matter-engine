@@ -74,11 +74,11 @@ void GameObjManager::Init()
 // Argument{s}:
 // Other: -
 //*************************************************************************
-void GameObjManager::Update(float time, const Mouse& mouse, const Keyboard& keyboard)
+void GameObjManager::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
 	for(auto it = _obj_list.begin(); it != _obj_list.end();)
 	{
-		(*it)->Update(time, mouse, keyboard);
+		(*it)->Update(mouse, keyboard);
 		if((*it)->IsKill())
 		{
 			delete (*it);

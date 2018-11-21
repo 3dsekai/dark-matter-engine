@@ -76,6 +76,8 @@ GameMain::~GameMain()
 	//delete game objects
 	delete _game_obj;
 	_game_obj = nullptr;
+	//delete shaders
+	ShaderManager::GetInstance()->DestroyInstance();
 }
 
 //*************************************************************************
@@ -123,7 +125,7 @@ void GameMain::Update()
 	}
 
 	//update the game objects
-	_game_obj->Update(0.0f, *_mouse, *_keyboard);
+	_game_obj->Update(*_mouse, *_keyboard);
 }
 
 //*************************************************************************
@@ -134,12 +136,6 @@ void GameMain::Update()
 //*************************************************************************
 void GameMain::Draw()
 {
-	//clear the color buffer/depth buffer, and make the background grey
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//set opengl viewport dimensions
-	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
 	//draw the game objects
 	_game_obj->Draw(*_cam);
 }

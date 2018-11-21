@@ -52,7 +52,7 @@ private:
 	void DestroyAllObjects();
 public:
 	void Init();
-	void Update(float time, const Mouse& mouse, const Keyboard& keyboard);
+	void Update(const Mouse& mouse, const Keyboard& keyboard);
 	void Draw(Camera& cam);
 	void AddNewGameObject(GameObjBase* obj);
 
