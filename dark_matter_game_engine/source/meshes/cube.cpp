@@ -1,5 +1,5 @@
 //*************************************************************************
-// DarkMatter OpenGL 3D Engine Framework
+// DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
 // Class Name: Cube
 // Source File: [cube.cpp]
@@ -7,7 +7,7 @@
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
 //
-// This is software is copyrighted.
+// This software is copyrighted.
 // The copyright notice and license information in this document must be
 // preserved in every copy of the document AS IS. Attribution to the
 // original author of this software (see name/website next to "Author:")
