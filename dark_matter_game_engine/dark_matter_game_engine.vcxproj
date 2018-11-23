@@ -44,6 +44,7 @@
     <ClInclude Include="source\math_lib\vec4.h" />
     <ClInclude Include="source\meshes\cube.h" />
     <ClInclude Include="source\meshes\meshBase.h" />
+    <ClInclude Include="source\window\window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp" />
@@ -65,6 +66,7 @@
     <ClCompile Include="source\math_lib\vec4.cpp" />
     <ClCompile Include="source\meshes\cube.cpp" />
     <ClCompile Include="source\meshes\meshBase.cpp" />
+    <ClCompile Include="source\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\shaders\color_cube\colored_cube.frag" />

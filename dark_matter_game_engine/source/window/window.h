@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: ShaderManager
-// Source File: [shaderManager.h]
+// Class Name: Window
+// Source File: [window.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,46 +25,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _SHADER_MANAGER_H_
-#define _SHADER_MANAGER_H_
+#ifndef _WINDOW_H_
+#define _WINDOW_H_
 
 //*************************************************************************
-// Includes
+// Window Class
 //*************************************************************************
-#include <map>
-#include <GL/glew.h>
-
-class Shader;
-
-//*************************************************************************
-// Shader Manager Class
-//*************************************************************************
-class ShaderManager
+class Window
 {
 public:
-	static ShaderManager* GetInstance();
-	static void DestroyInstance();
+	static Window* getInstance();
+	static void destroyInstance();
 
-	void LoadShader(const char* name, const GLchar* vert_file, const GLchar* frag_file, const GLchar* geom_file = nullptr);
-	void UseShader(const char* name);
-	void DeleteShader(const char* name);
-	Shader* GetShader(const char* name);
-
-private:
-//	Shader loadShaderFromFile(const GLchar* vert_file, const GLchar* frag_file, const GLchar* geom_file = nullptr);
-	static void ClearAllShaders();
+	inline void setWindowWidth(float w) { _width = w; };     //set window width
+	inline void setWindowHeight(float h) { _height = h; };   //set window height
+	inline float getWindowWidth() const { return _width; };    //get window width
+	inline float getWindowHeight() const { return _height; };  //get window height
 
 private:
-	ShaderManager() {};
-	~ShaderManager() {};
+	Window() {};
+	~Window() {};
 
-	ShaderManager(const ShaderManager &obj) {};
-
+	Window(const Window &obj) {};
 
 private:
-	static ShaderManager* _instance;
-	static std::map<const char*, Shader*> _shaders;
+	float _width; //window width;
+	float _height; //window height;
+	static Window* _instance; //singleton instance
 };
 
 #endif
-

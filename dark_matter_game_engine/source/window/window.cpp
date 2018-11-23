@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: ShaderManager
-// Source File: [shaderManager.h]
+// Class Name: Window
+// Source File: [window.cpp]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,46 +25,42 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _SHADER_MANAGER_H_
-#define _SHADER_MANAGER_H_
 
 //*************************************************************************
-// Includes
+// Include
 //*************************************************************************
-#include <map>
-#include <GL/glew.h>
-
-class Shader;
+#include "window.h"
 
 //*************************************************************************
-// Shader Manager Class
+// static member definition
 //*************************************************************************
-class ShaderManager
+Window* Window::_instance = nullptr;
+
+//*************************************************************************
+// Class: Window
+// Function Name: getInstance
+// Explanation: Get the instance to this static singleton class
+// Argument{s}:
+// Other: -
+//*************************************************************************
+Window* Window::getInstance()
 {
-public:
-	static ShaderManager* GetInstance();
-	static void DestroyInstance();
+	if (_instance == nullptr)
+	{
+		_instance = new Window;
+	}
+	return _instance;
+}
 
-	void LoadShader(const char* name, const GLchar* vert_file, const GLchar* frag_file, const GLchar* geom_file = nullptr);
-	void UseShader(const char* name);
-	void DeleteShader(const char* name);
-	Shader* GetShader(const char* name);
-
-private:
-//	Shader loadShaderFromFile(const GLchar* vert_file, const GLchar* frag_file, const GLchar* geom_file = nullptr);
-	static void ClearAllShaders();
-
-private:
-	ShaderManager() {};
-	~ShaderManager() {};
-
-	ShaderManager(const ShaderManager &obj) {};
-
-
-private:
-	static ShaderManager* _instance;
-	static std::map<const char*, Shader*> _shaders;
-};
-
-#endif
-
+//*************************************************************************
+// Class: Window
+// Function Name: destroyInstance
+// Explanation: Destroy the instance to this static singleton class
+// Argument{s}:
+// Other: -
+//*************************************************************************
+void Window::destroyInstance()
+{
+	delete _instance;
+	_instance = nullptr;
+}

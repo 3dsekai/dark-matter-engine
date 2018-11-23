@@ -161,37 +161,3 @@ void ShaderManager::ClearAllShaders()
 	//delete all shaders
 	_shaders.clear();
 }
-
-
-//*************************************************************************
-// Class: ShaderManager
-// Function Name: ShaderManager
-// Explanation: constructor
-// Argument{s}:
-// Other: -
-//*************************************************************************
-ShaderManager::ShaderManager()
-{
-}
-
-//*************************************************************************
-// Class: ShaderManager
-// Function Name: ShaderManager
-// Explanation: destructor
-// Argument{s}:
-// Other: -
-//*************************************************************************
-ShaderManager::~ShaderManager()
-{
-}
-
-//*************************************************************************
-// Class: ShaderManager
-// Function Name: ShaderManager
-// Explanation: copy constructor (to prevent the copying of this singleton class)
-// Argument{s}:
-// Other: -
-//*************************************************************************
-ShaderManager::ShaderManager(const ShaderManager &obj)
-{
-}

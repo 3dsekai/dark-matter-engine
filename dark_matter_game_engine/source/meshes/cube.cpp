@@ -36,7 +36,7 @@
 #include "../define/draw_define.h"
 #include "../math_lib/mat4.h"
 #include "../camera/camera.h"
-
+#include "../window/window.h"
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
@@ -200,7 +200,9 @@ void Cube::Draw(const Camera& cam)
 	//get view matrix
 	Mat4 view = cam.GetViewMatrix();
 	//prepare projection matrix.
-	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(cam.GetFieldOfView()), 1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
+	float w = Window::getInstance()->getWindowWidth();
+	float h = Window::getInstance()->getWindowHeight();
+	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(cam.GetFieldOfView()), 1.0f * (w/h), 0.1f, 100.0f);
 	//model-view-projection transform
 	Mat4 mvp = proj * view * model;
 

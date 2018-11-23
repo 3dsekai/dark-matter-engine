@@ -44,6 +44,9 @@
     <Filter Include="source\shaders\color_cube">
       <UniqueIdentifier>{9a5629ad-dbbf-4b29-9b42-96637a5525be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\window">
+      <UniqueIdentifier>{046f81ae-5074-446b-a0a2-d255f0104900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h">
@@ -121,6 +124,9 @@
     <ClInclude Include="source\math_lib\quat.h">
       <Filter>source\math_lib</Filter>
     </ClInclude>
+    <ClInclude Include="source\window\window.h">
+      <Filter>source\window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -179,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="source\math_lib\quat.cpp">
       <Filter>source\math_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window\window.cpp">
+      <Filter>source\window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

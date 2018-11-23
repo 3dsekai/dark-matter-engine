@@ -35,6 +35,7 @@
 //engine headers
 #include "main.h"
 #include "game_main/gameMain.h"
+#include "window/window.h"
 
 //*************************************************************************
 // Function Declarations
@@ -124,6 +125,8 @@ int main(int argc, char **argv)
 
 	//delete the entire game object
 	deleteGame();
+	//destroy window
+	Window::getInstance()->destroyInstance();
 
 	return 0;
 }
@@ -202,8 +205,6 @@ void renderGame()
 	//clear the color buffer/depth buffer, and make the background grey
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//set opengl viewport dimensions
-	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game->Draw();
 	glutSwapBuffers();
@@ -223,6 +224,12 @@ void renderGame()
 //*************************************************************************
 void resizeWindow(int width, int height)
 {
+	//set opengl viewport dimensions
+	if (height == 0) height = 1;
+	glViewport(0, 0, width, height);
+
+	Window::getInstance()->setWindowWidth(width * 1.0f);
+	Window::getInstance()->setWindowHeight(height * 1.0f);
 }
 
 //*************************************************************************
