@@ -130,6 +130,9 @@
     <ClInclude Include="source\window\window.h">
       <Filter>source\window</Filter>
     </ClInclude>
+    <ClInclude Include="source\define\texture_define.h">
+      <Filter>source\define</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">

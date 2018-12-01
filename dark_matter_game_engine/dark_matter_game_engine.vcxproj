@@ -22,6 +22,7 @@
     <ClInclude Include="source\Camera\camera.h" />
     <ClInclude Include="source\define\draw_define.h" />
     <ClInclude Include="source\define\shader_define.h" />
+    <ClInclude Include="source\define\texture_define.h" />
     <ClInclude Include="source\draw\shader.h" />
     <ClInclude Include="source\draw\shaderManager.h" />
     <ClInclude Include="source\game_main\gameMain.h" />

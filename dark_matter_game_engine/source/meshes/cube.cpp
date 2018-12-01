@@ -288,8 +288,9 @@ void Cube::SetTexture()
 	stbi_set_flip_vertically_on_load(true);
 
 	//load image data
+	std::string dir = "resources/img/" + std::string(_textureName);
 	int w, h, n;
-	unsigned char* imgData = stbi_load(_textureName, &w, &h, &n, 0);
+	unsigned char* imgData = stbi_load(dir.c_str(), &w, &h, &n, 0);
 
 	if (imgData)
 	{
