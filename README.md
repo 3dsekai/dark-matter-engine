@@ -1,6 +1,6 @@
 # DarkMatter OpenGL 3D Game Engine
 
-This project is still a work in progress; it is in no way complete.
+This project is a work in progress.
 I plan to continue building it indefinitely for fun/learning.
 
 Copyright(C) [2018]  [Christopher Tall]
@@ -14,3 +14,4 @@ third-party libraries
   
 - freeglut (http://freeglut.sourceforge.net/)
 - glew (http://glew.sourceforge.net/)
+- stb_image (https://github.com/nothings/stb/blob/master/stb_image.h)
