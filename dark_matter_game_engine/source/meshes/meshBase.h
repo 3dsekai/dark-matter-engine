@@ -47,15 +47,17 @@ public:
 	~MeshBase() = default;
 
 protected:
-	MeshBase(const char* shader_name,
-		const Vec3& pos,
-		const Vec3& scale,
-		const Quat& rot,
-		const Vec4& color,
-		GLuint vao);
+	MeshBase(const char* shaderName,
+			 const char* textureName,
+			 const Vec3& pos,
+			 const Vec3& scale,
+			 const Quat& rot,
+			 const Vec4& color,
+			 GLuint vao);
 
 protected:
 	virtual void Init() = 0;
+	virtual void SetTexture() = 0;
 
 public:
 	virtual void Draw(const Camera& cam) = 0;
@@ -73,7 +75,9 @@ public:
 	const Vec4 GetColor() const;
 
 protected:
-	const char* _shader_name;	//the name of the shader
+	const char* _shaderName;	//the name of the shader
+	const char* _textureName;	//name of the texture
+	GLuint _texture;			//texture id
 	GLuint _VAO;				//vertex array object
 
 	Vec3 _pos;					//position

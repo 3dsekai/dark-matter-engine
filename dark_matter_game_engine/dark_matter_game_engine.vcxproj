@@ -73,6 +73,8 @@
     <None Include="source\shaders\color_cube\colored_cube.vert" />
     <None Include="source\shaders\solid_cube\solid_cube.frag" />
     <None Include="source\shaders\solid_cube\solid_cube.vert" />
+    <None Include="source\shaders\tex_cube\tex_cube.frag" />
+    <None Include="source\shaders\tex_cube\tex_cube.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

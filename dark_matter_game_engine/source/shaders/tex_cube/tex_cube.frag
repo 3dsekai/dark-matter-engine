@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Cube
-// Source File: [cube.h]
+// Shader: Textured Cube Fragment Shader
+// Source File: [tex_cube.frag]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,36 +25,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _CUBE_H_
-#define _CUBE_H_
 
-//*************************************************************************
-// Includes
-//*************************************************************************
-#include <GL/glew.h>
-#include "meshBase.h"
+#version 330 core
 
-//*************************************************************************
-// Cube Class
-//*************************************************************************
-class Cube : public MeshBase
+in vec2 texCoord;
+out vec4 color;
+
+uniform sampler2D texture;
+uniform vec4 cubeColor;
+
+void main()
 {
-public:
-	Cube(const char* shaderName,
-		 const char* textureName = "",
-		 const Vec3& pos   = Vec3(0.0f, 0.0f, 0.0f),
-		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f),
-		 const Quat& rot   = Quat(0.0f, 0.0f, 0.0f, 1.0f),
-		 const Vec4& color = Vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	~Cube();
-
-private:
-	void Init() override;
-	void SetTexture() override;
-
-public:
-	void Draw(const Camera& cam) override;
-	void Delete() override;
-};
-
-#endif
+	color = texture(texture, texCoord) * cubeColor;
+//	color = cubeColor;
+}

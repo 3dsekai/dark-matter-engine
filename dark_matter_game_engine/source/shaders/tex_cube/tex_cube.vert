@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Cube
-// Source File: [cube.h]
+// Shader: Textured Cube Vertex Shader
+// Source File: [tex_cube.vert]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,36 +25,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _CUBE_H_
-#define _CUBE_H_
 
-//*************************************************************************
-// Includes
-//*************************************************************************
-#include <GL/glew.h>
-#include "meshBase.h"
+#version 330 core
 
-//*************************************************************************
-// Cube Class
-//*************************************************************************
-class Cube : public MeshBase
+layout (location = 0) in vec3 atPos;
+layout (location = 1) in vec2 atTex;
+
+out vec2 texCoord;
+
+uniform mat4 mvp;
+
+void main()
 {
-public:
-	Cube(const char* shaderName,
-		 const char* textureName = "",
-		 const Vec3& pos   = Vec3(0.0f, 0.0f, 0.0f),
-		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f),
-		 const Quat& rot   = Quat(0.0f, 0.0f, 0.0f, 1.0f),
-		 const Vec4& color = Vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	~Cube();
-
-private:
-	void Init() override;
-	void SetTexture() override;
-
-public:
-	void Draw(const Camera& cam) override;
-	void Delete() override;
-};
-
-#endif
+	gl_Position = mvp * vec4(atPos, 1.0);
+	texCoord = atTex;
+}

@@ -37,8 +37,9 @@
 // Argument{s}: -
 // Explanation: MeshBase constructor
 //*************************************************************************
-MeshBase::MeshBase(const char* shader_name, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
-	_shader_name(shader_name),
+MeshBase::MeshBase(const char* shaderName, const char* textureName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
+	_shaderName(shaderName),
+	_textureName(textureName),
 	_pos(pos),
 	_scale(scale),
 	_rot(rot),

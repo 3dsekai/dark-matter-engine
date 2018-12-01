@@ -47,6 +47,9 @@
     <Filter Include="source\window">
       <UniqueIdentifier>{046f81ae-5074-446b-a0a2-d255f0104900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\shaders\tex_cube">
+      <UniqueIdentifier>{43a22053-9c4b-4fc5-85fd-0ce74a5c0f15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h">
@@ -202,6 +205,12 @@
     </None>
     <None Include="source\shaders\color_cube\colored_cube.frag">
       <Filter>source\shaders\color_cube</Filter>
+    </None>
+    <None Include="source\shaders\tex_cube\tex_cube.vert">
+      <Filter>source\shaders\tex_cube</Filter>
+    </None>
+    <None Include="source\shaders\tex_cube\tex_cube.frag">
+      <Filter>source\shaders\tex_cube</Filter>
     </None>
   </ItemGroup>
 </Project>

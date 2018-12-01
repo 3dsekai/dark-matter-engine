@@ -68,20 +68,23 @@ MultBoxes::~MultBoxes()
 void MultBoxes::Init()
 {
 	//cube 1
-	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+							  "resources/img/cube/box.jpg",
 					 		  Vec3(0.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(1.0f, 0.0f, 0.0f, 1.0f)));
 	//cube 2 
-	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+							  "resources/img/cube/box.jpg",
 					 		  Vec3(5.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 1.0f, 0.0f, 1.0f)));
 
 	//cube 3
-	_cubes.push_back(new Cube(SOLID_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+							  "resources/img/cube/box.jpg",
 					 		  Vec3(2.5f, 5.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
@@ -100,6 +103,7 @@ void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
 	{
 		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
 	}
+	_rot.x += 0.5f;
 	_rot.y += 0.5f;
 }
 
