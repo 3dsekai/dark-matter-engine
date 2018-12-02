@@ -34,13 +34,13 @@
 class Window
 {
 public:
-	static Window* getInstance();
-	static void destroyInstance();
+	static Window* GetInstance();
+	static void DestroyInstance();
 
-	inline void setWindowWidth(float w) { _width = w; };     //set window width
-	inline void setWindowHeight(float h) { _height = h; };   //set window height
-	inline float getWindowWidth() const { return _width; };    //get window width
-	inline float getWindowHeight() const { return _height; };  //get window height
+	inline void SetWindowWidth(float w) { _width = w; };     //set window width
+	inline void SetWindowHeight(float h) { _height = h; };   //set window height
+	inline float GetWindowWidth() const { return _width; };    //get window width
+	inline float GetWindowHeight() const { return _height; };  //get window height
 
 private:
 	Window() {};

@@ -47,13 +47,15 @@ public:
 	~MeshBase() = default;
 
 protected:
-	MeshBase(const char* shaderName,
-			 const char* textureName,
-			 const Vec3& pos,
-			 const Vec3& scale,
-			 const Quat& rot,
-			 const Vec4& color,
-			 GLuint vao);
+	MeshBase(const char* shaderName, const char* textureName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
+		_shaderName(shaderName),
+		_textureName(textureName),
+		_pos(pos),
+		_scale(scale),
+		_rot(rot),
+		_color(color),
+		_VAO(vao)
+	{};
 
 protected:
 	virtual void Init() = 0;
@@ -64,15 +66,15 @@ public:
 	virtual void Delete() = 0;
 
 public:
-	void SetPosition(const Vec3& pos);
-	void SetRotation(const Quat& rot);
-	void SetScale(const Vec3& scale);
-	void SetColor(const Vec4& color);
+	inline void SetPosition(const Vec3& pos) { _pos = pos; };
+	inline void SetRotation(const Quat& rot) { _rot = rot; };
+	inline void SetScale(const Vec3& scale) { _scale = scale; };
+	inline void SetColor(const Vec4& color) { _color = color; };
 
-	const Vec3 GetPosition() const;
-	const Quat GetRotation() const;
-	const Vec3 GetScale() const;
-	const Vec4 GetColor() const;
+	inline const Vec3 GetPosition() const { return _pos; };
+	inline const Quat GetRotation() const { return _rot; };
+	inline const Vec3 GetScale() const { return _scale; };
+	inline const Vec4 GetColor() const { return _color; };
 
 protected:
 	const char* _shaderName;	//the name of the shader

@@ -229,8 +229,8 @@ void Cube::Draw(const Camera& cam)
 	//get view matrix
 	Mat4 view = cam.GetViewMatrix();
 	//prepare projection matrix.
-	float w = Window::getInstance()->getWindowWidth();
-	float h = Window::getInstance()->getWindowHeight();
+	float w = Window::GetInstance()->GetWindowWidth();
+	float h = Window::GetInstance()->GetWindowHeight();
 	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(cam.GetFieldOfView()), 1.0f * (w/h), 0.1f, 100.0f);
 	//model-view-projection transform
 	Mat4 mvp = proj * view * model;

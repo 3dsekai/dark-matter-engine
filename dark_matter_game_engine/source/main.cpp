@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 	//delete the entire game object
 	deleteGame();
 	//destroy window
-	Window::getInstance()->destroyInstance();
+	Window::GetInstance()->DestroyInstance();
 
 	return 0;
 }
@@ -228,8 +228,8 @@ void resizeWindow(int width, int height)
 	if (height == 0) height = 1;
 	glViewport(0, 0, width, height);
 
-	Window::getInstance()->setWindowWidth(width * 1.0f);
-	Window::getInstance()->setWindowHeight(height * 1.0f);
+	Window::GetInstance()->SetWindowWidth(width * 1.0f);
+	Window::GetInstance()->SetWindowHeight(height * 1.0f);
 }
 
 //*************************************************************************

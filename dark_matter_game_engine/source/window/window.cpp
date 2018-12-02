@@ -43,7 +43,7 @@ Window* Window::_instance = nullptr;
 // Argument{s}:
 // Other: -
 //*************************************************************************
-Window* Window::getInstance()
+Window* Window::GetInstance()
 {
 	if (_instance == nullptr)
 	{
@@ -59,7 +59,7 @@ Window* Window::getInstance()
 // Argument{s}:
 // Other: -
 //*************************************************************************
-void Window::destroyInstance()
+void Window::DestroyInstance()
 {
 	delete _instance;
 	_instance = nullptr;
