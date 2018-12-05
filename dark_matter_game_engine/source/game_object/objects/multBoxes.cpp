@@ -70,26 +70,27 @@ void MultBoxes::Init()
 {
 	//cube 1
 	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
-							  BOX_TEXTURE,
 					 		  Vec3(0.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(1.0f, 0.0f, 0.0f, 1.0f)));
 	//cube 2 
 	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
-							  BOX_TEXTURE,
 					 		  Vec3(5.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 1.0f, 0.0f, 1.0f)));
-
 	//cube 3
 	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
-							  BOX_TEXTURE,
 					 		  Vec3(2.5f, 5.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+
+	for (auto it = _cubes.begin(); it != _cubes.end(); it++)
+	{
+		(*it)->SetTexture(BOX_TEXTURE);
+	}
 }
 
 //*************************************************************************

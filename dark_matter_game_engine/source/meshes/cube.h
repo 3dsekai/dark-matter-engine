@@ -41,7 +41,6 @@ class Cube : public MeshBase
 {
 public:
 	Cube(const char* shaderName,
-		 const char* textureName = "",
 		 const Vec3& pos   = Vec3(0.0f, 0.0f, 0.0f),
 		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f),
 		 const Quat& rot   = Quat(0.0f, 0.0f, 0.0f, 1.0f),
@@ -50,9 +49,9 @@ public:
 
 private:
 	void Init() override;
-	void SetTexture() override;
 
 public:
+	void SetTexture(const char* texName) override;
 	void Draw(const Camera& cam) override;
 	void Delete() override;
 };

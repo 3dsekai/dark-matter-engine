@@ -119,8 +119,8 @@ namespace
 // Argument{s}: -
 // Explanation: Cube constructor
 //*************************************************************************
-Cube::Cube(const char* shaderName, const char* textureName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color) :
-	MeshBase(shaderName, textureName, pos, scale, rot, color, 0)
+Cube::Cube(const char* shaderName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color) :
+	MeshBase(shaderName, pos, scale, rot, color, 0)
 {
 	Init();
 }
@@ -187,17 +187,6 @@ void Cube::Init()
 	5*sizeof(float),
 	(void*)(3*sizeof(float)));
 
-	//generate and set the texture on the cube
-	SetTexture();
-	
-	//set the cube color and texture to the shader
-	Shader* shader = ShaderManager::GetInstance()->GetShader(_shaderName);
-	if (shader != nullptr)
-	{
-		shader->UseProgram();
-		shader->SetUniformInt(_texture, "texture");
-	}
-
 	//unbind the vertex buffer object
 	/*NOTE: can't unbind the element buffer object until the VAO is done being used*/
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -243,9 +232,13 @@ void Cube::Draw(const Camera& cam)
 		shader->SetUniformVec4(_color, "cubeColor");
 		shader->SetUniformMat4(mvp, "mvp");
 	}
-	//activate and bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _texture);
+
+	if (_texture != -1)
+	{
+		//activate and bind the texture
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _texture);
+	}
 
 	//bind the vertex array object
 	glBindVertexArray(_VAO);
@@ -271,7 +264,7 @@ void Cube::Delete()
 // Argument{s}: -
 // Explanation: Load image and set texture to cube shader
 //*************************************************************************
-void Cube::SetTexture()
+void Cube::SetTexture(const char* texName)
 {
 	glGenTextures(1, &_texture); //generate texture name
 	glBindTexture(GL_TEXTURE_2D, _texture); //bind the texture to the texture target
@@ -288,7 +281,7 @@ void Cube::SetTexture()
 	stbi_set_flip_vertically_on_load(true);
 
 	//load image data
-	std::string dir = "resources/img/" + std::string(_textureName);
+	std::string dir = "resources/img/" + std::string(texName);
 	int w, h, n;
 	unsigned char* imgData = stbi_load(dir.c_str(), &w, &h, &n, 0);
 
@@ -302,4 +295,12 @@ void Cube::SetTexture()
 		std::cout << "Texture load Failure" << std::endl;
 	}
 	stbi_image_free(imgData);
+
+	//set the cube color and texture to the shader
+	Shader* shader = ShaderManager::GetInstance()->GetShader(_shaderName);
+	if (shader != nullptr)
+	{
+		shader->UseProgram();
+		shader->SetUniformInt(_texture, "texture");
+	}
 }
