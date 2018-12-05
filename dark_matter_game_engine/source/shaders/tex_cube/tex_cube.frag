@@ -28,14 +28,15 @@
 
 #version 330 core
 
+//in/out variables
 in vec2 texCoord;
 out vec4 color;
 
+//uniforms
 uniform sampler2D texture;
 uniform vec4 cubeColor;
 
 void main()
 {
 	color = texture(texture, texCoord) * cubeColor;
-//	color = cubeColor;
 }

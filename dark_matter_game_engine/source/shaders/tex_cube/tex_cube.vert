@@ -28,11 +28,14 @@
 
 #version 330 core
 
+//attributes
 layout (location = 0) in vec3 atPos;
 layout (location = 1) in vec2 atTex;
 
+//out variables
 out vec2 texCoord;
 
+//uniforms
 uniform mat4 mvp;
 
 void main()
