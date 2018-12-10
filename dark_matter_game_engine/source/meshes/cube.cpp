@@ -39,23 +39,13 @@
 #include "../camera/camera.h"
 #include "../window/window.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "../../third_party_lib/stb_image.h"
-
-//*************************************************************************
-// Macro Definitions
-//*************************************************************************
-#define POS_ELEM_NUM (24)
-#define TEX_ELEM_NUM (8)
-#define INDICES_NUM (36)
-
 //*************************************************************************
 // constants definitions
 //*************************************************************************
 namespace
 {
 	//cube vertices
-	const GLfloat coords[] =
+	const float vertices[VERTICES_NUM] =
 	{
 		/*pos coord           tex coord */
 		//front
@@ -91,7 +81,7 @@ namespace
 	};
 
 	//cube indices
-	const GLuint indices[INDICES_NUM] =
+	const int indices[INDICES_NUM] =
 	{
 		// front
 		0, 1, 2,
@@ -144,61 +134,32 @@ Cube::~Cube()
 //*************************************************************************
 void Cube::Init()
 {
-	//do depth comparisons and update the z-buffer
-	glEnable(GL_DEPTH_TEST);
-
-	//generate a vertex array object
-	glGenVertexArrays(1, &_VAO);
-
-	//declare the buffer objects
-	GLuint _buffObj[2];
-
-	//generate the vertex buffer and element buffer objects
-	glGenBuffers(2, _buffObj);
-
-	//bind the vertex array object
-	glBindVertexArray(_VAO);
-
-	//bind the vertex data to the position vertex buffer object
-	glBindBuffer(GL_ARRAY_BUFFER, _buffObj[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(coords), coords, GL_STATIC_DRAW);
-
-	//bind the index data to the element buffer object
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffObj[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//define how the vertex buffer data should be interpreted when a draw call is made for vertex position
-	glEnableVertexAttribArray(POS_COORD_ATTRIB);
-	glVertexAttribPointer(
-	POS_COORD_ATTRIB,	//index for vertex attribute
-	3,					//number of elements in vertex attribute
-	GL_FLOAT,			//data type
-	GL_FALSE,			//value normalization
-	5*sizeof(float),	//stride: the offset between consecutive vertex attributes in the array (0 is tightly packed)
-	(GLvoid*)0);		//offset to the first vertex attribute in the array
-
-	//define how the vertex buffer data should be interpreted when a draw call is made for texture vertex
-	glEnableVertexAttribArray(TEX_COORD_ATTRIB);
-	glVertexAttribPointer(
-	TEX_COORD_ATTRIB,
-	2,
-	GL_FLOAT,
-	GL_FALSE,
-	5*sizeof(float),
-	(void*)(3*sizeof(float)));
-
-	//unbind the vertex buffer object
-	/*NOTE: can't unbind the element buffer object until the VAO is done being used*/
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//unbind the vertex array object
-	glBindVertexArray(0);
-
-	//delete the buffer objects
-	for (int i = 0; i < 2; i++)
-	{
-		glDeleteBuffers(1, &_buffObj[i]);
+	{ //position coordinates
+		VAParams va1;
+		va1.size = 3; //size of attribute
+		va1.type = GL_FLOAT; //vertex attribute type
+		va1.norm = GL_FALSE; //vertex attribute normalization bool
+		va1.stride = 5*sizeof(float); //size of vertex stride
+		va1.offset = 0; //offset attribute
+		_renderer->_mParams.vertAttr.push_back(va1);
 	}
+
+	{ //texture coordinates
+		VAParams va2;
+		va2.size = 2;
+		va2.type = GL_FLOAT;
+		va2.norm = GL_FALSE;
+		va2.stride = 5*sizeof(float);
+		va2.offset = 3*sizeof(float);
+		_renderer->_mParams.vertAttr.push_back(va2);
+	}
+
+	//set number of vertices and indices
+	_renderer->_mParams.vertNum = VERTICES_NUM;
+	_renderer->_mParams.idxNum = INDICES_NUM;
+
+	//initialize the mesh for rendering
+	_renderer->InitMesh(vertices, indices);
 }
 
 
@@ -215,36 +176,9 @@ void Cube::Draw(const Camera& cam)
 	Mat4 translation = Mat4::Identity().Translate(_pos);
 	Mat4 scale = Mat4::Identity().Scale(_scale);
 	Mat4 model = translation * rotation * scale;
-	//get view matrix
-	Mat4 view = cam.GetViewMatrix();
-	//prepare projection matrix.
-	float w = Window::GetInstance()->GetWindowWidth();
-	float h = Window::GetInstance()->GetWindowHeight();
-	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(cam.GetFieldOfView()), 1.0f * (w/h), 0.1f, 100.0f);
-	//model-view-projection transform
-	Mat4 mvp = proj * view * model;
 
-	Shader* shader = ShaderManager::GetInstance()->GetShader(_shaderName);
-	if (shader != nullptr)
-	{
-		//set the model-view-projection matrix to the shader
-		shader->UseProgram();
-		shader->SetUniformVec4(_color, "cubeColor");
-		shader->SetUniformMat4(mvp, "mvp");
-	}
-
-	if (_texture != -1)
-	{
-		//activate and bind the texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _texture);
-	}
-
-	//bind the vertex array object
-	glBindVertexArray(_VAO);
-
-	//draw the triangles to the buffer
-	glDrawElements(GL_TRIANGLES, INDICES_NUM, GL_UNSIGNED_INT, 0);
+	//draw the mesh
+	_renderer->DrawMesh(cam, model);
 }
 
 //*************************************************************************
@@ -255,7 +189,11 @@ void Cube::Draw(const Camera& cam)
 //*************************************************************************
 void Cube::Delete()
 {
-	glDeleteVertexArrays(1, &_VAO);
+	glDeleteVertexArrays(1, &_renderer->_mParams.VAO);
+
+	//delete renderer
+	delete _renderer;
+	_renderer = nullptr;
 }
 
 //*************************************************************************
@@ -266,41 +204,5 @@ void Cube::Delete()
 //*************************************************************************
 void Cube::SetTexture(const char* texName)
 {
-	glGenTextures(1, &_texture); //generate texture name
-	glBindTexture(GL_TEXTURE_2D, _texture); //bind the texture to the texture target
-
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//flip texture's y-axis
-	stbi_set_flip_vertically_on_load(true);
-
-	//load image data
-	std::string dir = "resources/img/" + std::string(texName);
-	int w, h, n;
-	unsigned char* imgData = stbi_load(dir.c_str(), &w, &h, &n, 0);
-
-	if (imgData)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, imgData); //generate texture image on currently bound texture object
-		glGenerateMipmap(GL_TEXTURE_2D); //generate mipmaps for currently bound texture object
-	}
-	else
-	{
-		std::cout << "Texture load Failure" << std::endl;
-	}
-	stbi_image_free(imgData);
-
-	//set the cube color and texture to the shader
-	Shader* shader = ShaderManager::GetInstance()->GetShader(_shaderName);
-	if (shader != nullptr)
-	{
-		shader->UseProgram();
-		shader->SetUniformInt(_texture, "texture");
-	}
+	_renderer->SetTextureMesh(texName);
 }

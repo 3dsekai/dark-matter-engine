@@ -123,7 +123,6 @@ void Shader::InitializeShader(ShaderType type, const char* path)
 			std::cout << "error: shader object compilation failed\n" << info_log << std::endl;
 		}
 	}
-//	free(src);
 };
 
 //*************************************************************************

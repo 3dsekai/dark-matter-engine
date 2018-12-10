@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: MeshBase
-// Source File: [meshBase.h]
+// Class Name: RenderMesh
+// Source File: [renderMesh.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,66 +25,68 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _MESH_BASE_H_
-#define _MESH_BASE_H_
+#ifndef _RENDERMESH_H_
+#define _RENDERMESH_H_
 
 //*************************************************************************
-// Includes
+// Include
 //*************************************************************************
+#include <vector>
 #include <GL/glew.h>
-#include "../draw/renderMesh.h"
 #include "../math_lib/vec4.h"
-#include "../math_lib/quat.h"
 
 class Camera;
 
 //*************************************************************************
-// MeshBase Class
+// Structs
 //*************************************************************************
-class MeshBase
+//vertex attribute parameters
+struct VAParams
+{
+	int size; //size of attribute
+	GLenum type; //vertex attribute type
+	GLboolean norm; //vertex attribute normalization bool
+	GLuint stride; //size of vertex stride
+	int offset; //offset attribute
+};
+
+//mesh parameters
+struct MeshParams
+{
+	//shader name
+	const char* shaderName;
+
+	//vertex aray object
+	GLuint VAO;
+
+	//texture id
+	GLuint texId;
+
+	//mesh color
+	Vec4 color;
+
+	//vertex attributes
+	std::vector<VAParams> vertAttr;
+
+	int vertNum; //number of vertices
+	int idxNum; //number of indices
+};
+
+//*************************************************************************
+// Class
+//*************************************************************************
+class RenderMesh
 {
 public:
-	MeshBase() = default;
-	~MeshBase() = default;
+	RenderMesh() {};
+	~RenderMesh() {};
 
-protected:
-	MeshBase(const char* shaderName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
-		_pos(pos),
-		_scale(scale),
-		_rot(rot)
-	{
-		_renderer = new RenderMesh();
-		_renderer->_mParams.shaderName = shaderName;
-		_renderer->_mParams.texId = -1;
-		_renderer->_mParams.color = color;
-		_renderer->_mParams.VAO = vao;
-	};
-
-protected:
-	virtual void Init() = 0;
+	void InitMesh(const float* vertices, const int* indices);
+	void DrawMesh(const Camera& cam, Mat4 model);
+	void SetTextureMesh(const char* texName);
 
 public:
-	virtual void SetTexture(const char* texName) = 0;
-	virtual void Draw(const Camera& cam) = 0;
-	virtual void Delete() = 0;
-
-public:
-	inline void SetPosition(const Vec3& pos) { _pos = pos; };
-	inline void SetRotation(const Quat& rot) { _rot = rot; };
-	inline void SetScale(const Vec3& scale) { _scale = scale; };
-	inline void SetColor(const Vec4& color) { _renderer->_mParams.color = color; };
-
-	inline const Vec3 GetPosition() const { return _pos; };
-	inline const Quat GetRotation() const { return _rot; };
-	inline const Vec3 GetScale() const { return _scale; };
-	inline const Vec4 GetColor() const { return _renderer->_mParams.color; };
-
-protected:
-	RenderMesh* _renderer;		//mesh renderer
-
-	Vec3 _pos;					//position
-	Vec3 _scale;				//scale
-	Quat _rot;					//rotation
+	MeshParams _mParams;
 };
 
 #endif

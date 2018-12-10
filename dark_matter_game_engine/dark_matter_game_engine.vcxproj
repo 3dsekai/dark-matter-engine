@@ -23,6 +23,7 @@
     <ClInclude Include="source\define\draw_define.h" />
     <ClInclude Include="source\define\shader_define.h" />
     <ClInclude Include="source\define\texture_define.h" />
+    <ClInclude Include="source\draw\renderMesh.h" />
     <ClInclude Include="source\draw\shader.h" />
     <ClInclude Include="source\draw\shaderManager.h" />
     <ClInclude Include="source\game_main\gameMain.h" />
@@ -49,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp" />
+    <ClCompile Include="source\draw\renderMesh.cpp" />
     <ClCompile Include="source\draw\shader.cpp" />
     <ClCompile Include="source\draw\shaderManager.cpp" />
     <ClCompile Include="source\game_main\gameMain.cpp" />
@@ -66,7 +68,6 @@
     <ClCompile Include="source\math_lib\vec3.cpp" />
     <ClCompile Include="source\math_lib\vec4.cpp" />
     <ClCompile Include="source\meshes\cube.cpp" />
-    <ClCompile Include="source\meshes\meshBase.cpp" />
     <ClCompile Include="source\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>

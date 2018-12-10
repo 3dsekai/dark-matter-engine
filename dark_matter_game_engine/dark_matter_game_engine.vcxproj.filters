@@ -133,6 +133,9 @@
     <ClInclude Include="source\define\texture_define.h">
       <Filter>source\define</Filter>
     </ClInclude>
+    <ClInclude Include="source\draw\renderMesh.h">
+      <Filter>source\draw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -161,9 +164,6 @@
     </ClCompile>
     <ClCompile Include="source\draw\shaderManager.cpp">
       <Filter>source\draw</Filter>
-    </ClCompile>
-    <ClCompile Include="source\meshes\meshBase.cpp">
-      <Filter>source\meshes</Filter>
     </ClCompile>
     <ClCompile Include="source\meshes\cube.cpp">
       <Filter>source\meshes</Filter>
@@ -194,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="source\window\window.cpp">
       <Filter>source\window</Filter>
+    </ClCompile>
+    <ClCompile Include="source\draw\renderMesh.cpp">
+      <Filter>source\draw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
