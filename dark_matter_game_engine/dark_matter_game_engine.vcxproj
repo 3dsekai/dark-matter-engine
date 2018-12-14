@@ -46,6 +46,7 @@
     <ClInclude Include="source\math_lib\vec4.h" />
     <ClInclude Include="source\meshes\cube.h" />
     <ClInclude Include="source\meshes\meshBase.h" />
+    <ClInclude Include="source\meshes\plane.h" />
     <ClInclude Include="source\window\window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -68,15 +69,16 @@
     <ClCompile Include="source\math_lib\vec3.cpp" />
     <ClCompile Include="source\math_lib\vec4.cpp" />
     <ClCompile Include="source\meshes\cube.cpp" />
+    <ClCompile Include="source\meshes\plane.cpp" />
     <ClCompile Include="source\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\shaders\color_cube\colored_cube.frag" />
     <None Include="source\shaders\color_cube\colored_cube.vert" />
-    <None Include="source\shaders\solid_cube\solid_cube.frag" />
-    <None Include="source\shaders\solid_cube\solid_cube.vert" />
-    <None Include="source\shaders\tex_cube\tex_cube.frag" />
-    <None Include="source\shaders\tex_cube\tex_cube.vert" />
+    <None Include="source\shaders\solid_cube\solid_mesh.frag" />
+    <None Include="source\shaders\solid_cube\solid_mesh.vert" />
+    <None Include="source\shaders\tex_cube\tex_mesh.frag" />
+    <None Include="source\shaders\tex_cube\tex_mesh.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

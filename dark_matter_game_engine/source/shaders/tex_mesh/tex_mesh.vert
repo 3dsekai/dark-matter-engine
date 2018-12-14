@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Shader: Solid Cube Fragment Shader
-// Source File: [solid_cube.frag]
+// Shader: Textured Mesh Vertex Shader
+// Source File: [tex_mesh.vert]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -27,11 +27,19 @@
 //*************************************************************************
 
 #version 330 core
-out vec4 color;
 
-uniform vec4 cubeColor;
+//attributes
+layout (location = 0) in vec3 atPos;
+layout (location = 1) in vec2 atTex;
+
+//out variables
+out vec2 texCoord;
+
+//uniforms
+uniform mat4 mvp;
 
 void main()
 {
-	color = vec4(cubeColor);
+	gl_Position = mvp * vec4(atPos, 1.0);
+	texCoord = atTex;
 }

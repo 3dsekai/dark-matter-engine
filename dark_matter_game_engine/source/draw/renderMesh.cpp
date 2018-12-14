@@ -41,7 +41,12 @@
 #include "../../third_party_lib/stb_image.h"
 
 //*************************************************************************
-// InitMesh
+// Class: RenderMesh
+// Function Name: InitMesh
+// Argument{s}:
+// const float* vertices: the mesh's vertices
+// const int* indices: the mesh's indices
+// Explanation: initializes the mesh for rendering
 //*************************************************************************
 void RenderMesh::InitMesh(const float* vertices, const int* indices)
 {
@@ -94,7 +99,12 @@ void RenderMesh::InitMesh(const float* vertices, const int* indices)
 }
 
 //*************************************************************************
-// RenderMesh
+// Class: RenderMesh
+// Function Name: DrawMesh
+// Argument{s}:
+// const Camera& cam: the world camera
+// Mat4 model: the local matrix for the mesh
+// Explanation: draw mesh
 //*************************************************************************
 void RenderMesh::DrawMesh(const Camera& cam, Mat4 model)
 {
@@ -112,7 +122,7 @@ void RenderMesh::DrawMesh(const Camera& cam, Mat4 model)
 	{
 		//set the model-view-projection matrix to the shader
 		shader->UseProgram();
-		shader->SetUniformVec4(_mParams.color, "cubeColor");
+		shader->SetUniformVec4(_mParams.color, "meshColor");
 		shader->SetUniformMat4(mvp, "mvp");
 	}
 	else
@@ -135,7 +145,11 @@ void RenderMesh::DrawMesh(const Camera& cam, Mat4 model)
 }
 
 //*************************************************************************
-// SetTextureMesh
+// Class: RenderMesh
+// Function Name: SetTextureMesh
+// Argument{s}:
+// const char* texName: the name of the texture to load
+// Explanation: set the texture onto the mesh
 //*************************************************************************
 void RenderMesh::SetTextureMesh(const char* texName)
 {
@@ -176,4 +190,15 @@ void RenderMesh::SetTextureMesh(const char* texName)
 		shader->UseProgram();
 		shader->SetUniformInt(_mParams.texId, "texture");
 	}
+}
+
+//*************************************************************************
+// Class: RenderMesh
+// Function Name: DeleteMesh
+// Argument{s}:
+// Explanation: delete mesh renderer
+//*************************************************************************
+void RenderMesh::DeleteMesh()
+{
+	glDeleteVertexArrays(1, &_mParams.VAO);
 }

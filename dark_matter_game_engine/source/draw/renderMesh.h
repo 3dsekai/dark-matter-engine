@@ -84,6 +84,7 @@ public:
 	void InitMesh(const float* vertices, const int* indices);
 	void DrawMesh(const Camera& cam, Mat4 model);
 	void SetTextureMesh(const char* texName);
+	void DeleteMesh();
 
 public:
 	MeshParams _mParams;

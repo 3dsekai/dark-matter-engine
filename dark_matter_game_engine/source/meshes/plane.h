@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: MultBoxes
-// Source File: [multBoxes.h]
+// Class Name: Plane
+// Source File: [plane.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,42 +25,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
+#ifndef _PLANE_H_
+#define _PLANE_H_
 
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include <vector>
-#include "../gameObjBase.h"
+#include <GL/glew.h>
+#include "meshBase.h"
 
-class Cube;
-class Plane;
 //*************************************************************************
-// MultBoxes Class
+// Plane Class
 //*************************************************************************
-class MultBoxes : public GameObjBase
+class Plane : public MeshBase
 {
 public:
-	MultBoxes();
-	~MultBoxes();
-
-	void Init() override;
-	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
-	void Draw(Camera& cam) override;
-	void Release() override;
-	//set position
-	void SetPosition(const Vec3& pos) 
-	{
-		_pos = pos;
-	};
-	//set rotation
-	void SetRotation(const Vec3& rot)
-	{
-		_rot = rot;
-	};
+	Plane(const char* shaderName,
+		  const Vec3& pos   = Vec3(0.0f, 0.0f, 0.0f),
+		  const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f),
+		  const Quat& rot   = Quat(0.0f, 0.0f, 0.0f, 1.0f),
+		  const Vec4& color = Vec4(1.0f, 1.0f, 1.0f, 0.0f));
+	~Plane();
 
 private:
-	std::vector<Cube*> _cubes;
-	Plane* _plane;
-	Vec3 _pos;
-	Vec3 _rot;
+	void Init() override;
+
+public:
+	void SetTexture(const char* texName) override;
+	void Draw(const Camera& cam) override;
+	void Delete() override;
 };
+
+#endif

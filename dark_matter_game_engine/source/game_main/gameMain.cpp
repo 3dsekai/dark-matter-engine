@@ -93,15 +93,15 @@ void GameMain::Start()
 
 	//compile the solid cube shader
 	ShaderManager::GetInstance()->LoadShader(
-	SOLID_CUBE_SHADER_NAME,
-	SOLID_CUBE_VERTEX_SHADER,
-	SOLID_CUBE_FRAGMENT_SHADER);
+	SOLID_MESH_SHADER_NAME,
+	SOLID_MESH_VERTEX_SHADER,
+	SOLID_MESH_FRAGMENT_SHADER);
 
 	//compile the texture cube shader
 	ShaderManager::GetInstance()->LoadShader(
-	TEXTURE_CUBE_SHADER_NAME,
-	TEXTURE_CUBE_VERTEX_SHADER,
-	TEXTURE_CUBE_FRAGMENT_SHADER);
+	TEXTURE_MESH_SHADER_NAME,
+	TEXTURE_MESH_VERTEX_SHADER,
+	TEXTURE_MESH_FRAGMENT_SHADER);
 }
 
 //*************************************************************************

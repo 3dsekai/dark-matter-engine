@@ -32,6 +32,7 @@
 #include "multBoxes.h"
 #include "../../define/shader_define.h"
 #include "../../meshes/cube.h"
+#include "../../meshes/plane.h"
 #include "../../define/texture_define.h"
 
 //*************************************************************************
@@ -69,19 +70,19 @@ MultBoxes::~MultBoxes()
 void MultBoxes::Init()
 {
 	//cube 1
-	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
 					 		  Vec3(0.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(1.0f, 0.0f, 0.0f, 1.0f)));
 	//cube 2 
-	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
 					 		  Vec3(5.0f, 0.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
 							  Vec4(0.0f, 1.0f, 0.0f, 1.0f)));
 	//cube 3
-	_cubes.push_back(new Cube(TEXTURE_CUBE_SHADER_NAME,
+	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
 					 		  Vec3(2.5f, 5.0f, 0.0f),
 							  Vec3(1.0, 1.0f, 1.0f),
 							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
@@ -91,6 +92,18 @@ void MultBoxes::Init()
 	{
 		(*it)->SetTexture(BOX_TEXTURE);
 	}
+
+	_plane = new Plane(SOLID_MESH_SHADER_NAME,
+					  Vec3(0.0f, 0.0f, 0.0f),
+					  Vec3(1.0, 1.0f, 1.0f),
+					  Quat(0.0f, 0.0f, 0.0f, 1.0f),
+					  Vec4(0.5f, 0.5f, 0.7f, 1.0f));
+
+	//init plane
+	_plane->SetPosition(Vec3(1.0f, 8.0f, 0.0f));
+	_plane->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(90.0f, 0.0f, 0.0f))));
+	_plane->SetScale(Vec3(10.0f, 10.0f, 10.0f));
+
 }
 
 //*************************************************************************
@@ -121,6 +134,8 @@ void MultBoxes::Draw(Camera& cam)
 	{
 		(*it)->Draw(cam);
 	}
+
+	_plane->Draw(cam);
 }
 
 //*************************************************************************

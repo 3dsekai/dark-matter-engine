@@ -29,16 +29,16 @@
 //*************************************************************************
 //solid cube shader files
 //*************************************************************************
-#define SOLID_CUBE_SHADER_NAME ("solid_cube")
-#define SOLID_CUBE_VERTEX_SHADER ("source/shaders/solid_cube/solid_cube.vert")
-#define SOLID_CUBE_FRAGMENT_SHADER ("source/shaders/solid_cube/solid_cube.frag")
+#define SOLID_MESH_SHADER_NAME ("solid_mesh")
+#define SOLID_MESH_VERTEX_SHADER ("source/shaders/solid_mesh/solid_mesh.vert")
+#define SOLID_MESH_FRAGMENT_SHADER ("source/shaders/solid_mesh/solid_mesh.frag")
 
 //*************************************************************************
 //texture cube shader files
 //*************************************************************************
-#define TEXTURE_CUBE_SHADER_NAME ("tex_cube")
-#define TEXTURE_CUBE_VERTEX_SHADER ("source/shaders/tex_cube/tex_cube.vert")
-#define TEXTURE_CUBE_FRAGMENT_SHADER ("source/shaders/tex_cube/tex_cube.frag")
+#define TEXTURE_MESH_SHADER_NAME ("tex_mesh")
+#define TEXTURE_MESH_VERTEX_SHADER ("source/shaders/tex_mesh/tex_mesh.vert")
+#define TEXTURE_MESH_FRAGMENT_SHADER ("source/shaders/tex_mesh/tex_mesh.frag")
 
 //*************************************************************************
 //colored cube shader files

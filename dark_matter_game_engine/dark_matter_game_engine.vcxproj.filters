@@ -38,16 +38,16 @@
     <Filter Include="source\shaders">
       <UniqueIdentifier>{4715eb5f-0b2c-4e5b-a9f0-6be1d684b93f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\shaders\solid_cube">
-      <UniqueIdentifier>{4e99e1cb-1071-4011-9de1-330de6cd66ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\shaders\color_cube">
       <UniqueIdentifier>{9a5629ad-dbbf-4b29-9b42-96637a5525be}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\window">
       <UniqueIdentifier>{046f81ae-5074-446b-a0a2-d255f0104900}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\shaders\tex_cube">
+    <Filter Include="source\shaders\solid_mesh">
+      <UniqueIdentifier>{4e99e1cb-1071-4011-9de1-330de6cd66ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\shaders\tex_mesh">
       <UniqueIdentifier>{43a22053-9c4b-4fc5-85fd-0ce74a5c0f15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -136,6 +136,9 @@
     <ClInclude Include="source\draw\renderMesh.h">
       <Filter>source\draw</Filter>
     </ClInclude>
+    <ClInclude Include="source\meshes\plane.h">
+      <Filter>source\meshes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -198,25 +201,28 @@
     <ClCompile Include="source\draw\renderMesh.cpp">
       <Filter>source\draw</Filter>
     </ClCompile>
+    <ClCompile Include="source\meshes\plane.cpp">
+      <Filter>source\meshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="source\shaders\solid_cube\solid_cube.frag">
-      <Filter>source\shaders\solid_cube</Filter>
-    </None>
-    <None Include="source\shaders\solid_cube\solid_cube.vert">
-      <Filter>source\shaders\solid_cube</Filter>
-    </None>
     <None Include="source\shaders\color_cube\colored_cube.vert">
       <Filter>source\shaders\color_cube</Filter>
     </None>
     <None Include="source\shaders\color_cube\colored_cube.frag">
       <Filter>source\shaders\color_cube</Filter>
     </None>
-    <None Include="source\shaders\tex_cube\tex_cube.vert">
-      <Filter>source\shaders\tex_cube</Filter>
+    <None Include="source\shaders\tex_cube\tex_mesh.frag">
+      <Filter>source\shaders\tex_mesh</Filter>
     </None>
-    <None Include="source\shaders\tex_cube\tex_cube.frag">
-      <Filter>source\shaders\tex_cube</Filter>
+    <None Include="source\shaders\tex_cube\tex_mesh.vert">
+      <Filter>source\shaders\tex_mesh</Filter>
+    </None>
+    <None Include="source\shaders\solid_cube\solid_mesh.frag">
+      <Filter>source\shaders\solid_mesh</Filter>
+    </None>
+    <None Include="source\shaders\solid_cube\solid_mesh.vert">
+      <Filter>source\shaders\solid_mesh</Filter>
     </None>
   </ItemGroup>
 </Project>
