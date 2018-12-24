@@ -139,6 +139,12 @@
     <ClInclude Include="source\meshes\plane.h">
       <Filter>source\meshes</Filter>
     </ClInclude>
+    <ClInclude Include="source\draw\drawUtil.h">
+      <Filter>source\draw</Filter>
+    </ClInclude>
+    <ClInclude Include="source\draw\uboManager.h">
+      <Filter>source\draw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -204,6 +210,9 @@
     <ClCompile Include="source\meshes\plane.cpp">
       <Filter>source\meshes</Filter>
     </ClCompile>
+    <ClCompile Include="source\draw\uboManager.cpp">
+      <Filter>source\draw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\shaders\color_cube\colored_cube.vert">
@@ -212,17 +221,17 @@
     <None Include="source\shaders\color_cube\colored_cube.frag">
       <Filter>source\shaders\color_cube</Filter>
     </None>
-    <None Include="source\shaders\tex_cube\tex_mesh.frag">
-      <Filter>source\shaders\tex_mesh</Filter>
-    </None>
-    <None Include="source\shaders\tex_cube\tex_mesh.vert">
-      <Filter>source\shaders\tex_mesh</Filter>
-    </None>
-    <None Include="source\shaders\solid_cube\solid_mesh.frag">
+    <None Include="source\shaders\solid_mesh\solid_mesh.vert">
       <Filter>source\shaders\solid_mesh</Filter>
     </None>
-    <None Include="source\shaders\solid_cube\solid_mesh.vert">
+    <None Include="source\shaders\solid_mesh\solid_mesh.frag">
       <Filter>source\shaders\solid_mesh</Filter>
+    </None>
+    <None Include="source\shaders\tex_mesh\tex_mesh.frag">
+      <Filter>source\shaders\tex_mesh</Filter>
+    </None>
+    <None Include="source\shaders\tex_mesh\tex_mesh.vert">
+      <Filter>source\shaders\tex_mesh</Filter>
     </None>
   </ItemGroup>
 </Project>

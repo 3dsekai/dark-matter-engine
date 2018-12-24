@@ -34,6 +34,7 @@
 #include "../input/inputCodes.h"
 
 #include "../draw/shaderManager.h"
+#include "../draw/uboManager.h"
 #include "../define/shader_define.h"
 
 //*************************************************************************
@@ -142,8 +143,11 @@ void GameMain::Update()
 //*************************************************************************
 void GameMain::Draw()
 {
+	//set uniform buffer objects
+	UBOManager::SetUniformBufferObject(*_cam);
+
 	//draw the game objects
-	_game_obj->Draw(*_cam);
+	_game_obj->Draw();
 }
 
 //*************************************************************************

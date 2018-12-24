@@ -77,6 +77,8 @@ public:
 	void SetUniformMat3(const Mat3& val, const char* name);
 	void SetUniformMat4(const Mat4& val, const char* name);
 
+	inline const GLuint GetProgramID() const { return _program; };
+
 private:
 	std::string ReadShaderFile(const char* dir);
 	GLenum GetGLShaderType(ShaderType type);

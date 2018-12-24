@@ -34,12 +34,15 @@
 #include <vector>
 #include <GL/glew.h>
 #include "../math_lib/vec4.h"
+#include "../math_lib/mat4.h"
 
-class Camera;
 
 //*************************************************************************
-// Structs
+// Class
 //*************************************************************************
+class RenderMesh
+{
+public:
 //vertex attribute parameters
 struct VAParams
 {
@@ -59,11 +62,11 @@ struct MeshParams
 	//vertex aray object
 	GLuint VAO;
 
+	//color
+	Vec4 color;
+
 	//texture id
 	GLuint texId;
-
-	//mesh color
-	Vec4 color;
 
 	//vertex attributes
 	std::vector<VAParams> vertAttr;
@@ -72,17 +75,12 @@ struct MeshParams
 	int idxNum; //number of indices
 };
 
-//*************************************************************************
-// Class
-//*************************************************************************
-class RenderMesh
-{
 public:
 	RenderMesh() {};
 	~RenderMesh() {};
 
 	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Camera& cam, Mat4 model);
+	void DrawMesh(const Mat4& model);
 	void SetTextureMesh(const char* texName);
 	void DeleteMesh();
 

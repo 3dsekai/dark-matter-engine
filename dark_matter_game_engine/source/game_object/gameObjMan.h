@@ -36,7 +36,6 @@
 class GameObjBase;
 class Mouse;
 class Keyboard;
-class Camera;
 
 //*************************************************************************
 // Class
@@ -53,7 +52,7 @@ private:
 public:
 	void Init();
 	void Update(const Mouse& mouse, const Keyboard& keyboard);
-	void Draw(Camera& cam);
+	void Draw();
 	void AddNewGameObject(GameObjBase* obj);
 
 private:

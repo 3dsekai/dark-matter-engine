@@ -55,9 +55,9 @@ protected:
 	{
 		_renderer = new RenderMesh();
 		_renderer->_mParams.shaderName = shaderName;
+		_renderer->_mParams.VAO = vao;
 		_renderer->_mParams.texId = -1;
 		_renderer->_mParams.color = color;
-		_renderer->_mParams.VAO = vao;
 	};
 
 protected:
@@ -65,7 +65,7 @@ protected:
 
 public:
 	virtual void SetTexture(const char* texName) = 0;
-	virtual void Draw(const Camera& cam) = 0;
+	virtual void Draw() = 0;
 	virtual void Delete() = 0;
 
 public:

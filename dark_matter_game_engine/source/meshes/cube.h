@@ -52,7 +52,7 @@ private:
 
 public:
 	void SetTexture(const char* texName) override;
-	void Draw(const Camera& cam) override;
+	void Draw() override;
 	void Delete() override;
 };
 

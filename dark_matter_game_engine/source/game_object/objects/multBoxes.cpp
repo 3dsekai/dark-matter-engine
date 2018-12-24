@@ -59,6 +59,9 @@ MultBoxes::~MultBoxes()
 		(*it) = nullptr;
 	}
 	_cubes.clear();
+
+	delete _plane;
+	_plane = nullptr;
 }
 
 //*************************************************************************
@@ -128,14 +131,14 @@ void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
 // Argument{s}: -
 // Explanation: draw game object
 //*************************************************************************
-void MultBoxes::Draw(Camera& cam)
+void MultBoxes::Draw()
 {
 	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
 	{
-		(*it)->Draw(cam);
+		(*it)->Draw();
 	}
 
-	_plane->Draw(cam);
+	_plane->Draw();
 }
 
 //*************************************************************************

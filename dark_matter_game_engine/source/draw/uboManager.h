@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: GameObjectBase
-// Source File: [gameObjBase.h]
+// Class Name: UBOManager
+// Source File: [uboManager.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,40 +25,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _GAME_OBJ_BASE_H_
-#define _GAME_OBJ_BASE_H_
+#ifndef _UBOMANAGER_H_
+#define _UBOMANAGER_H_
 
-//*************************************************************************
-// Includes
-//*************************************************************************
-#include "../input/mouse.h"
-#include "../input/keyboard.h"
-
+#include "../math_lib/mat4.h"
+class Camera;
 //*************************************************************************
 // Class
 //*************************************************************************
-class GameObjBase
+class UBOManager
 {
+private:
+//uniform buffer object parameters
+struct UBOParams
+{
+	Mat4 projView;
+};
+
 public:
-	//constructor
-	GameObjBase() { _is_kill = false; };
-	//destructor
-	virtual ~GameObjBase() {_is_kill = true; };
+	static void SetUniformBufferObject(const Camera& cam);
 
-	//initialize game object
-	virtual void Init() = 0;
-	//update game object
-	virtual void Update(const Mouse& mouse, const Keyboard& keyboard) = 0;
-	//draw game object
-	virtual void Draw() = 0;
-	//delete game object
-	virtual void Release() = 0;
-
-	//is the object ready for deletion?
-	bool IsKill() const { return _is_kill; };
-
-protected:
-	bool _is_kill; //object is ready for deletion check
+private:
+	static UBOParams _uboParams;
 };
 
 #endif

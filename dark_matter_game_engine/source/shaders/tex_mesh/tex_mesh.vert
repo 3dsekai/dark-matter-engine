@@ -28,18 +28,32 @@
 
 #version 330 core
 
-//attributes
-layout (location = 0) in vec3 atPos;
-layout (location = 1) in vec2 atTex;
+//*************************************************************************
+// input/output variables
+//*************************************************************************
+layout (location = 0) in vec3 attrPos;
+layout (location = 1) in vec2 attrTex;
 
-//out variables
 out vec2 texCoord;
 
-//uniforms
-uniform mat4 mvp;
+//*************************************************************************
+// Uniform Buffer Objects
+//*************************************************************************
+layout (std140) uniform UBOParams
+{
+	mat4 projView;
+};
 
+//*************************************************************************
+// Uniforms
+//*************************************************************************
+uniform mat4 model;
+
+//*************************************************************************
+// Shader Function
+//*************************************************************************
 void main()
 {
-	gl_Position = mvp * vec4(atPos, 1.0);
-	texCoord = atTex;
+	gl_Position = projView * model * vec4(attrPos, 1.0);
+	texCoord = attrTex;
 }

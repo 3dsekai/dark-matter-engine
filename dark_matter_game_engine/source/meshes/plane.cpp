@@ -96,7 +96,7 @@ Plane::~Plane()
 void Plane::Init()
 {
 	{ //position coordinates
-		VAParams va1;
+		RenderMesh::VAParams va1;
 		va1.size = 3; //size of attribute
 		va1.type = GL_FLOAT; //vertex attribute type
 		va1.norm = GL_FALSE; //vertex attribute normalization bool
@@ -106,7 +106,7 @@ void Plane::Init()
 	}
 
 	{ //texture coordinates
-		VAParams va2;
+		RenderMesh::VAParams va2;
 		va2.size = 2;
 		va2.type = GL_FLOAT;
 		va2.norm = GL_FALSE;
@@ -130,7 +130,7 @@ void Plane::Init()
 // Argument{s}: -
 // Explanation: Draw plane
 //*************************************************************************
-void Plane::Draw(const Camera& cam)
+void Plane::Draw()
 {
 	//prepare model matrix
 	Mat4 rotation = Mat4::Identity().Rotate(_rot);
@@ -139,7 +139,7 @@ void Plane::Draw(const Camera& cam)
 	Mat4 model = translation * rotation * scale;
 
 	//draw the mesh
-	_renderer->DrawMesh(cam, model);
+	_renderer->DrawMesh(model);
 }
 
 //*************************************************************************

@@ -33,9 +33,6 @@
 #include "renderMesh.h"
 #include "../draw/shaderManager.h"
 #include "../draw/shader.h"
-#include "../math_lib/mat4.h"
-#include "../camera/camera.h"
-#include "../window/window.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../third_party_lib/stb_image.h"
@@ -106,24 +103,15 @@ void RenderMesh::InitMesh(const float* vertices, const int* indices)
 // Mat4 model: the local matrix for the mesh
 // Explanation: draw mesh
 //*************************************************************************
-void RenderMesh::DrawMesh(const Camera& cam, Mat4 model)
+void RenderMesh::DrawMesh(const Mat4& model)
 {
-	//get view matrix
-	Mat4 view = cam.GetViewMatrix();
-	//prepare projection matrix.
-	float w = Window::GetInstance()->GetWindowWidth();
-	float h = Window::GetInstance()->GetWindowHeight();
-	Mat4 proj = Mat4::Identity().Perspective(MathUtil::Deg2Rad(cam.GetFieldOfView()), 1.0f*(w/h), 0.1f, 100.0f);
-	//model-view-projection transform
-	Mat4 mvp = proj * view * model;
-
 	Shader* shader = ShaderManager::GetInstance()->GetShader(_mParams.shaderName);
 	if(shader != nullptr)
 	{
 		//set the model-view-projection matrix to the shader
 		shader->UseProgram();
 		shader->SetUniformVec4(_mParams.color, "meshColor");
-		shader->SetUniformMat4(mvp, "mvp");
+		shader->SetUniformMat4(model, "model");
 	}
 	else
 	{
@@ -143,7 +131,6 @@ void RenderMesh::DrawMesh(const Camera& cam, Mat4 model)
 	//draw the triangles to the buffer
 	glDrawElements(GL_TRIANGLES, _mParams.idxNum, GL_UNSIGNED_INT, 0);
 }
-
 //*************************************************************************
 // Class: RenderMesh
 // Function Name: SetTextureMesh

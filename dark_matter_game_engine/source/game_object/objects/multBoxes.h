@@ -31,7 +31,7 @@
 //*************************************************************************
 #include <vector>
 #include "../gameObjBase.h"
-
+#include "../../math_lib/vec3.h"
 class Cube;
 class Plane;
 //*************************************************************************
@@ -45,7 +45,7 @@ public:
 
 	void Init() override;
 	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
-	void Draw(Camera& cam) override;
+	void Draw() override;
 	void Release() override;
 	//set position
 	void SetPosition(const Vec3& pos) 

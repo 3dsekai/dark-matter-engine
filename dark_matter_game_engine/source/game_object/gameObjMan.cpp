@@ -98,11 +98,11 @@ void GameObjManager::Update(const Mouse& mouse, const Keyboard& keyboard)
 // Argument{s}:
 // Other: -
 //*************************************************************************
-void GameObjManager::Draw(Camera& cam)
+void GameObjManager::Draw()
 {
 	for(auto it = _obj_list.begin(); it != _obj_list.end(); it++)
 	{
-		(*it)->Draw(cam);
+		(*it)->Draw();
 	}
 }
 

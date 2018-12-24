@@ -23,9 +23,11 @@
     <ClInclude Include="source\define\draw_define.h" />
     <ClInclude Include="source\define\shader_define.h" />
     <ClInclude Include="source\define\texture_define.h" />
+    <ClInclude Include="source\draw\drawUtil.h" />
     <ClInclude Include="source\draw\renderMesh.h" />
     <ClInclude Include="source\draw\shader.h" />
     <ClInclude Include="source\draw\shaderManager.h" />
+    <ClInclude Include="source\draw\uboManager.h" />
     <ClInclude Include="source\game_main\gameMain.h" />
     <ClInclude Include="source\game_object\createGameObjId.h" />
     <ClInclude Include="source\game_object\gameObjBase.h" />
@@ -54,6 +56,7 @@
     <ClCompile Include="source\draw\renderMesh.cpp" />
     <ClCompile Include="source\draw\shader.cpp" />
     <ClCompile Include="source\draw\shaderManager.cpp" />
+    <ClCompile Include="source\draw\uboManager.cpp" />
     <ClCompile Include="source\game_main\gameMain.cpp" />
     <ClCompile Include="source\game_object\gameObjFactory.cpp" />
     <ClCompile Include="source\game_object\gameObjMan.cpp" />
@@ -75,10 +78,10 @@
   <ItemGroup>
     <None Include="source\shaders\color_cube\colored_cube.frag" />
     <None Include="source\shaders\color_cube\colored_cube.vert" />
-    <None Include="source\shaders\solid_cube\solid_mesh.frag" />
-    <None Include="source\shaders\solid_cube\solid_mesh.vert" />
-    <None Include="source\shaders\tex_cube\tex_mesh.frag" />
-    <None Include="source\shaders\tex_cube\tex_mesh.vert" />
+    <None Include="source\shaders\solid_mesh\solid_mesh.frag" />
+    <None Include="source\shaders\solid_mesh\solid_mesh.vert" />
+    <None Include="source\shaders\tex_mesh\tex_mesh.frag" />
+    <None Include="source\shaders\tex_mesh\tex_mesh.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
