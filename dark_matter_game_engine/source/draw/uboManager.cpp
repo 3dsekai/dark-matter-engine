@@ -32,54 +32,58 @@
 #include <iostream>
 #include <GL/glew.h>
 #include "uboManager.h"
-#include "shaderManager.h"
-#include "drawUtil.h"
-#include "shader.h"
 
+//*************************************************************************
+// static member variables initialization
+//*************************************************************************
 UBOManager::UBOParams UBOManager::_uboParams = UBOParams();
+GLuint UBOManager::_uboBufferId = 0;
+
 //*************************************************************************
 // Class: UBOManager
-// Function Name: SetUniformBufferObject
+// Function Name: InitUniformBufferObject
+// Argument{s}:
+// Explanation: initialize the uniform buffer object
+//*************************************************************************
+void UBOManager::InitUniformBufferObject()
+{
+	//create the buffer
+	glGenBuffers(1, &_uboBufferId);
+	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(UBOParams), NULL, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+}
+
+//*************************************************************************
+// Class: UBOManager
+// Function Name: UpdateUniformBufferObject
 // Argument{s}:
 // Explanation: set all the parameters in the mesh's uniform buffer object
 //*************************************************************************
-void UBOManager::SetUniformBufferObject(const Camera& cam)
+void UBOManager::UpdateUniformBufferObject()
 {
-	//get the projection-view matrix for this frame
-	_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(cam);
-
-	//get the relevant shader program id
-	GLuint shaderIdSolid = ShaderManager::GetInstance()->GetShader("solid_mesh")->GetProgramID();
-	if (shaderIdSolid == 0)
-	{
-		std::cout << "InitUniformBufferObject(): couldn't load shader: " << "solid_mesh" << std::endl;
-	}
-	GLuint shaderIdTex = ShaderManager::GetInstance()->GetShader("tex_mesh")->GetProgramID();
-	if (shaderIdTex == 0)
-	{
-		std::cout << "InitUniformBufferObject(): couldn't load shader: " << "tex_mesh" << std::endl;
-	}
-
-	//Get the relevant block indices
-	unsigned int uBlockIdxSolid = glGetUniformBlockIndex(shaderIdSolid, "UBOParams");
-	unsigned int uBlockIdxTex = glGetUniformBlockIndex(shaderIdTex, "UBOParams");
-
-	//link each shader's uniform block to this uniform binding point
-	glUniformBlockBinding(shaderIdSolid, uBlockIdxSolid, 0);
-	glUniformBlockBinding(shaderIdTex, uBlockIdxTex, 0);
-
-	//create the buffer
-	unsigned int uboMatrices;
-	glGenBuffers(1, &uboMatrices);
-	glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(Mat4), NULL, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 	// define the range of the buffer that links to a uniform binding point
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, sizeof(Mat4));
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, _uboBufferId, 0, sizeof(Mat4));
 
 	//store mview-projection matrix
-	glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Mat4), &_uboParams.projView);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+//*************************************************************************
+// Class: UBOManager
+// Function Name: LinkShaderUBOBlockIndex
+// Argument{s}:
+// GLuint shaderId: the id of the shader to the uniform binding point
+// Explanation: link the shader's uniform block to the uniform binding point
+//*************************************************************************
+void UBOManager::LinkShaderUBOBlockIndex(GLuint shaderId)
+{
+	//Get the relevant block index
+	unsigned int uBlockIdx = glGetUniformBlockIndex(shaderId, "UBOParams");
+
+	//link the shader's uniform block to this uniform binding point
+	glUniformBlockBinding(shaderId, uBlockIdx, 0);
 }

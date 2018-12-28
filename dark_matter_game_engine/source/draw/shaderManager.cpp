@@ -31,6 +31,7 @@
 //*************************************************************************
 #include "shaderManager.h"
 #include "shader.h"
+#include "uboManager.h"
 
 //*************************************************************************
 // static member definition
@@ -89,6 +90,10 @@ void ShaderManager::LoadShader(const char* name, const GLchar* vert_file, const 
 	{
 		_shaders[name] = new Shader;
 		_shaders[name]->Compile(vert_file, frag_file, geom_file);
+		if(_shaders[name]->GetProgramID() != 0)
+		{
+			UBOManager::LinkShaderUBOBlockIndex(_shaders[name]->GetProgramID());
+		}
 	}
 }
 

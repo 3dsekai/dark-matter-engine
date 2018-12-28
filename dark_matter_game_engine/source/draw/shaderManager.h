@@ -51,7 +51,6 @@ public:
 	Shader* GetShader(const char* name);
 
 private:
-//	Shader loadShaderFromFile(const GLchar* vert_file, const GLchar* frag_file, const GLchar* geom_file = nullptr);
 	static void ClearAllShaders();
 
 private:

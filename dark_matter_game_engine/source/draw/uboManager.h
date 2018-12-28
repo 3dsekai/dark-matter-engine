@@ -43,10 +43,15 @@ struct UBOParams
 };
 
 public:
-	static void SetUniformBufferObject(const Camera& cam);
+	static void InitUniformBufferObject();
+	static void UpdateUniformBufferObject();
+	static void LinkShaderUBOBlockIndex(GLuint shaderId);
+
+public:
+	static UBOParams _uboParams;
 
 private:
-	static UBOParams _uboParams;
+	static GLuint _uboBufferId;
 };
 
 #endif

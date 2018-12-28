@@ -34,6 +34,7 @@
 #include "../input/inputCodes.h"
 
 #include "../draw/shaderManager.h"
+#include "../draw/drawUtil.h"
 #include "../draw/uboManager.h"
 #include "../define/shader_define.h"
 
@@ -92,6 +93,9 @@ void GameMain::Start()
 	//initialize the game objects
 	_game_obj->Init();
 
+	//initialize the uniform buffer object
+	UBOManager::InitUniformBufferObject();
+
 	//compile the solid cube shader
 	ShaderManager::GetInstance()->LoadShader(
 	SOLID_MESH_SHADER_NAME,
@@ -143,8 +147,11 @@ void GameMain::Update()
 //*************************************************************************
 void GameMain::Draw()
 {
+	//get the projection-view matrix for this frame. store it in the UBO.
+	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*_cam);
+
 	//set uniform buffer objects
-	UBOManager::SetUniformBufferObject(*_cam);
+	UBOManager::UpdateUniformBufferObject();
 
 	//draw the game objects
 	_game_obj->Draw();
