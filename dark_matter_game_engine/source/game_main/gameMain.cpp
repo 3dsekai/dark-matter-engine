@@ -90,9 +90,6 @@ GameMain::~GameMain()
 //*************************************************************************
 void GameMain::Start()
 {
-	//initialize the game objects
-	_game_obj->Init();
-
 	//initialize the uniform buffer object
 	UBOManager::InitUniformBufferObject();
 
@@ -107,6 +104,9 @@ void GameMain::Start()
 	TEXTURE_MESH_SHADER_NAME,
 	TEXTURE_MESH_VERTEX_SHADER,
 	TEXTURE_MESH_FRAGMENT_SHADER);
+
+	//initialize the game objects
+	_game_obj->Init();
 }
 
 //*************************************************************************

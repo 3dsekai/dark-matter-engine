@@ -31,11 +31,9 @@
 //*************************************************************************
 #include <iostream>
 #include "renderMesh.h"
-#include "../draw/shaderManager.h"
-#include "../draw/shader.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "../../third_party_lib/stb_image.h"
+#include "shaderManager.h"
+#include "shader.h"
+#include "../resource/textureResourceManager.h"
 
 //*************************************************************************
 // Class: RenderMesh
@@ -118,7 +116,7 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
 	}
 
-	if(_mParams.texId != -1)
+	if(_mParams.texId != 0)
 	{
 		//activate and bind the texture
 		glActiveTexture(GL_TEXTURE0);
@@ -138,45 +136,54 @@ void RenderMesh::DrawMesh(const Mat4& model)
 // const char* texName: the name of the texture to load
 // Explanation: set the texture onto the mesh
 //*************************************************************************
-void RenderMesh::SetTextureMesh(const char* texName)
+void RenderMesh::Set2DTextureMesh(const char* texName)
 {
-	glGenTextures(1, &_mParams.texId); //generate texture name
-	glBindTexture(GL_TEXTURE_2D, _mParams.texId); //bind the texture to the texture target
-
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//flip texture's y-axis
-	stbi_set_flip_vertically_on_load(true);
-
-	//load image data
+	//load texture
 	std::string dir = "resources/img/" + std::string(texName);
-	int w, h, n;
-	unsigned char* imgData = stbi_load(dir.c_str(), &w, &h, &n, 0);
+	TextureResourceManager::stbImgData texData;
+	TextureResourceManager::LoadTexture(dir.c_str(), &texData);
 
-	if (imgData)
+	if (texData.imgData != nullptr)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, imgData); //generate texture image on currently bound texture object
-		glGenerateMipmap(GL_TEXTURE_2D); //generate mipmaps for currently bound texture object
-	}
-	else
-	{
-		std::cout << "Texture load Failure" << std::endl;
-	}
-	stbi_image_free(imgData);
+		glGenTextures(1, &_mParams.texId); //generate texture name
+		glBindTexture(GL_TEXTURE_2D, _mParams.texId); //bind the texture to the texture target
 
-	//set the cube color and texture to the shader
-	Shader* shader = ShaderManager::GetInstance()->GetShader(_mParams.shaderName);
-	if (shader != nullptr)
-	{
-		shader->UseProgram();
-		shader->SetUniformInt(_mParams.texId, "texture");
+		// set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//generate texture image on currently bound texture object
+		glTexImage2D(GL_TEXTURE_2D,
+					 0,
+					 GL_RGB,
+					 texData.w,
+					 texData.h,
+					 0,
+					 GL_RGB,
+					 GL_UNSIGNED_BYTE,
+					 texData.imgData);
+		//generate mipmaps for currently bound texture object
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		//set the cube color and texture to the shader
+		Shader* shader = ShaderManager::GetInstance()->GetShader(_mParams.shaderName);
+		if (shader != nullptr)
+		{
+			shader->UseProgram();
+			shader->SetUniformUint(_mParams.texId, "texture");
+		}
+		else
+		{
+			std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
+		}
 	}
+
+	//unload texture
+	TextureResourceManager::UnloadTexture(&texData);
 }
 
 //*************************************************************************

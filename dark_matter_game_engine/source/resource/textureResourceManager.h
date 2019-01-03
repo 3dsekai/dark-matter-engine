@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: RenderMesh
-// Source File: [renderMesh.h]
+// Class Name: TextureResourceManager
+// Source File: [textureResourceManager.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,67 +25,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _RENDERMESH_H_
-#define _RENDERMESH_H_
-
-//*************************************************************************
-// Include
-//*************************************************************************
-#include <vector>
-#include <GL/glew.h>
-#include "../math_lib/vec4.h"
-#include "../math_lib/mat4.h"
-
+#ifndef _TEXTURE_RESOURCE_MANAGER_H_
+#define _TEXTURE_RESOURCE_MANAGER_H_
 
 //*************************************************************************
 // Class
 //*************************************************************************
-class RenderMesh
+class TextureResourceManager
 {
 public:
-//vertex attribute parameters
-struct VAParams
-{
-	int size; //size of attribute
-	GLenum type; //vertex attribute type
-	GLboolean norm; //vertex attribute normalization bool
-	GLuint stride; //size of vertex stride
-	int offset; //offset attribute
-};
-
-//mesh parameters
-struct MeshParams
-{
-	//shader name
-	const char* shaderName;
-
-	//vertex aray object
-	GLuint VAO;
-
-	//color
-	Vec4 color;
-
-	//texture id
-	GLuint texId;
-
-	//vertex attributes
-	std::vector<VAParams> vertAttr;
-
-	int vertNum; //number of vertices
-	int idxNum; //number of indices
-};
+	//stb_image library, texture load data
+	struct stbImgData
+	{
+		int w;
+		int h;
+		int n;
+		unsigned char* imgData;
+	};
 
 public:
-	RenderMesh() {};
-	~RenderMesh() {};
-
-	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Mat4& model);
-	void Set2DTextureMesh(const char* texName);
-	void DeleteMesh();
-
-public:
-	MeshParams _mParams;
+	static void LoadTexture(const char* textureName, stbImgData* textureData);
+	static void UnloadTexture(stbImgData* textureData);
 };
 
 #endif

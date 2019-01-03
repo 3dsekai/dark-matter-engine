@@ -50,6 +50,9 @@
     <Filter Include="source\shaders\tex_mesh">
       <UniqueIdentifier>{43a22053-9c4b-4fc5-85fd-0ce74a5c0f15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\resource">
+      <UniqueIdentifier>{ef25a6d7-e13f-4b86-988c-1920ebb64550}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h">
@@ -145,6 +148,9 @@
     <ClInclude Include="source\draw\uboManager.h">
       <Filter>source\draw</Filter>
     </ClInclude>
+    <ClInclude Include="source\resource\textureResourceManager.h">
+      <Filter>source\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="source\draw\uboManager.cpp">
       <Filter>source\draw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resource\textureResourceManager.cpp">
+      <Filter>source\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

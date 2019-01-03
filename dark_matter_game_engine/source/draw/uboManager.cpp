@@ -66,7 +66,7 @@ void UBOManager::UpdateUniformBufferObject()
 	// define the range of the buffer that links to a uniform binding point
 	glBindBufferRange(GL_UNIFORM_BUFFER, 0, _uboBufferId, 0, sizeof(Mat4));
 
-	//store mview-projection matrix
+	//store view-projection matrix
 	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Mat4), &_uboParams.projView);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);

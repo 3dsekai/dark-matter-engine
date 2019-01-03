@@ -164,5 +164,5 @@ void Plane::Delete()
 //*************************************************************************
 void Plane::SetTexture(const char* texName)
 {
-	_renderer->SetTextureMesh(texName);
+	_renderer->Set2DTextureMesh(texName);
 }
