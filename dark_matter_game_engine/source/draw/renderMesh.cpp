@@ -45,9 +45,6 @@
 //*************************************************************************
 void RenderMesh::InitMesh(const float* vertices, const int* indices)
 {
-	//do depth comparisons and update the z-buffer
-	glEnable(GL_DEPTH_TEST);
-
 	//generate a vertex array object
 	glGenVertexArrays(1, &_mParams.VAO);
 

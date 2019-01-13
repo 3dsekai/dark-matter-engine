@@ -37,6 +37,7 @@
 #include "../draw/drawUtil.h"
 #include "../draw/uboManager.h"
 #include "../define/shader_define.h"
+#include "../math_lib/vec3.h"
 
 //*************************************************************************
 // static member definitions
@@ -147,8 +148,9 @@ void GameMain::Update()
 //*************************************************************************
 void GameMain::Draw()
 {
-	//get the projection-view matrix for this frame. store it in the UBO.
-	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*_cam);
+	//store global values in the UBO.
+	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*_cam);//get the projection-view matrix for this frame
+	UBOManager::_uboParams.ambientLight = Vec3(1.0f, 1.0f, 1.0f);//set the global ambient light
 
 	//set uniform buffer objects
 	UBOManager::UpdateUniformBufferObject();

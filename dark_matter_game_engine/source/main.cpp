@@ -202,6 +202,9 @@ void updateGame()
 //*************************************************************************
 void renderGame()
 {
+	//do depth comparisons and update the z-buffer
+	glEnable(GL_DEPTH_TEST);
+
 	//clear the color buffer/depth buffer, and make the background grey
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

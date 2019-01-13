@@ -31,7 +31,8 @@
 //*************************************************************************
 // input/output variables
 //*************************************************************************
-out vec4 outputColor;
+in vec3 ambCol; //ambient color
+out vec4 color; //output color
 
 //*************************************************************************
 // Uniforms
@@ -43,5 +44,7 @@ uniform vec4 meshColor;
 //*************************************************************************
 void main()
 {
-	outputColor = meshColor;
+	//get the output color
+	float ambLightStren = 0.3f;
+	color = ambLightStren * vec4(ambCol,1.0) * meshColor;
 }

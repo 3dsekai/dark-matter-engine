@@ -100,7 +100,7 @@ void MultBoxes::Init()
 					  Vec3(0.0f, 0.0f, 0.0f),
 					  Vec3(1.0, 1.0f, 1.0f),
 					  Quat(0.0f, 0.0f, 0.0f, 1.0f),
-					  Vec4(0.5f, 0.5f, 0.7f, 1.0f));
+					  Vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
 	//init plane
 	_plane->SetPosition(Vec3(1.0f, 8.0f, 0.0f));

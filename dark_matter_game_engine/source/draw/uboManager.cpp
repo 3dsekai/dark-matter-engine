@@ -50,7 +50,7 @@ void UBOManager::InitUniformBufferObject()
 	//create the buffer
 	glGenBuffers(1, &_uboBufferId);
 	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(UBOParams), NULL, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER,UBOPARAMS_SIZE, NULL, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 }
@@ -64,11 +64,16 @@ void UBOManager::InitUniformBufferObject()
 void UBOManager::UpdateUniformBufferObject()
 {
 	// define the range of the buffer that links to a uniform binding point
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, _uboBufferId, 0, sizeof(Mat4));
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, _uboBufferId, 0, UBOPARAMS_SIZE);
 
 	//store view-projection matrix
 	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Mat4), &_uboParams.projView);
+	glBufferSubData(GL_UNIFORM_BUFFER, AO_NONE, BA_MAT4, &_uboParams.projView);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	//store the ambient light
+	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
+	glBufferSubData(GL_UNIFORM_BUFFER, AO_MAT4, BA_VEC3, &_uboParams.ambientLight);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

@@ -35,13 +35,15 @@ layout (location = 0) in vec3 attrPos;
 layout (location = 1) in vec2 attrTex;
 
 out vec2 texCoord;
+out vec3 ambCol;
 
 //*************************************************************************
 // Uniform Buffer Objects
 //*************************************************************************
 layout (std140) uniform UBOParams
 {
-	mat4 projView;
+	mat4 projView; //world matrix
+	vec3 ambientLight; //ambient light color
 };
 
 //*************************************************************************
@@ -54,6 +56,7 @@ uniform mat4 model;
 //*************************************************************************
 void main()
 {
-	gl_Position = projView * model * vec4(attrPos, 1.0);
-	texCoord = attrTex;
+	gl_Position = projView * model * vec4(attrPos, 1.0);//calculate position
+	texCoord = attrTex; //pass the texture coordinates
+	ambCol = ambientLight;//pass the ambient light color
 }

@@ -29,7 +29,29 @@
 #define _UBOMANAGER_H_
 
 #include "../math_lib/mat4.h"
-class Camera;
+#include "../math_lib/vec3.h"
+
+//*************************************************************************
+// macros
+//*************************************************************************
+/*
+
+    size of the UBOParams struct
+
+                          //base alignment    //aligned offset
+    Mat4 projView;        16                  0    (column 0)
+                          16                  16   (column 1)
+                          16                  32   (column 2)
+                          16                  48   (column 3)
+
+    Vec3 ambientLight;    16                  64
+
+              total size: 80
+
+
+*/
+//#define UBOPARAMS_SIZE (sizeof(Mat4)*sizeof(Vec3))
+#define UBOPARAMS_SIZE (80)
 //*************************************************************************
 // Class
 //*************************************************************************
@@ -39,7 +61,29 @@ private:
 //uniform buffer object parameters
 struct UBOParams
 {
-	Mat4 projView;
+	Mat4 projView;//world matrix store
+	Vec3 ambientLight;//global ambient light color
+};
+//the size (base alignment) of various components
+//according to the std140 layout specifications
+enum BASE_ALIGNMENT
+{
+	BA_FLOAT = sizeof(float),
+	BA_VEC3  = sizeof(float)*4,
+	BA_VEC4  = sizeof(float)*4,
+	BA_MAT3  = sizeof(float)*12,
+	BA_MAT4  = sizeof(float)*16,
+};
+//the offset necessary to order components
+//according to the std140 layout specifications
+enum ALIGNED_OFFSET
+{
+	AO_NONE  = 0,
+	AO_FLOAT = sizeof(float),
+	AO_VEC3  = sizeof(float)*4,
+	AO_VEC4  = sizeof(float)*4,
+	AO_MAT3  = sizeof(float)*12,
+	AO_MAT4  = sizeof(float)*16,
 };
 
 public:

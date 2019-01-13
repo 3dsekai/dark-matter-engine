@@ -31,19 +31,25 @@
 //*************************************************************************
 // input/output variables
 //*************************************************************************
-in vec2 texCoord;
-out vec4 color;
+in vec2 texCoord; //texture coordinates
+in vec3 ambCol; //ambient color
+out vec4 color; //output color
 
 //*************************************************************************
 // Uniforms
 //*************************************************************************
-uniform sampler2D texture;
-uniform vec4 meshColor;
+uniform sampler2D texture; //texture data
+uniform vec4 meshColor; //mesh base color
 
 //*************************************************************************
 // Shader Function
 //*************************************************************************
 void main()
 {
-	color = texture(texture, texCoord) * meshColor;
+	//get the output color
+	float ambLightStren = 0.3f;
+	vec4 outCol = ambLightStren * vec4(ambCol,1.0) * meshColor;
+
+	//add texture to output
+	color = texture(texture, texCoord) * outCol;
 }
