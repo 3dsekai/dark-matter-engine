@@ -31,6 +31,7 @@
 //*************************************************************************
 #include <string.h>
 #include "mat3.h"
+#include "mat4.h"
 #include "mathUtil.h"
 
 //*************************************************************************
@@ -152,4 +153,22 @@ Mat3 Mat3::GetInverse()
 	}
 	inverse.Transpose(); //get the transpose of the adjoint matrix
 	return inverse * (1 / det); //inverse = adj M / det M
+}
+
+//get the matrix normal
+Mat3 Mat3::GetMatrixNormal()
+{
+	//matrix normal: the transpose of the inverse of a matrix
+	return (*this).GetInverse().Transpose();
+}
+
+//convert mat4 to mat3
+Mat3 Mat3::Mat4ToMat3(const Mat4& m)
+{
+	return
+	{
+		m.elem[0], m.elem[1], m.elem[2],
+		m.elem[4], m.elem[5], m.elem[6],
+		m.elem[8], m.elem[9], m.elem[10]
+	};
 }

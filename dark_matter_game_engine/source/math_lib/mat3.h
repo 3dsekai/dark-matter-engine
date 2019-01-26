@@ -29,6 +29,11 @@
 #define _MAT3_H_
 
 //*************************************************************************
+// includes
+//*************************************************************************
+class Mat4;
+
+//*************************************************************************
 // macros 
 //*************************************************************************
 #define MAT3_SIZE (3)
@@ -57,6 +62,8 @@ public:
 	Mat3& Transpose();
 	float GetDeterminant();
 	Mat3 GetInverse();
+	Mat3 GetMatrixNormal();
+	static Mat3 Mat4ToMat3(const Mat4& m);
 
 	//identity matrix
 	static Mat3 Identity()

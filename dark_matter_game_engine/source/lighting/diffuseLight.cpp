@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Shader: Textured Mesh Vertex Shader
-// Source File: [tex_mesh.vert]
+// Class Name: DiffuseLight
+// Source File: [diffuseLight.cpp]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,44 +25,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-
-#version 330 core
-
+//
 //*************************************************************************
-// input/output variables
+// Includes
 //*************************************************************************
-layout (location = 0) in vec3 attrPos;
-layout (location = 1) in vec2 attrTex;
-layout (location = 2) in vec3 attrNormal;
-
-out vec2 texCoord; //texture coordinates
-out vec4 ambientCol; //the ambient light
-out vec3 pixelPos; //position of the fragment
-out vec3 normal; //vertex normal
-
+//#include "diffuseLight.h"
+//
 //*************************************************************************
-// Uniform Buffer Objects
+// Class: DiffuseLight
+// Function Name: DiffuseLight
+// Argument{s}: -
+// Explanation: DiffuseLight constructor
 //*************************************************************************
-layout (std140) uniform UBOParams
-{
-	mat4 projView; //world matrix
-	vec4 ambientLight; //ambient light color
-};
-
-//*************************************************************************
-// Uniforms
-//*************************************************************************
-uniform mat4 model; //model matrix
-uniform mat3 normModelMat; //normalized model matrix to avoid scaling issues with light
-
-//*************************************************************************
-// Shader Function
-//*************************************************************************
-void main()
-{
-	gl_Position = projView * model * vec4(attrPos, 1.0);//calculate position
-	texCoord = attrTex; //pass the texture coordinates
-	ambientCol = ambientLight;//pass the ambient light color
-	pixelPos = vec3(model * vec4(attrPos, 1.0));
-	normal = normModelMat * attrNormal; //calculate the vertex normal
-}
+//DiffuseLight::DiffuseLight(const char* shaderName,
+//						   const Vec3& pos,
+//						   const Vec3& scale,
+//						   const Quat& rot,
+//						   const Vec4& color) :
+//			  LightBase(shaderName, pos, scale, rot, color /*0*/)
+//{
+//	Init();
+//}
+//
+////*************************************************************************
+//// Class: DiffuseLight
+//// Function Name: ~DiffuseLight
+//// Argument{s}: -
+//// Explanation: Ambient light destructor
+////*************************************************************************
+//DiffuseLight::~DiffuseLight()
+//{
+//}

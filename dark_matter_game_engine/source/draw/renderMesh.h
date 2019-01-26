@@ -34,8 +34,9 @@
 #include <vector>
 #include <GL/glew.h>
 #include "../math_lib/vec4.h"
-#include "../math_lib/mat4.h"
 
+class Vec4;
+class Mat4;
 
 //*************************************************************************
 // Class

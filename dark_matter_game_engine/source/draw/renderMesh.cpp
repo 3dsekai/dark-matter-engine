@@ -33,6 +33,8 @@
 #include "renderMesh.h"
 #include "shaderManager.h"
 #include "shader.h"
+#include "../math_lib/mat3.h"
+#include "../math_lib/mat4.h"
 #include "../resource/textureResourceManager.h"
 
 //*************************************************************************
@@ -107,6 +109,17 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		shader->UseProgram();
 		shader->SetUniformVec4(_mParams.color, "meshColor");
 		shader->SetUniformMat4(model, "model");
+		
+		//get matrix normal		
+		Mat4 norm = model;
+		norm = norm.GetMatrixNormal();
+		shader->SetUniformMat3(Mat3::Mat4ToMat3(norm), "normModelMat");
+
+		//diffuse light pos
+		shader->SetUniformVec3(Vec3(10.0f, 0.0f, 0.0f), "difLightPos");
+
+		//diffuse light color
+		shader->SetUniformVec3(Vec3(1.0f, 1.0f, 1.0f), "difLightColor");
 	}
 	else
 	{

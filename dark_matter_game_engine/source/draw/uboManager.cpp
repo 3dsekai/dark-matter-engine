@@ -73,7 +73,7 @@ void UBOManager::UpdateUniformBufferObject()
 
 	//store the ambient light
 	glBindBuffer(GL_UNIFORM_BUFFER, _uboBufferId);
-	glBufferSubData(GL_UNIFORM_BUFFER, AO_MAT4, BA_VEC3, &_uboParams.ambientLight);
+	glBufferSubData(GL_UNIFORM_BUFFER, AO_MAT4, BA_VEC4, &_uboParams.ambientLight);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

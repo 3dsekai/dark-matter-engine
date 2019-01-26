@@ -25,6 +25,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
+#ifndef _MULT_BOXES_H_
+#define _MULT_BOXES_H_
 
 //*************************************************************************
 // Includes
@@ -64,3 +66,5 @@ private:
 	Vec3 _pos;
 	Vec3 _rot;
 };
+
+#endif

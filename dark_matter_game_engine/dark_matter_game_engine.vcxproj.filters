@@ -53,6 +53,9 @@
     <Filter Include="source\resource">
       <UniqueIdentifier>{ef25a6d7-e13f-4b86-988c-1920ebb64550}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\lighting">
+      <UniqueIdentifier>{8cd9d450-983d-410e-aa9e-aefe62326817}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h">
@@ -151,6 +154,15 @@
     <ClInclude Include="source\resource\textureResourceManager.h">
       <Filter>source\resource</Filter>
     </ClInclude>
+    <ClInclude Include="source\lighting\lightBase.h">
+      <Filter>source\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lighting\diffuseLight.h">
+      <Filter>source\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_object\objects\lamp.h">
+      <Filter>source\game_object\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -221,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="source\resource\textureResourceManager.cpp">
       <Filter>source\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\objects\lamp.cpp">
+      <Filter>source\game_object\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

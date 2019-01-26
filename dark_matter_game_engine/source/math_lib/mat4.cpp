@@ -154,6 +154,13 @@ Mat4 Mat4::GetInverse()
 	return inverse * (1 / det); //inverse = adj M / det M
 }
 
+//get the matrix normal
+Mat4 Mat4::GetMatrixNormal()
+{
+	//matrix normal: the transpose of the inverse of a matrix
+	return (*this).GetInverse().Transpose();
+}
+
 //generate translation matrix
 Mat4 Mat4::Translate(const Vec3& vec)
 {
@@ -261,4 +268,16 @@ Mat4 Mat4::LookAt(const Vec3& eye, const Vec3& center, const Vec3& up)
 
 	//get the look at matrix;
 	return (*this * look_at * eye_pos);
+}
+
+//convert mat3 to mat4
+Mat4 Mat4::Mat3ToMat4(const Mat3& m)
+{
+	return
+	{
+		m.elem[0], m.elem[1], m.elem[2],  1.0f,
+		m.elem[4], m.elem[5], m.elem[6],  1.0f,
+		m.elem[8], m.elem[9], m.elem[10], 1.0f,
+		1.0f,      1.0f,      1.0f,       1.0f
+	};
 }

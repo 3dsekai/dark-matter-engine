@@ -30,7 +30,8 @@
 
 enum CREATE_ID
 {
-	CREATE_OBJ_ID_BOXES = 0,
+	CREATE_OBJ_ID_BOXES = 0, //three colored boxes
+	CREATE_OBJ_ID_LAMP, //diffuse light lamp
 	CREATE_OBJ_ID_NUM
 };
 

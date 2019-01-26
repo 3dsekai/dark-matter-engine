@@ -33,6 +33,7 @@
 #include "vec3.h"
 
 class Quat;
+class Mat3;
 
 //*************************************************************************
 // macros 
@@ -66,6 +67,7 @@ public:
 	Mat4& Transpose();
 	float GetDeterminant();
 	Mat4 GetInverse();
+	Mat4 GetMatrixNormal();
 	Mat4 Translate(const Vec3& vec);
 	Mat4 Scale(const Vec3& vec);
 	Mat4 Rotate(const Vec3& vec);
@@ -75,6 +77,7 @@ public:
 	Mat4 RotateZAxis(const float rad);
 	Mat4 Perspective(const float fovy, const float aspect, const float zNear, const float zFar);
 	Mat4 LookAt(const Vec3& eye, const Vec3& center, const Vec3& up);
+	static Mat4 Mat3ToMat4(const Mat3& m);
 
 	//identity matrix
 	static Mat4 Identity()

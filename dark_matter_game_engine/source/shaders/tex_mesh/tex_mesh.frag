@@ -32,24 +32,55 @@
 // input/output variables
 //*************************************************************************
 in vec2 texCoord; //texture coordinates
-in vec3 ambCol; //ambient color
+in vec4 ambientCol; //ambient color
+in vec3 normal; //fragment normal vector
+in vec3 pixelPos; //the position of this fragment (pixel)
 out vec4 color; //output color
 
 //*************************************************************************
 // Uniforms
 //*************************************************************************
 uniform sampler2D texture; //texture data
-uniform vec4 meshColor; //mesh base color
+uniform vec4 meshColor; //mesh color
+uniform vec3 difLightPos; //diffuse light position
+uniform vec3 difLightColor; //diffuse light color
 
 //*************************************************************************
-// Shader Function
+// Shader Program
 //*************************************************************************
 void main()
 {
-	//get the output color
-	float ambLightStren = 0.3f;
-	vec4 outCol = ambLightStren * vec4(ambCol,1.0) * meshColor;
+	//////////////////////////////////////////////
+	//ambient light
+	//////////////////////////////////////////////
 
-	//add texture to output
-	color = texture(texture, texCoord) * outCol;
+	//strength of the ambient light
+	float ambientStrength = ambientCol.w;
+	//calculate the ambient light (color of light * strength of light)
+	vec4 ambient = vec4(ambientCol.x * ambientStrength,
+						ambientCol.y * ambientStrength,
+						ambientCol.z * ambientStrength,
+						1.0);
+
+	//////////////////////////////////////////////
+	//diffuse light
+	//////////////////////////////////////////////
+
+	//normalize the fragment's normal
+	vec3 norm = normalize(normal);
+
+	//get the direction of the fragment to the light
+	vec3 dir = normalize(difLightPos - pixelPos);
+
+	//get the dot product of cosine angle between frag normal and light.
+	//calculates the "strength" of the light on this fragment.
+	float strength = max(dot(norm, dir), 0.0);
+
+	//calculate diffuse light (color of light * strength of light)
+	vec3 diffuse = difLightColor * strength;
+
+	//////////////////////////////////////////////
+	//output color
+	//////////////////////////////////////////////
+	color = texture(texture, texCoord) * (ambient + diffuse) * meshColor;
 }

@@ -29,7 +29,7 @@
 #define _UBOMANAGER_H_
 
 #include "../math_lib/mat4.h"
-#include "../math_lib/vec3.h"
+#include "../math_lib/vec4.h"
 
 //*************************************************************************
 // macros
@@ -44,13 +44,13 @@
                           16                  32   (column 2)
                           16                  48   (column 3)
 
-    Vec3 ambientLight;    16                  64
+    Vec4 ambientLight;    16                  64
 
               total size: 80
 
 
 */
-//#define UBOPARAMS_SIZE (sizeof(Mat4)*sizeof(Vec3))
+//#define UBOPARAMS_SIZE (sizeof(Mat4)*sizeof(Vec4))
 #define UBOPARAMS_SIZE (80)
 //*************************************************************************
 // Class
@@ -62,7 +62,7 @@ private:
 struct UBOParams
 {
 	Mat4 projView;//world matrix store
-	Vec3 ambientLight;//global ambient light color
+	Vec4 ambientLight;//global ambient light color
 };
 //the size (base alignment) of various components
 //according to the std140 layout specifications

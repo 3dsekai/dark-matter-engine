@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Shader: Textured Mesh Vertex Shader
-// Source File: [tex_mesh.vert]
+// Class Name: LightBase
+// Source File: [lightBase.h]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2018, 2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,44 +25,40 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-
-#version 330 core
-
-//*************************************************************************
-// input/output variables
-//*************************************************************************
-layout (location = 0) in vec3 attrPos;
-layout (location = 1) in vec2 attrTex;
-layout (location = 2) in vec3 attrNormal;
-
-out vec2 texCoord; //texture coordinates
-out vec4 ambientCol; //the ambient light
-out vec3 pixelPos; //position of the fragment
-out vec3 normal; //vertex normal
+#ifndef _LIGHT_BASE_H_
+#define _LIGHT_BASE_H_
 
 //*************************************************************************
-// Uniform Buffer Objects
+// Includes
 //*************************************************************************
-layout (std140) uniform UBOParams
+#include "../math_lib/vec3.h"
+
+//*************************************************************************
+// LightBase Class
+//*************************************************************************
+class LightBase
 {
-	mat4 projView; //world matrix
-	vec4 ambientLight; //ambient light color
+public:
+	LightBase() = default;
+	~LightBase() = default;
+
+protected:
+	LightBase(const Vec3& pos,const Vec3& color) :
+		_pos(pos),
+		_color(color)
+	{
+	};
+
+public:
+	void SetPosition(const Vec3& pos) {_pos = pos;};
+	const Vec3 GetPosition() const {_pos;};
+
+	void SetColor(const Vec3& col) {_color = col;};
+	const Vec3 GetColor() const {_color;};
+
+private:
+	Vec3 _pos;
+	Vec3 _color;
 };
 
-//*************************************************************************
-// Uniforms
-//*************************************************************************
-uniform mat4 model; //model matrix
-uniform mat3 normModelMat; //normalized model matrix to avoid scaling issues with light
-
-//*************************************************************************
-// Shader Function
-//*************************************************************************
-void main()
-{
-	gl_Position = projView * model * vec4(attrPos, 1.0);//calculate position
-	texCoord = attrTex; //pass the texture coordinates
-	ambientCol = ambientLight;//pass the ambient light color
-	pixelPos = vec3(model * vec4(attrPos, 1.0));
-	normal = normModelMat * attrNormal; //calculate the vertex normal
-}
+#endif

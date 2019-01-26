@@ -5,7 +5,7 @@
 // Source File: [solid_mesh.vert]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2018, 2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -32,8 +32,11 @@
 // input/output variables
 //*************************************************************************
 layout (location = 0) in vec3 attrPos;
+layout (location = 2) in vec3 attrNormal;
 
-out vec3 ambCol;
+out vec4 ambientCol; //the ambient light
+out vec3 pixelPos; //position of the fragment
+out vec3 normal; //vertex normal
 
 //*************************************************************************
 // Uniform Buffer Objects
@@ -41,13 +44,14 @@ out vec3 ambCol;
 layout (std140) uniform UBOParams
 {
 	mat4 projView; //world matrix
-	vec3 ambientLight; //ambient light color
+	vec4 ambientLight; //ambient light color
 };
 
 //*************************************************************************
 // Uniforms
 //*************************************************************************
-uniform mat4 model;
+uniform mat4 model; //model matrix
+uniform mat3 normModelMat; //normalized model matrix to avoid scaling issues with light
 
 //*************************************************************************
 // Shader Function
@@ -55,5 +59,7 @@ uniform mat4 model;
 void main()
 {
 	gl_Position = projView * model * vec4(attrPos, 1.0);//calculate position
-	ambCol = ambientLight;//pass the ambient light color
+	ambientCol = ambientLight;//pass the ambient light color
+	pixelPos = vec3(model * vec4(attrPos, 1.0));
+	normal = normModelMat * attrNormal; //calculate the vertex normal
 }
