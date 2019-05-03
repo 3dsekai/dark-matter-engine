@@ -144,7 +144,7 @@ Mat3 Mat3::GetInverse()
 		{
 			//get the submatrix of this object's matrix
 			float submat[4];
-			MathUtil::GetSubMatrix(this->elem, submat, row, col, MAT3_SIZE);
+			MathUtil::GetMinor(this->elem, submat, row, col, MAT3_SIZE);
 
 			//get the cofactor of the submatrix
 			sign = ((row + col) % 2 == 0) ? 1 : -1;//change the sign to match the cofactor sign order

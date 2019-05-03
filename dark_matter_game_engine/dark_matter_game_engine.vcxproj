@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp" />
+    <ClCompile Include="source\draw\drawUtil.cpp" />
     <ClCompile Include="source\draw\renderMesh.cpp" />
     <ClCompile Include="source\draw\shader.cpp" />
     <ClCompile Include="source\draw\shaderManager.cpp" />

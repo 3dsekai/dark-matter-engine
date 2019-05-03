@@ -32,6 +32,7 @@
 #include <math.h>
 #include <string.h>
 #include "mathUtil.h"
+#include <array>
 
 //*************************************************************************
 // Math Utility Functions
@@ -57,7 +58,7 @@ namespace MathUtil
 	}
 
 	//get the minor matrix from a base matrix for determinant calculation
-	void GetSubMatrix(const float mat[], float submat[], int r, int c, int dim)
+	void GetMinor(const float mat[], float submat[], int r, int c, int dim)
 	{
 		int i = -1;
 		for (int col = 0; col < dim; col++)
@@ -80,21 +81,18 @@ namespace MathUtil
 			return mat[0] * mat[3] - mat[1] * mat[2];
 		}
 
-		float det = 0;
+		float det = 0.0f;
 		int sign = 1;
-		int submat_size = (dimension - 1) * (dimension - 1);
+//		const int size = (dimension - 1) * (dimension - 1);
 		for (int col = 0; col < dimension; col++)
 		{
 			//get the submatrix (for calculating the cofactor)
-			float *submat = new float[submat_size];
-			GetSubMatrix(mat, submat, 0, col, dimension);
+			float submat[16];
+			GetMinor(mat, submat, 0, col, dimension);
 
 			//calculate the cofactor for the current column in the matrix 
 			det += sign * mat[col] * GetDeterminant(submat, dimension - 1);
 			sign = -sign;
-
-			delete[] submat;
-			submat = nullptr;
 		}
 		return det;
 	}

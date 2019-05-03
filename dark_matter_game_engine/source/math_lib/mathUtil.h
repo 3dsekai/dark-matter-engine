@@ -46,7 +46,7 @@ namespace MathUtil
 	float Clamp(float val, float upper, float lower);
 	float Deg2Rad(float deg);
 	float Rad2Deg(float rad);
-	void GetSubMatrix(const float mat[], float submat[], int r, int c, int dim);
+	void GetMinor(const float mat[], float submat[], int r, int c, int dim);
 	float GetDeterminant(const float mat[], int dimension);
 }
 #endif
