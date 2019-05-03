@@ -30,8 +30,7 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "vec3.h"
-
+class Vec3;
 class Quat;
 class Mat3;
 
@@ -80,78 +79,17 @@ public:
 	static Mat4 Mat3ToMat4(const Mat3& m);
 
 	//identity matrix
-	static Mat4 Identity()
-	{
-		return
-		{
-			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		};
-	};
-
+	static Mat4 Identity();
 	//translation
-	static Mat4 TranslateMat(const Vec3& vec)
-	{
-		return
-		{
-			1.0f,  0.0f,  0.0f,  0.0f,
-			0.0f,  1.0f,  0.0f,  0.0f,
-			0.0f,  0.0f,  1.0f,  0.0f,
-			vec.x, vec.y, vec.z, 1.0f
-		};
-	};
+	static Mat4 TranslateMat(const Vec3& vec);
 	//scaling
-	static Mat4 ScaleMat(const Vec3& vec)
-	{
-		return
-		{
-			vec.x, 0.0f,  0.0f,  0.0f,
-			0.0f,  vec.y, 0.0f,  0.0f,
-			0.0f,  0.0f,  vec.z, 0.0f,
-			0.0f,  0.0f,  0.0f,  1.0f
-		};
-	};
+	static Mat4 ScaleMat(const Vec3& vec);
 	//rotation: X
-	static Mat4 RotXMat(const float rad)
-	{
-		float cosAng = cosf(rad);
-		float sinAng = sinf(rad);
-		return
-		{
-			1.0f,  0.0f,   0.0f,   0.0f,
-			0.0f,  cosAng, sinAng, 0.0f,
-			0.0f, -sinAng, cosAng, 0.0f,
-			0.0f,  0.0f,   0.0f,   1.0f
-		};
-	};
+	static Mat4 RotXMat(const float rad);
 	//rotation: Y
-	static Mat4 RotYMat(const float rad)
-	{
-		float cosAng = cosf(rad);
-		float sinAng = sinf(rad);
-		return
-		{
-			cosAng, 0.0f, -sinAng, 0.0f,
-			0.0f,   1.0f,  0.0f,   0.0f,
-			sinAng, 0.0f,  cosAng, 0.0f,
-			0.0f,   0.0f,  0.0f,   1.0f
-		};
-	};
+	static Mat4 RotYMat(const float rad);
 	//rotation: Z
-	static Mat4 RotZMat(const float rad)
-	{
-		float cosAng = cosf(rad);
-		float sinAng = sinf(rad);
-		return
-		{
-			 cosAng, sinAng, 0.0f, 0.0f,
-			-sinAng, cosAng, 0.0f, 0.0f,
-			 0.0f,   0.0f,   1.0f, 0.0f,
-			 0.0f,   0.0f,   0.0f, 1.0f
-		};
-	};
+	static Mat4 RotZMat(const float rad);
 
 public:
 	float elem[MAT4_ELEM_NUM];

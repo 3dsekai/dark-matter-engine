@@ -172,3 +172,14 @@ Mat3 Mat3::Mat4ToMat3(const Mat4& m)
 		m.elem[8], m.elem[9], m.elem[10]
 	};
 }
+
+//identity matrix
+Mat3 Mat3::Identity()
+{
+	return
+	{
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+	};
+}

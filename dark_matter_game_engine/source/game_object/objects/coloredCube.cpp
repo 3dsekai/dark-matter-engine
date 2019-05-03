@@ -38,6 +38,7 @@
 #include "../../input/keyboard.h"
 #include "../../input/mouse.h"
 #include "../../math_lib/mat4.h"
+#include "../../math_lib/mathUtil.h"
 #include "../../draw/shader.h"
 //*************************************************************************
 // constants definitions

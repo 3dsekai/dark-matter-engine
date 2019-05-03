@@ -35,8 +35,8 @@
 #include "shader.h"
 #include "../math_lib/mat3.h"
 #include "../math_lib/mat4.h"
+#include "../math_lib/vec3.h"
 #include "../resource/textureResourceManager.h"
-
 //*************************************************************************
 // Class: RenderMesh
 // Function Name: InitMesh

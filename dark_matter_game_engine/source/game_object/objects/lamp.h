@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Vec3
-// Source File: [vec3.h]
+// Class Name: Lamp
+// Source File: [lamp.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,61 +25,40 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _VEC3_H_
-#define _VEC3_H_
+#ifndef _LAMP_H_
+#define _LAMP_H_
+
 //*************************************************************************
 // Includes
 //*************************************************************************
-
-class Mat3;
-
+#include <vector>
+#include "../gameObjBase.h"
+#include "../../math_lib/vec3.h"
+class Cube;
+class DiffuseLight;
 //*************************************************************************
-// Class
+// Lamp Class
 //*************************************************************************
-class Vec3
+class Lamp : public GameObjBase
 {
 public:
+	Lamp();
+	~Lamp();
 
-	//constructors
-	Vec3();
-	Vec3(float X, float Y, float Z);
+	void Init() override;
+	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
+	void Draw() override;
+	void Release() override;
+	//set position
+	inline void SetPosition(const Vec3& pos) {_pos = pos;};
+	//set rotation
+	inline void SetRotation(const Vec3& rot) {_rot = rot;};
 
-	//operator overloads
-	Vec3 operator +(const Vec3& vec) const;
-	Vec3 operator -(const Vec3& vec) const;
-	Vec3 operator *(const Vec3& vec) const;
-	Vec3 operator /(const Vec3& vec) const;
-	Vec3 operator +(float scalar) const;
-	Vec3 operator -(float scalar) const;
-	Vec3 operator *(float scalar) const;
-	Vec3 operator /(float scalar) const;
-	Vec3 operator *(const Mat3& mat) const;
-	Vec3& operator =(const Vec3& vec);
-	bool operator ==(const Vec3& vec) const;
-	bool operator !=(const Vec3& vec) const;
-	Vec3& operator +=(const Vec3& vec);
-	Vec3& operator -=(const Vec3& vec);
-	Vec3& operator *=(const Vec3& vec);
-	Vec3& operator /=(const Vec3& vec);
-	Vec3& operator *=(const Mat3& mat);
-	Vec3 operator -();
-
-	//general purpose functions
-	float Length() const;
-	Vec3& Normalize();
-	Vec3 GetNormalizedVec() const;
-	float Dot(const Vec3& vec) const;
-	Vec3 Cross(const Vec3& vec) const;
-
-	//convert degrees to radians (for Vec3)
-	static Vec3 Deg2RadVec3(const Vec3& v);
-	//convert radians to degrees (for Vec3)
-	static Vec3 Rad2DegVec3(const Vec3& v);
-
-public:
-	float x;
-	float y;
-	float z;
+private:
+	Cube* _lamp;
+	DiffuseLight* _light;
+	Vec3 _pos;
+	Vec3 _rot;
 };
 
 #endif

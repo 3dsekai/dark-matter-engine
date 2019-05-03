@@ -72,6 +72,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math_lib\mat3.cpp" />
     <ClCompile Include="source\math_lib\mat4.cpp" />
+    <ClCompile Include="source\math_lib\mathUtil.cpp" />
     <ClCompile Include="source\math_lib\quat.cpp" />
     <ClCompile Include="source\math_lib\vec2.cpp" />
     <ClCompile Include="source\math_lib\vec3.cpp" />

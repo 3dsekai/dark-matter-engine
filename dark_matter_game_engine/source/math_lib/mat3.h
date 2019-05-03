@@ -66,15 +66,7 @@ public:
 	static Mat3 Mat4ToMat3(const Mat4& m);
 
 	//identity matrix
-	static Mat3 Identity()
-	{
-		return
-		{
-			1.0f, 0.0f, 0.0f, 
-			0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 
-		};
-	};
+	static Mat3 Identity();
 
 public:
 	float elem[MAT3_ELEM_NUM];

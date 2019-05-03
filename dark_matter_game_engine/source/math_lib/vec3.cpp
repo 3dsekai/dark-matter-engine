@@ -32,6 +32,7 @@
 #include <math.h>
 #include "vec3.h"
 #include "mat3.h"
+#include "mathUtil.h"
 
 //*************************************************************************
 // Functions
@@ -245,3 +246,18 @@ Vec3 Vec3::Cross(const Vec3& vec) const
 				this->z * vec.x - this->x * vec.z,
 				this->x * vec.y - this->y * vec.x);
 }
+
+//convert degrees to radians (for Vec3)
+Vec3 Vec3::Deg2RadVec3(const Vec3& v)
+{
+	return Vec3(v.x * (PI / 180.0f),
+		v.y * (PI / 180.0f),
+		v.z * (PI / 180.0f));
+};
+//convert radians to degrees (for Vec3)
+Vec3 Vec3::Rad2DegVec3(const Vec3& v)
+{
+	return (Vec3(v.x * (180.0f / PI),
+		v.y * (180.0f / PI),
+		v.z * (180.0f / PI)));
+};
