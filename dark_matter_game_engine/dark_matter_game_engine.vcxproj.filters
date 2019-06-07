@@ -163,6 +163,9 @@
     <ClInclude Include="source\game_object\objects\lamp.h">
       <Filter>source\game_object\objects</Filter>
     </ClInclude>
+    <ClInclude Include="source\game_object\objects\floor.h">
+      <Filter>source\game_object\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="source\draw\drawUtil.cpp">
       <Filter>source\draw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\objects\floor.cpp">
+      <Filter>source\game_object\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

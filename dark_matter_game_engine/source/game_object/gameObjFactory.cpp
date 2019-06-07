@@ -31,6 +31,7 @@
 //*************************************************************************
 #include "gameObjFactory.h"
 #include "objects/multBoxes.h"
+#include "objects/floor.h"
 #include "objects/lamp.h"
 
 //*************************************************************************
@@ -46,6 +47,9 @@ GameObjBase* GameObjFactory::GenerateGameObject(CREATE_ID id)
 	{
 	case CREATE_OBJ_ID_BOXES:
 		return new MultBoxes;
+		break;
+	case CREATE_OBJ_ID_FLOOR:
+		return new Floor;
 		break;
 	case CREATE_OBJ_ID_LAMP:
 		return new Lamp;

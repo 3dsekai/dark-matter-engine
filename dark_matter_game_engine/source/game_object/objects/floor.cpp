@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: MultBoxes
-// Source File: [multBoxes.cpp]
+// Class Name: Floor
+// Source File: [floor.cpp]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -29,107 +29,86 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "multBoxes.h"
+#include "floor.h"
 #include "../../define/shader_define.h"
-#include "../../meshes/cube.h"
+#include "../../meshes/plane.h"
 #include "../../define/texture_define.h"
 
 //*************************************************************************
-// Class: MultiBoxes
-// Function Name: MulBoxes
+// Class: Floor
+// Function Name: Floor
 // Argument{s}: -
-// Explanation: MultBoxes constructor
+// Explanation: Floor constructor
 //*************************************************************************
-MultBoxes::MultBoxes()
+Floor::Floor() :
+	_plane(nullptr)
 {
 }
 
 //*************************************************************************
-// Class: MultiBoxes
-// Function Name: MulBoxes
+// Class: Floor
+// Function Name: Floor
 // Argument{s}: -
-// Explanation: MultBoxes destructor
+// Explanation: Floor destructor
 //*************************************************************************
-MultBoxes::~MultBoxes()
+Floor::~Floor()
 {
-	for (auto it = _cubes.begin(); it != _cubes.end(); it++)
-	{
-		delete *it;
-		(*it) = nullptr;
-	}
-	_cubes.clear();
+	delete _plane;
+	_plane = nullptr;
 }
 
 //*************************************************************************
-// Class: MultiBoxes
+// Class: Floor
 // Function Name: Init
 // Argument{s}: -
 // Explanation: initialize game object
 //*************************************************************************
-void MultBoxes::Init()
+void Floor::Init()
 {
-	//cube 1
-	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
-					 		  Vec3(0.0f, 0.0f, 0.0f),
-							  Vec3(1.0, 1.0f, 1.0f),
-							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
-							  Vec4(1.0f, 0.0f, 0.0f, 1.0f)));
-	//cube 2 
-	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
-					 		  Vec3(5.0f, 0.0f, 0.0f),
-							  Vec3(1.0, 1.0f, 1.0f),
-							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
-							  Vec4(0.0f, 1.0f, 0.0f, 1.0f)));
-	//cube 3
-	_cubes.push_back(new Cube(TEXTURE_MESH_SHADER_NAME,
-					 		  Vec3(2.5f, 5.0f, 0.0f),
-							  Vec3(1.0, 1.0f, 1.0f),
-							  Quat(0.0f, 0.0f, 0.0f, 1.0f),
-							  Vec4(0.0f, 0.0f, 1.0f, 1.0f)));
+	_plane = new Plane(SOLID_MESH_SHADER_NAME,
+					  Vec3(0.0f, 0.0f, 0.0f),
+					  Vec3(1.0, 1.0f, 1.0f),
+					  Quat(0.0f, 0.0f, 0.0f, 1.0f),
+					  Vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
-	for (auto it = _cubes.begin(); it != _cubes.end(); it++)
-	{
-		(*it)->SetTexture(BOX_TEXTURE);
-	}
+	//init plane
+	_plane->SetPosition(Vec3(1.0f, 8.0f, 0.0f));
+	_plane->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(90.0f, 0.0f, 0.0f))));
+	_plane->SetScale(Vec3(10.0f, 10.0f, 10.0f));
+
 }
 
 //*************************************************************************
-// Class: MultiBoxes
+// Class: Floor
 // Function Name: Update
 // Argument{s}: -
 // Explanation: update game object
 //*************************************************************************
-void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
+void Floor::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
-	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
-	{
-		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
-	}
-	_rot.x += 0.5f;
-	_rot.y += 0.5f;
 }
 
 //*************************************************************************
-// Class: MultiBoxes
+// Class: Floor
 // Function Name: Draw
 // Argument{s}: -
 // Explanation: draw game object
 //*************************************************************************
-void MultBoxes::Draw()
+void Floor::Draw()
 {
-	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
+	if(_plane != nullptr)
 	{
-		(*it)->Draw();
+		_plane->Draw();
 	}
 }
 
 //*************************************************************************
-// Class: MultiBoxes
+// Class: Floor
 // Function Name: Release
 // Argument{s}: -
 // Explanation: delete game object
 //*************************************************************************
-void MultBoxes::Release()
+void Floor::Release()
 {
 	_is_kill = true;
 }

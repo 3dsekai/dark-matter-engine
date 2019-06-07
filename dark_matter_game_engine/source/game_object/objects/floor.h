@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: MultBoxes
-// Source File: [multBoxes.h]
+// Class Name: Floor
+// Source File: [floor.h]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,8 +25,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _MULT_BOXES_H_
-#define _MULT_BOXES_H_
+#ifndef _FLOOR_H_
+#define _FLOOR_H_
 
 //*************************************************************************
 // Includes
@@ -34,15 +34,15 @@
 #include <vector>
 #include "../gameObjBase.h"
 #include "../../math_lib/vec3.h"
-class Cube;
+class Plane;
 //*************************************************************************
-// MultBoxes Class
+// Floor Class
 //*************************************************************************
-class MultBoxes : public GameObjBase
+class Floor : public GameObjBase
 {
 public:
-	MultBoxes();
-	~MultBoxes();
+	Floor();
+	~Floor();
 
 	void Init() override;
 	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
@@ -60,7 +60,7 @@ public:
 	};
 
 private:
-	std::vector<Cube*> _cubes;
+	Plane* _plane;
 	Vec3 _pos;
 	Vec3 _rot;
 };

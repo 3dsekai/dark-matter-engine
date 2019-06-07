@@ -34,6 +34,7 @@
     <ClInclude Include="source\game_object\gameObjFactory.h" />
     <ClInclude Include="source\game_object\gameObjMan.h" />
     <ClInclude Include="source\game_object\objects\coloredCube.h" />
+    <ClInclude Include="source\game_object\objects\floor.h" />
     <ClInclude Include="source\game_object\objects\lamp.h" />
     <ClInclude Include="source\game_object\objects\multBoxes.h" />
     <ClInclude Include="source\input\inputCodes.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="source\game_object\gameObjFactory.cpp" />
     <ClCompile Include="source\game_object\gameObjMan.cpp" />
     <ClCompile Include="source\game_object\objects\coloredCube.cpp" />
+    <ClCompile Include="source\game_object\objects\floor.cpp" />
     <ClCompile Include="source\game_object\objects\lamp.cpp" />
     <ClCompile Include="source\game_object\objects\multBoxes.cpp" />
     <ClCompile Include="source\input\keyboard.cpp" />

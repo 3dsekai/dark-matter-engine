@@ -31,6 +31,7 @@
 //*************************************************************************
 #include "gameObjMan.h"
 #include "objects/multBoxes.h"
+#include "objects/floor.h"
 #include "objects/lamp.h"
 
 //*************************************************************************
@@ -66,6 +67,7 @@ GameObjManager::~GameObjManager()
 void GameObjManager::Init()
 {
 	AddNewGameObject(new MultBoxes);
+	AddNewGameObject(new Floor);
 	AddNewGameObject(new Lamp);
 }
 
