@@ -62,7 +62,7 @@ private:
 template<class T>
 T* GameObjFactory::CreateGameObject(CREATE_ID id)
 {
-	auto obj = CreateGameObj(id);
+	auto obj = GenerateGameObject(id);
 	if (obj != nullptr)
 	{
 		GameMain::AddGameObject(obj);

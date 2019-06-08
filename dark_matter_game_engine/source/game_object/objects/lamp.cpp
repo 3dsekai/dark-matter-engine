@@ -40,7 +40,9 @@
 // Argument{s}: -
 // Explanation: Lamp constructor
 //*************************************************************************
-Lamp::Lamp()
+Lamp::Lamp() :
+	_lamp(nullptr),
+	_light(nullptr)
 {
 }
 
@@ -98,7 +100,10 @@ void Lamp::Update(const Mouse& mouse, const Keyboard& keyboard)
 //*************************************************************************
 void Lamp::Draw()
 {
-	_lamp->Draw();
+	if(_lamp != nullptr)
+	{
+		_lamp->Draw();
+	}
 }
 
 //*************************************************************************

@@ -1,0 +1,20 @@
+*************************************************
+
+Dark Matter Engine Developer Log
+
+author: Christopher Tall
+
+*************************************************
+
+
+
+=================================================
+
+6/8/2019 Log
+
+=================================================
+
+The "light flicker on rotating meshes bug" is being caused by the
+'normModelMat' uniform. The below vertex normal calculation is probably incorrect:
+
+normal = normModelMat * attrNormal; //calculate the vertex normal
