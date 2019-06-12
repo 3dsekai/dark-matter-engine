@@ -130,29 +130,13 @@ float Mat3::GetDeterminant()
 //inverse of the matrix, using classical adjoint method
 Mat3 Mat3::GetInverse()
 {
-	float det = GetDeterminant();
-	if ((unsigned int)det == 0)
-	{ //the matrix is singular - can't be inverted
-		return *this;
+	Mat3 inv;
+	bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT3_SIZE);
+	if (!res)
+	{ //inverse calculation failed
+		inv = Identity();
 	}
-
-	Mat3 inverse;
-	int sign = 1;
-	for (int col = 0; col < MAT3_SIZE; col++)
-	{
-		for (int row = 0; row < MAT3_SIZE; row++)
-		{
-			//get the submatrix of this object's matrix
-			float submat[4];
-			MathUtil::GetMinor(this->elem, submat, row, col, MAT3_SIZE);
-
-			//get the cofactor of the submatrix
-			sign = ((row + col) % 2 == 0) ? 1 : -1;//change the sign to match the cofactor sign order
-			inverse.elem[MAT3_SIZE * row + col] = sign * MathUtil::GetDeterminant(submat, MAT3_SIZE - 1);
-		}
-	}
-	inverse.Transpose(); //get the transpose of the adjoint matrix
-	return inverse * (1 / det); //inverse = adj M / det M
+	return inv;
 }
 
 //get the matrix normal

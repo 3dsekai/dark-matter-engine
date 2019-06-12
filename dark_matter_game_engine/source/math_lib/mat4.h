@@ -76,6 +76,8 @@ public:
 	Mat4 RotateZAxis(const float rad);
 	Mat4 Perspective(const float fovy, const float aspect, const float zNear, const float zFar);
 	Mat4 LookAt(const Vec3& eye, const Vec3& center, const Vec3& up);
+	Vec3 GetTranslation();
+
 	static Mat4 Mat3ToMat4(const Mat3& m);
 
 	//identity matrix

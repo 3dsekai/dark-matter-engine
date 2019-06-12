@@ -133,29 +133,13 @@ float Mat4::GetDeterminant()
 //inverse of the matrix, using classical adjoint method
 Mat4 Mat4::GetInverse()
 {
-	float det = GetDeterminant();
-	if ((int)det == 0)
-	{ //the matrix is singular - can't be inverted
-		return *this;
+	Mat4 inv;
+	bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT4_SIZE);
+	if (!res)
+	{ //inverse calculation failed
+		inv = Identity();
 	}
-
-	Mat4 inverse;
-	int sign = 1;
-	for (int col = 0; col < MAT4_SIZE; col++)
-	{
-		for (int row = 0; row < MAT4_SIZE; row++)
-		{
-			//get the submatrix of this object's matrix
-			float submat[9];
-			MathUtil::GetMinor(this->elem, submat, row, col, MAT4_SIZE);
-
-			//get the cofactor of the submatrix
-			sign = ((row + col) % 2 == 0) ? 1 : -1;//change the sign to match the cofactor sign order
-			inverse.elem[MAT4_SIZE * row + col] = sign * MathUtil::GetDeterminant(submat, MAT4_SIZE - 1);
-		}
-	}
-	inverse.Transpose(); //get the transpose of the adjoint matrix
-	return inverse * (1 / det); //inverse = adj M / det M
+	return inv;
 }
 
 //get the matrix normal
@@ -272,6 +256,12 @@ Mat4 Mat4::LookAt(const Vec3& eye, const Vec3& center, const Vec3& up)
 
 	//get the look at matrix;
 	return (*this * look_at * eye_pos);
+}
+
+//get translation
+Vec3 Mat4::GetTranslation()
+{
+	return Vec3(elem[12], elem[13], elem[14]);
 }
 
 //convert mat3 to mat4

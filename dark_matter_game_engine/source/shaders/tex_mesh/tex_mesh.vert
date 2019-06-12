@@ -65,4 +65,5 @@ void main()
 	ambientCol = ambientLight;//pass the ambient light color
 	pixelPos = vec3(model * vec4(attrPos, 1.0));
 	normal = normModelMat * attrNormal; //calculate the vertex normal
+//	normal = mat3(transpose(inverse(model))) * attrNormal;
 }

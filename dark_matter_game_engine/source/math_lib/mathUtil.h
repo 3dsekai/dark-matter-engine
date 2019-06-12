@@ -46,7 +46,9 @@ namespace MathUtil
 	float Clamp(float val, float upper, float lower);
 	float Deg2Rad(float deg);
 	float Rad2Deg(float rad);
-	void GetMinor(const float mat[], float submat[], int r, int c, int dim);
-	float GetDeterminant(const float mat[], int dimension);
+	void GetCofactor(float* m, float* submat, int r, int c, int d);
+	float GetDeterminant(float* m, int d);
+	void GetAdjoint(float* m, float* adj, int d);
+	bool GetInverse(float* m, float* inv, int d);
 }
 #endif

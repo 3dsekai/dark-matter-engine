@@ -18,3 +18,15 @@ The "light flicker on rotating meshes bug" is being caused by the
 'normModelMat' uniform. The below vertex normal calculation is probably incorrect:
 
 normal = normModelMat * attrNormal; //calculate the vertex normal
+
+
+=================================================
+
+6/9/2019 Log
+
+=================================================
+
+So, it looks like my "light flicker" problem is being caused by my
+matrix inverse algorithm churning out funky values.
+Back to the drawing board...
+Graphics Gems pg. 766 has a matrix inverse algo I could try using.
