@@ -63,14 +63,14 @@ namespace MathUtil
 // int r: row to exclude
 // int c: column to exclude
 // int d: matrix dimension
-void GetCofactor(float* m, float* subm, int r, int c, int d)
+void GetCofactor(float* m, float* subm, int row, int col, int d)
 {
 	int i = 0;
 	for (int r = 0; r < d; r++)
 	{
 		for (int c = 0; c < d; c++)
 		{
-			if (r != r && c != c)
+			if (r != row && c != col)
 			{
 				subm[i] = m[d * r + c];
 				i++;

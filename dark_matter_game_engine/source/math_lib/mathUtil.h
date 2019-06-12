@@ -46,7 +46,7 @@ namespace MathUtil
 	float Clamp(float val, float upper, float lower);
 	float Deg2Rad(float deg);
 	float Rad2Deg(float rad);
-	void GetCofactor(float* m, float* submat, int r, int c, int d);
+	void GetCofactor(float* m, float* submat, int row, int col, int d);
 	float GetDeterminant(float* m, int d);
 	void GetAdjoint(float* m, float* adj, int d);
 	bool GetInverse(float* m, float* inv, int d);
