@@ -93,13 +93,17 @@ void MultBoxes::Init()
 		(*it)->SetTexture(BOX_TEXTURE);
 	}
 
-//	Mat4 t = Mat4::TranslateMat(Vec3(5.0f, 0.0f, 0.0f));
-//	Mat4 r = Mat4::RotYMat(MathUtil::Deg2Rad(90.0f));
-//	Mat4 l = t * r;
-//
-//	auto it = _cubes.begin();
-//	(*it)->SetPosition(l.GetTranslation());
-//	(*it)->SetRotation(Quat::Mat2Quat(l));
+	//Mat4 t = Mat4::TranslateMat(Vec3(0.0f, 5.0f, 0.0f));
+	//Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(Vec3(45.0f, 45.0f, 0.0f)));
+	//Mat4 l = t * r;
+
+	//auto it = _cubes.begin();
+	//(*it)->SetPosition(l.GetTranslation());
+	//(*it)->SetRotation(Quat::Mat2Quat(l));
+
+	//Mat4 inv = l.GetInverse();
+	//(*it)->SetPosition(inv.GetTranslation());
+	//(*it)->SetRotation(Quat::Mat2Quat(inv));
 }
 
 //*************************************************************************
@@ -110,10 +114,10 @@ void MultBoxes::Init()
 //*************************************************************************
 void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
-	//for(auto it = _cubes.begin(); it != _cubes.end(); it++)
-	//{
-	//	(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
-	//}
+	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
+	{
+		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
+	}
 	_rot.x += 0.5f;
 	_rot.y += 0.5f;
 }

@@ -66,9 +66,9 @@ namespace MathUtil
 void GetCofactor(float* m, float* subm, int row, int col, int d)
 {
 	int i = 0;
-	for (int r = 0; r < d; r++)
+	for (int c = 0; c < d; c++)
 	{
-		for (int c = 0; c < d; c++)
+		for (int r = 0; r < d; r++)
 		{
 			if (r != row && c != col)
 			{
@@ -117,9 +117,9 @@ void GetAdjoint(float* m, float* adj, int d)
 
 	float subm[16];
 	int sign = 1;
-	for (int r = 0; r < d; r++)
+	for (int c = 0; c < d; c++)
 	{
-		for (int c = 0; c < d; c++)
+		for (int r = 0; r < d; r++)
 		{
 			//get the submatrix of this object's matrix
 			GetCofactor(m, subm, r, c, d);
@@ -151,9 +151,9 @@ bool GetInverse(float* m, float* inv, int d)
 	float adj[16];
 	GetAdjoint(m, adj, d);
 
-	for (int r = 0; r < d; r++)
+	for (int c = 0; c < d; c++)
 	{
-		for (int c = 0; c < d; c++)
+		for (int r = 0; r < d; r++)
 		{
 			//inverse = adj M / det M
 			inv[d * r + c] = adj[d * r + c] * (1/det);
