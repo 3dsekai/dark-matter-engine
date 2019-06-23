@@ -127,27 +127,44 @@ Mat4& Mat4::Transpose()
 //determinant
 float Mat4::GetDeterminant()
 {
-	return MathUtil::Det4x4(this->elem);
-	//return MathUtil::GetDeterminant(elem, MAT4_SIZE);
+	float det;
+	float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
+
+	a1 = elem[0];  b1 = elem[1];
+	c1 = elem[2];  d1 = elem[3];
+
+	a2 = elem[4];  b2 = elem[5];
+	c2 = elem[6];  d2 = elem[7];
+
+	a3 = elem[8];  b3 = elem[9];
+	c3 = elem[10]; d3 = elem[11];
+
+	a4 = elem[12]; b4 = elem[13];
+	c4 = elem[14]; d4 = elem[15];
+
+	Mat3 m0 = { b2, b3, b4, c2, c3, c4, d2, d3, d4 };
+	Mat3 m1 = { a2, a3, a4, c2, c3, c4, d2, d3, d4 };
+	Mat3 m2 = { a2, a3, a4, b2, b3, b4, d2, d3, d4 };
+	Mat3 m3 = { a2, a3, a4, b2, b3, b4, c2, c3, c4 };
+
+	det = a1 * m0.GetDeterminant()
+		- b1 * m1.GetDeterminant()
+		+ c1 * m2.GetDeterminant()
+		- d1 * m3.GetDeterminant();
+
+	return det;
 }
 
 //inverse of the matrix, using classical adjoint method
 Mat4 Mat4::GetInverse()
 {
 	Mat4 inv;
-	bool res = MathUtil::Inverse(this->elem, inv.elem);
+	bool res = MathUtil::Inverse(*this, inv.elem);
 	if (!res)
 	{ //inverse calculation failed
 		inv = Identity();
 	}
 	return inv;
-	//Mat4 inv;
-	//bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT4_SIZE);
-	//if (!res)
-	//{ //inverse calculation failed
-	//	inv = Identity();
-	//}
-	//return inv;
 }
 
 //get the matrix normal

@@ -124,8 +124,17 @@ Mat3& Mat3::Transpose()
 //determinant
 float Mat3::GetDeterminant()
 {
-	return 0.0f;
-	//return MathUtil::GetDeterminant(elem, MAT3_SIZE);
+	float det;
+	float a1, a2, a3, b1, b2, b3, c1, c2, c3;
+	a1 = elem[0]; b1 = elem[1]; c1 = elem[2];
+	a2 = elem[3]; b2 = elem[4]; c2 = elem[5];
+	a3 = elem[6]; b3 = elem[7]; c3 = elem[8];
+
+	det = a1 * MathUtil::Det2x2(b2, b3, c2, c3)
+		- b1 * MathUtil::Det2x2(a2, a3, c2, c3)
+		+ c1 * MathUtil::Det2x2(a2, a3, b2, b3);
+
+	return det;
 }
 
 //inverse of the matrix, using classical adjoint method

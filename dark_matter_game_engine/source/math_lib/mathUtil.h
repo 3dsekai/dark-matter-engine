@@ -28,6 +28,7 @@
 #ifndef _MATHUTIL_H_
 #define _MATHUTIL_H_
 
+class Mat4;
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
@@ -48,12 +49,8 @@ namespace MathUtil
 	float Rad2Deg(float rad);
 	float Det2x2(float a, float b, float c, float d);
 	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3);
+	void Adjoint(const Mat4& m, float* adj);
+	bool Inverse(Mat4& m, float* inv);
 	float Det4x4(float* m);
-	void Adjoint(float* m, float* adj);
-	bool Inverse(float* m, float* inv);
-//	void GetCofactor(float* m, float* submat, int row, int col, int d);
-//	float GetDeterminant(float* m, int d);
-//	void GetAdjoint(float* m, float* adj, int d);
-//	bool GetInverse(float* m, float* inv, int d);
 }
 #endif
