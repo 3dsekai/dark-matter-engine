@@ -124,19 +124,21 @@ Mat3& Mat3::Transpose()
 //determinant
 float Mat3::GetDeterminant()
 {
-	return MathUtil::GetDeterminant(elem, MAT3_SIZE);
+	return 0.0f;
+	//return MathUtil::GetDeterminant(elem, MAT3_SIZE);
 }
 
 //inverse of the matrix, using classical adjoint method
 Mat3 Mat3::GetInverse()
 {
-	Mat3 inv;
-	bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT3_SIZE);
-	if (!res)
-	{ //inverse calculation failed
-		inv = Identity();
-	}
-	return inv;
+	return Identity();
+	//Mat3 inv;
+	//bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT3_SIZE);
+	//if (!res)
+	//{ //inverse calculation failed
+	//	inv = Identity();
+	//}
+	//return inv;
 }
 
 //get the matrix normal

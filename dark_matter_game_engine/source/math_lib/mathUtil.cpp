@@ -57,108 +57,107 @@ namespace MathUtil
 		return rad * (180.0f / PI);
 	}
 
-//get the cofactor matrix from a base matrix for determinant calculation
-// float* m: base matrix
-// float* subm: the sub matrix
-// int r: row to exclude
-// int c: column to exclude
-// int d: matrix dimension
-void GetCofactor(float* m, float* subm, int row, int col, int d)
-{
-	int i = 0;
-	for (int c = 0; c < d; c++)
+	//get determinant for 2x2 matrix
+	float Det2x2(float a, float b, float c, float d)
 	{
-		for (int r = 0; r < d; r++)
+		return a * d - b * c;
+	}
+
+	//get determinant for 3x3 matrix
+	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)
+	{
+		float det;
+
+		det = a1 * Det2x2(b2, b3, c2, c3)
+			- b1 * Det2x2(a2, a3, c2, c3)
+			+ c1 * Det2x2(a2, a3, b2, b3);
+
+		return det;
+	}
+
+	//get determinant for 4x4 matrix
+	float Det4x4(float* m)
+	{
+		float det;
+		float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
+
+		a1 = m[0]; b1 = m[1];
+		c1 = m[2]; d1 = m[3];
+
+		a2 = m[4]; b2 = m[5];
+		c2 = m[6]; d2 = m[7];
+
+		a3 = m[8];  b3 = m[9];
+		c3 = m[10]; d3 = m[11];
+
+		a4 = m[12]; b4 = m[13];
+		c4 = m[14]; d4 = m[15];
+
+		det = a1 * Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4)
+			- b1 * Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4)
+			+ c1 * Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4)
+			- d1 * Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+
+		return det;
+	}
+
+	//get matrix classical adjoint
+	void Adjoint(float* m, float* adj)
+	{
+		float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
+
+		a1 = m[0]; b1 = m[1];
+		c1 = m[2]; d1 = m[3];
+
+		a2 = m[4]; b2 = m[5];
+		c2 = m[6]; d2 = m[7];
+
+		a3 = m[8];  b3 = m[9];
+		c3 = m[10]; d3 = m[11];
+
+		a4 = m[12]; b4 = m[13];
+		c4 = m[14]; d4 = m[15];
+
+		adj[0] =    Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
+		adj[4] =  - Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
+		adj[8] =    Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
+		adj[12] = - Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, d4);
+
+		adj[1] =  - Det3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
+		adj[5] =    Det3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
+		adj[9] =  - Det3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
+		adj[13] =   Det3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+
+		adj[2] =    Det3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
+		adj[6] =  - Det3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
+		adj[10] =   Det3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
+		adj[14] = - Det3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+
+		adj[3] =  - Det3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
+		adj[7] =    Det3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
+		adj[11] = - Det3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
+		adj[15] =   Det3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+	}
+
+	//get matrix inverse
+	bool Inverse(float* m, float* inv)
+	{
+		Adjoint(m, inv);
+
+		float det = Det4x4(inv);
+
+		if(det == 0.0f)
 		{
-			if (r != row && c != col)
+			return false;
+		}
+
+		for(int r = 0; r < 4; r++)
+		{
+			for(int c = 0; c < 4; c++)
 			{
-				subm[i] = m[d * r + c];
-				i++;
+				inv[4 * r + c] = inv[4 * r + c] * (1 / det);
 			}
 		}
+		return true;
 	}
-}
-
-//calculate the determinant of a matrix
-// float* m: base matrix
-// int d: matrix dimension
-float GetDeterminant(float* m, int d)
-{
-	if (d == 1)
-	{
-		return m[0];
-	}
-
-	float det = 0.0f;
-	int sign = 1;
-	float subm[16]; //get the submatrix (for calculating the cofactor)
-	for (int col = 0; col < d; col++)
-	{
-		GetCofactor(m, subm, 0, col, d);
-
-		//calculate the cofactor for the current column in the matrix 
-		det += sign * m[col] * GetDeterminant(subm, d - 1);
-		sign = -sign;
-	}
-	return det;
-}
-
-//get classical adjoint
-// float* m: base matrix
-// float* adj: adjoint matrix
-// int d: base matrix dimension
-void GetAdjoint(float* m, float* adj, int d)
-{
-	if (d == 1)
-	{
-		adj[0] = 1;
-		return;
-	}
-
-	float subm[16];
-	int sign = 1;
-	for (int c = 0; c < d; c++)
-	{
-		for (int r = 0; r < d; r++)
-		{
-			//get the submatrix of this object's matrix
-			GetCofactor(m, subm, r, c, d);
-
-			//get the cofactor of the submatrix
-			sign = ((r + c) % 2 == 0) ? 1 : -1;//change the sign to match the cofactor sign order
-			//interchange rows and columns to get transpose
-			adj[d * c + r] = sign * GetDeterminant(subm, d - 1);
-		}
-	}
-}
-
-// calculate matrix inverse
-// float* m: base matrix
-// float* inv: matrix to store inverted base matrix
-// int d: matrix dimension
-// return:
-//			true = successfully inverted matrix
-//			false = could not invert matrix
-bool GetInverse(float* m, float* inv, int d)
-{
-	int det = (int)GetDeterminant(m, d);
-	if (det == 0)
-	{ //the matrix is singular - can't be inverted
-		return false;
-	}
-
-	// Find adjoint
-	float adj[16];
-	GetAdjoint(m, adj, d);
-
-	for (int c = 0; c < d; c++)
-	{
-		for (int r = 0; r < d; r++)
-		{
-			//inverse = adj M / det M
-			inv[d * r + c] = adj[d * r + c] * (1/det);
-		}
-	}
-	return true;
-}
 }

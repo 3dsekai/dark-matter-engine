@@ -127,19 +127,27 @@ Mat4& Mat4::Transpose()
 //determinant
 float Mat4::GetDeterminant()
 {
-	return MathUtil::GetDeterminant(elem, MAT4_SIZE);
+	return MathUtil::Det4x4(this->elem);
+	//return MathUtil::GetDeterminant(elem, MAT4_SIZE);
 }
 
 //inverse of the matrix, using classical adjoint method
 Mat4 Mat4::GetInverse()
 {
 	Mat4 inv;
-	bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT4_SIZE);
+	bool res = MathUtil::Inverse(this->elem, inv.elem);
 	if (!res)
 	{ //inverse calculation failed
 		inv = Identity();
 	}
 	return inv;
+	//Mat4 inv;
+	//bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT4_SIZE);
+	//if (!res)
+	//{ //inverse calculation failed
+	//	inv = Identity();
+	//}
+	//return inv;
 }
 
 //get the matrix normal

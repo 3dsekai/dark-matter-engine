@@ -116,7 +116,11 @@ void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
 	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
 	{
-		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
+//		(*it)->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(_rot)));
+		Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(_rot));
+		(*it)->SetRotation(Quat::Mat2Quat(r));
+		//Mat4 inv = r.GetInverse();
+		//(*it)->SetRotation(Quat::Mat2Quat(inv));
 	}
 	_rot.x += 0.5f;
 	_rot.y += 0.5f;
