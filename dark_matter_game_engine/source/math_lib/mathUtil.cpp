@@ -33,7 +33,7 @@
 #include <string.h>
 #include "mathUtil.h"
 #include "mat4.h"
-
+#include "mat3.h"
 //*************************************************************************
 // Math Utility Functions
 //*************************************************************************
@@ -63,80 +63,49 @@ namespace MathUtil
 		return a * d - b * c;
 	}
 
-	//get determinant for 3x3 matrix
-	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)
-	{
-		float det;
+	////get determinant for 3x3 matrix
+	//float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)
+	//{
+	//	float det;
 
-		det = a1 * Det2x2(b2, b3, c2, c3)
-			- b1 * Det2x2(a2, a3, c2, c3)
-			+ c1 * Det2x2(a2, a3, b2, b3);
+	//	det = a1 * Det2x2(b2, b3, c2, c3)
+	//		- b1 * Det2x2(a2, a3, c2, c3)
+	//		+ c1 * Det2x2(a2, a3, b2, b3);
 
-		return det;
-	}
+	//	return det;
+	//}
 
-	//get determinant for 4x4 matrix
-	float Det4x4(float* m)
-	{
-		float det;
-		float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
+	////get determinant for 4x4 matrix
+	//float Det4x4(float* m)
+	//{
+	//	float det;
+	//	float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
 
-		a1 = m[0]; b1 = m[1];
-		c1 = m[2]; d1 = m[3];
+	//	a1 = m[0]; b1 = m[1];
+	//	c1 = m[2]; d1 = m[3];
 
-		a2 = m[4]; b2 = m[5];
-		c2 = m[6]; d2 = m[7];
+	//	a2 = m[4]; b2 = m[5];
+	//	c2 = m[6]; d2 = m[7];
 
-		a3 = m[8];  b3 = m[9];
-		c3 = m[10]; d3 = m[11];
+	//	a3 = m[8];  b3 = m[9];
+	//	c3 = m[10]; d3 = m[11];
 
-		a4 = m[12]; b4 = m[13];
-		c4 = m[14]; d4 = m[15];
+	//	a4 = m[12]; b4 = m[13];
+	//	c4 = m[14]; d4 = m[15];
 
-		det = a1 * Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4)
-			- b1 * Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4)
-			+ c1 * Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4)
-			- d1 * Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
+	//	det = a1 * Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4)
+	//		- b1 * Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4)
+	//		+ c1 * Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4)
+	//		- d1 * Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, c4);
 
-		return det;
-	}
+	//	return det;
+	//}
 
 	//get matrix classical adjoint
 	void Adjoint(const Mat4& m, float* adj)
 	{
 		float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
-
-		a1 = m.elem[0]; b1 = m.elem[1];
-		c1 = m.elem[2]; d1 = m.elem[3];
-
-		a2 = m.elem[4]; b2 = m.elem[5];
-		c2 = m.elem[6]; d2 = m.elem[7];
-
-		a3 = m.elem[8];  b3 = m.elem[9];
-		c3 = m.elem[10]; d3 = m.elem[11];
-
-		a4 = m.elem[12]; b4 = m.elem[13];
-		c4 = m.elem[14]; d4 = m.elem[15];
-
-		adj[0] = Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
-		adj[4] = -Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
-		adj[8] = Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
-		adj[12] = -Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, d4);
-
-		adj[1] = -Det3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
-		adj[5] = Det3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
-		adj[9] = -Det3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
-		adj[13] = Det3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
-
-		adj[2] = Det3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
-		adj[6] = -Det3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
-		adj[10] = Det3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
-		adj[14] = -Det3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
-
-		adj[3] = -Det3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
-		adj[7] = Det3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
-		adj[11] = -Det3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
-		adj[15] = Det3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+		Mat3 m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15;
 
 		//a1 = m[0]; b1 = m[1];
 		//c1 = m[2]; d1 = m[3];
@@ -150,25 +119,61 @@ namespace MathUtil
 		//a4 = m[12]; b4 = m[13];
 		//c4 = m[14]; d4 = m[15];
 
-		//adj->elem[0] =    Det3x3(b2, b3, b4, c2, c3, c4, d2, d3, d4);
-		//adj->elem[4] =  - Det3x3(a2, a3, a4, c2, c3, c4, d2, d3, d4);
-		//adj->elem[8] =    Det3x3(a2, a3, a4, b2, b3, b4, d2, d3, d4);
-		//adj->elem[12] = - Det3x3(a2, a3, a4, b2, b3, b4, c2, c3, d4);
+		//assign elements to individual values to aid in selecting correct values
+		a1 = m.elem[0]; b1 = m.elem[1];
+		c1 = m.elem[2]; d1 = m.elem[3];
 
-		//adj->elem[1] =  - Det3x3(b1, b3, b4, c1, c3, c4, d1, d3, d4);
-		//adj->elem[5] =    Det3x3(a1, a3, a4, c1, c3, c4, d1, d3, d4);
-		//adj->elem[9] =  - Det3x3(a1, a3, a4, b1, b3, b4, d1, d3, d4);
-		//adj->elem[13] =   Det3x3(a1, a3, a4, b1, b3, b4, c1, c3, c4);
+		a2 = m.elem[4]; b2 = m.elem[5];
+		c2 = m.elem[6]; d2 = m.elem[7];
 
-		//adj->elem[2] =    Det3x3(b1, b2, b4, c1, c2, c4, d1, d2, d4);
-		//adj->elem[6] =  - Det3x3(a1, a2, a4, c1, c2, c4, d1, d2, d4);
-		//adj->elem[10] =   Det3x3(a1, a2, a4, b1, b2, b4, d1, d2, d4);
-		//adj->elem[14] = - Det3x3(a1, a2, a4, b1, b2, b4, c1, c2, c4);
+		a3 = m.elem[8];  b3 = m.elem[9];
+		c3 = m.elem[10]; d3 = m.elem[11];
 
-		//adj->elem[3] =  - Det3x3(b1, b2, b3, c1, c2, c3, d1, d2, d3);
-		//adj->elem[7] =    Det3x3(a1, a2, a3, c1, c2, c3, d1, d2, d3);
-		//adj->elem[11] = - Det3x3(a1, a2, a3, b1, b2, b3, d1, d2, d3);
-		//adj->elem[15] =   Det3x3(a1, a2, a3, b1, b2, b3, c1, c2, c3);
+		a4 = m.elem[12]; b4 = m.elem[13];
+		c4 = m.elem[14]; d4 = m.elem[15];
+
+		//construct the 3x3 matrices necessary to calculate cofactors for adjoint
+		m0 =  {b2, b3, b4, c2, c3, c4, d2, d3, d4};
+		m1 =  {a2, a3, a4, c2, c3, c4, d2, d3, d4};
+		m2 =  {a2, a3, a4, b2, b3, b4, d2, d3, d4};
+		m3 =  {a2, a3, a4, b2, b3, b4, c2, c3, c4};
+
+		m4 =  {b1, b3, b4, c1, c3, c4, d1, d3, d4};
+		m5 =  {a1, a3, a4, c1, c3, c4, d1, d3, d4};
+		m6 =  {a1, a3, a4, b1, b3, b4, d1, d3, d4};
+		m7 =  {a1, a3, a4, b1, b3, b4, c1, c3, c4};
+
+		m8  = {b1, b2, b4, c1, c2, c4, d1, d2, d4};
+		m9  = {a1, a2, a4, c1, c2, c4, d1, d2, d4};
+		m10 = {a1, a2, a4, b1, b2, b4, d1, d2, d4};
+		m11 = {a1, a2, a4, b1, b2, b4, c1, c2, c4};
+
+		m12 = {b1, b2, b3, c1, c2, c3, d1, d2, d3};
+		m13 = {a1, a2, a3, c1, c2, c3, d1, d2, d3};
+		m14 = {a1, a2, a3, b1, b2, b3, d1, d2, d3};
+		m15 = {a1, a2, a3, b1, b2, b3, c1, c2, c3};
+
+		//calculate cofactors and construct the classical adjoint
+		// the rows/columns is transposed for the adjoint
+		adj[0] =    m0.GetDeterminant();
+		adj[4] =  - m1.GetDeterminant();
+		adj[8] =    m2.GetDeterminant();
+		adj[12] = - m3.GetDeterminant();
+
+		adj[1] =  - m4.GetDeterminant();
+		adj[5] =    m5.GetDeterminant();
+		adj[9] =  - m6.GetDeterminant();
+		adj[13] =   m7.GetDeterminant();
+
+		adj[2] =    m8.GetDeterminant();
+		adj[6] =  - m9.GetDeterminant();
+		adj[10] =   m10.GetDeterminant();
+		adj[14] = - m11.GetDeterminant();
+
+		adj[3] =  - m12.GetDeterminant();
+		adj[7] =    m13.GetDeterminant();
+		adj[11] = - m14.GetDeterminant();
+		adj[15] =   m15.GetDeterminant();
 	}
 
 	//get matrix inverse
@@ -177,16 +182,19 @@ namespace MathUtil
 		float det = m.GetDeterminant();
 
 		if (det == 0.0f)
-		{
+		{ // matrix is singular - can't get inverse
 			return false;
 		}
 
+		//construct the adjoint matrix
 		Adjoint(m, inv);
 
+		//construct inverse matrix
 		for(int r = 0; r < 4; r++)
 		{
 			for(int c = 0; c < 4; c++)
 			{
+				// inverseA = 1/adjA
 				inv[4 * r + c] = inv[4 * r + c] * (1 / det);
 			}
 		}

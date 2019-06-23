@@ -48,9 +48,9 @@ namespace MathUtil
 	float Deg2Rad(float deg);
 	float Rad2Deg(float rad);
 	float Det2x2(float a, float b, float c, float d);
-	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3);
 	void Adjoint(const Mat4& m, float* adj);
 	bool Inverse(Mat4& m, float* inv);
-	float Det4x4(float* m);
+//	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3);
+//	float Det4x4(float* m);
 }
 #endif
