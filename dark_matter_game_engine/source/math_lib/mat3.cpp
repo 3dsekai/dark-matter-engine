@@ -29,6 +29,7 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
+#include <math.h>
 #include <string.h>
 #include "mat3.h"
 #include "mat4.h"
@@ -121,7 +122,16 @@ Mat3& Mat3::Transpose()
 	return *this;
 }
 
-//determinant
+/*
+Get the determinant of this 3x3 matrix
+
+3x3 matrix form:
+
+| a1  b1  c1 |
+| a2  b2  c2 |
+| a3  b3  c3 |
+
+*/
 float Mat3::GetDeterminant()
 {
 	float det;
@@ -137,17 +147,60 @@ float Mat3::GetDeterminant()
 	return det;
 }
 
-//inverse of the matrix, using classical adjoint method
+//get 3x3 matrix classical adjoint
+//for math reference:3D Math Primer for Graphics and Game Development pg. 168 - 171
+//for algorithm reference: Graphics Gems pg. 767
+Mat3 Mat3::GetAdjoint()
+{
+	float a1, a2, a3, b1, b2, b3, c1, c2, c3;
+
+	//assign elements to individual values to aid in selecting correct values
+	a1 = elem[0]; b1 = elem[1]; c1 = elem[2];
+	a2 = elem[3]; b2 = elem[4]; c2 = elem[5];
+	a3 = elem[6]; b3 = elem[7]; c3 = elem[8];
+
+	//calculate cofactors and construct the classical adjoint
+	// the rows/columns is transposed for the adjoint
+	Mat3 adj;
+	adj.elem[0] = MathUtil::Det2x2(b2, b3, c2, c3);
+	adj.elem[3] = -MathUtil::Det2x2(a2, a3, c2, c3);
+	adj.elem[6] = MathUtil::Det2x2(a2, a3, b2, b3);
+
+	adj.elem[1] = -MathUtil::Det2x2(b1, b3, c1, c3);
+	adj.elem[4] = MathUtil::Det2x2(a1, a3, c1, c3);
+	adj.elem[7] = -MathUtil::Det2x2(a1, a3, b1, b3);
+
+	adj.elem[2] = MathUtil::Det2x2(b1, b2, c1, c2);
+	adj.elem[5] = -MathUtil::Det2x2(a1, a2, c1, c2);
+	adj.elem[8] = MathUtil::Det2x2(a1, a2, b1, b2);
+	return adj;
+}
+
+//get 3x3 matrix inverse
+//for math reference:3D Math Primer for Graphics and Game Development pg. 168 - 171
+//for algorithm reference: Graphics Gems pg. 766
 Mat3 Mat3::GetInverse()
 {
-	return Identity();
-	//Mat3 inv;
-	//bool res = MathUtil::GetInverse(this->elem, inv.elem, MAT3_SIZE);
-	//if (!res)
-	//{ //inverse calculation failed
-	//	inv = Identity();
-	//}
-	//return inv;
+	float det = GetDeterminant();
+
+	if (fabs(det) < SMALL_NUMBER)
+	{ // matrix is singular - can't get inverse
+		return Identity();
+	}
+
+	//construct the adjoint matrix
+	Mat3 inv = GetAdjoint();
+
+	//construct inverse matrix
+	for (int r = 0; r < MAT3_SIZE; r++)
+	{
+		for (int c = 0; c < MAT3_SIZE; c++)
+		{
+			// inverseA = 1/adjA
+			inv.elem[MAT3_SIZE * r + c] = inv.elem[MAT3_SIZE * r + c] * (1 / det);
+		}
+	}
+	return inv;
 }
 
 //get the matrix normal

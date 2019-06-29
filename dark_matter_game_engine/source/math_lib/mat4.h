@@ -65,6 +65,7 @@ public:
 	Mat4& SetIdentity();
 	Mat4& Transpose();
 	float GetDeterminant();
+	Mat4 GetAdjoint();
 	Mat4 GetInverse();
 	Mat4 GetMatrixNormal();
 	Mat4 Translate(const Vec3& vec);

@@ -124,7 +124,17 @@ Mat4& Mat4::Transpose()
 	return *this;
 }
 
-//determinant
+/*
+Get the determinant of this 4x4 matrix
+
+4x4 matrix form:
+
+| a1  b1  c1  d1 |
+| a2  b2  c2  d2 |
+| a3  b3  c3  d3 |
+| a4  b4  c4  d4 |
+
+*/
 float Mat4::GetDeterminant()
 {
 	float det;
@@ -155,14 +165,98 @@ float Mat4::GetDeterminant()
 	return det;
 }
 
-//inverse of the matrix, using classical adjoint method
+//get 4x4 matrix classical adjoint
+//for math reference:3D Math Primer for Graphics and Game Development pg. 168 - 171
+//for algorithm reference: Graphics Gems pg. 767
+Mat4 Mat4::GetAdjoint()
+{
+	float a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4;
+	Mat3 m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15;
+	Mat4 adj;
+
+	//assign elements to individual values to aid in selecting correct values
+	a1 = elem[0]; b1 = elem[1];
+	c1 = elem[2]; d1 = elem[3];
+
+	a2 = elem[4]; b2 = elem[5];
+	c2 = elem[6]; d2 = elem[7];
+
+	a3 = elem[8];  b3 = elem[9];
+	c3 = elem[10]; d3 = elem[11];
+
+	a4 = elem[12]; b4 = elem[13];
+	c4 = elem[14]; d4 = elem[15];
+
+	//construct the 3x3 matrices necessary to calculate cofactors for adjoint
+	m0 =  {b2, b3, b4, c2, c3, c4, d2, d3, d4};
+	m1 =  {a2, a3, a4, c2, c3, c4, d2, d3, d4};
+	m2 =  {a2, a3, a4, b2, b3, b4, d2, d3, d4};
+	m3 =  {a2, a3, a4, b2, b3, b4, c2, c3, c4};
+
+	m4 =  {b1, b3, b4, c1, c3, c4, d1, d3, d4};
+	m5 =  {a1, a3, a4, c1, c3, c4, d1, d3, d4};
+	m6 =  {a1, a3, a4, b1, b3, b4, d1, d3, d4};
+	m7 =  {a1, a3, a4, b1, b3, b4, c1, c3, c4};
+
+	m8  = {b1, b2, b4, c1, c2, c4, d1, d2, d4};
+	m9  = {a1, a2, a4, c1, c2, c4, d1, d2, d4};
+	m10 = {a1, a2, a4, b1, b2, b4, d1, d2, d4};
+	m11 = {a1, a2, a4, b1, b2, b4, c1, c2, c4};
+
+	m12 = {b1, b2, b3, c1, c2, c3, d1, d2, d3};
+	m13 = {a1, a2, a3, c1, c2, c3, d1, d2, d3};
+	m14 = {a1, a2, a3, b1, b2, b3, d1, d2, d3};
+	m15 = {a1, a2, a3, b1, b2, b3, c1, c2, c3};
+
+	//calculate cofactors and construct the classical adjoint
+	// the rows/columns is transposed for the adjoint
+	adj.elem[0] =    m0.GetDeterminant();
+	adj.elem[4] =  - m1.GetDeterminant();
+	adj.elem[8] =    m2.GetDeterminant();
+	adj.elem[12] = - m3.GetDeterminant();
+
+	adj.elem[1] =  - m4.GetDeterminant();
+	adj.elem[5] =    m5.GetDeterminant();
+	adj.elem[9] =  - m6.GetDeterminant();
+	adj.elem[13] =   m7.GetDeterminant();
+
+	adj.elem[2] =    m8.GetDeterminant();
+	adj.elem[6] =  - m9.GetDeterminant();
+	adj.elem[10] =   m10.GetDeterminant();
+	adj.elem[14] = - m11.GetDeterminant();
+
+	adj.elem[3] =  - m12.GetDeterminant();
+	adj.elem[7] =    m13.GetDeterminant();
+	adj.elem[11] = - m14.GetDeterminant();
+	adj.elem[15] =   m15.GetDeterminant();
+
+	return adj;
+}
+
+
+//get 4x4 matrix inverse
+//for math reference:3D Math Primer for Graphics and Game Development pg. 168 - 171
+//for algorithm reference: Graphics Gems pg. 766
 Mat4 Mat4::GetInverse()
 {
-	Mat4 inv;
-	bool res = MathUtil::Inverse(*this, inv.elem);
-	if (!res)
-	{ //inverse calculation failed
-		inv = Identity();
+	float det = GetDeterminant();
+
+	if ( fabs( det ) < SMALL_NUMBER)
+	{ // matrix is singular - can't get inverse
+		return Identity();
+	}
+
+	//construct the adjoint matrix
+	Mat4 inv = GetAdjoint();
+
+	//construct inverse matrix
+	for(int r = 0; r < MAT4_SIZE; r++)
+	{
+		for(int c = 0; c < MAT4_SIZE; c++)
+		{
+			// inverseA = 1/adjA
+			inv.elem[MAT4_SIZE * r + c] = inv.elem[MAT4_SIZE * r + c] * (1 / det);
+		}
 	}
 	return inv;
 }

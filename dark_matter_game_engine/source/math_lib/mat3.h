@@ -61,6 +61,7 @@ public:
 	Mat3& SetIdentity();
 	Mat3& Transpose();
 	float GetDeterminant();
+	Mat3 GetAdjoint();
 	Mat3 GetInverse();
 	Mat3 GetMatrixNormal();
 	static Mat3 Mat4ToMat3(const Mat4& m);

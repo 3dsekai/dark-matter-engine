@@ -28,13 +28,13 @@
 #ifndef _MATHUTIL_H_
 #define _MATHUTIL_H_
 
-class Mat4;
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
 #define PI (3.14159265359f) //the value of pi
 #define MIN(X, Y) ((X < Y) ? (X) : (Y)) //get smaller value
 #define MAX(X, Y) ((X > Y) ? (X) : (Y)) //get larger value
+#define SMALL_NUMBER (1.e-8)
 
 //*************************************************************************
 // Math Utility Functions
@@ -48,9 +48,5 @@ namespace MathUtil
 	float Deg2Rad(float deg);
 	float Rad2Deg(float rad);
 	float Det2x2(float a, float b, float c, float d);
-	void Adjoint(const Mat4& m, float* adj);
-	bool Inverse(Mat4& m, float* inv);
-//	float Det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3);
-//	float Det4x4(float* m);
 }
 #endif
