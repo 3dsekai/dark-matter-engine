@@ -30,3 +30,13 @@ So, it looks like my "light flicker" problem is being caused by my
 matrix inverse algorithm churning out funky values.
 Back to the drawing board...
 Graphics Gems pg. 766 has a matrix inverse algo I could try using.
+
+=================================================
+
+7/2/2019 Log
+
+=================================================
+
+Finally got the matrix inverse algo working.
+I scrapped the old one, and recreated it based on the
+algorithm from Graphics Games.
