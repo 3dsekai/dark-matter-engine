@@ -25,34 +25,58 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-//
+
 //*************************************************************************
 // Includes
 //*************************************************************************
-//#include "diffuseLight.h"
-//
+#include <iostream>
+#include "diffuseLight.h"
+#include "../draw/shaderManager.h"
+#include "../draw/shader.h"
+
 //*************************************************************************
 // Class: DiffuseLight
 // Function Name: DiffuseLight
 // Argument{s}: -
 // Explanation: DiffuseLight constructor
 //*************************************************************************
-//DiffuseLight::DiffuseLight(const char* shaderName,
-//						   const Vec3& pos,
-//						   const Vec3& scale,
-//						   const Quat& rot,
-//						   const Vec4& color) :
-//			  LightBase(shaderName, pos, scale, rot, color /*0*/)
-//{
-//	Init();
-//}
-//
-////*************************************************************************
-//// Class: DiffuseLight
-//// Function Name: ~DiffuseLight
-//// Argument{s}: -
-//// Explanation: Ambient light destructor
-////*************************************************************************
-//DiffuseLight::~DiffuseLight()
-//{
-//}
+DiffuseLight::DiffuseLight(const char* shader_name, const Vec3& pos, const Vec3& color)
+		: LightBase(shader_name, pos, color)
+{
+};
+
+//*************************************************************************
+// Class: DiffuseLight
+// Function Name: ~DiffuseLight
+// Argument{s}: -
+// Explanation: Diffuse light destructor
+//*************************************************************************
+DiffuseLight::~DiffuseLight()
+{
+}
+
+//*************************************************************************
+// Class: DiffuseLight
+// Function Name: Draw
+// Argument{s}: -
+// Explanation: Diffuse light draw
+//*************************************************************************
+void DiffuseLight::Draw()
+{
+	Shader* shader = ShaderManager::GetInstance()->GetShader(_shader);
+	if(shader != nullptr)
+	{
+		//set the model-view-projection matrix to the shader
+		shader->UseProgram();
+
+		//diffuse light pos
+		shader->SetUniformVec3(_pos, "lightPos");
+
+		//diffuse light color
+		shader->SetUniformVec3(_color, "lightColor");
+	}
+	else
+	{
+		std::cout << "Couldn't load shader: " << _shader << std::endl;
+	}
+}

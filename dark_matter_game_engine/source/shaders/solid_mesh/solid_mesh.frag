@@ -40,8 +40,8 @@ out vec4 color; //output color
 // Uniforms
 //*************************************************************************
 uniform vec4 meshColor; //mesh color
-uniform vec3 difLightPos; //diffuse light position
-uniform vec3 difLightColor; //diffuse light color
+uniform vec3 lightPos; //diffuse light position
+uniform vec3 lightColor; //diffuse light color
 
 //*************************************************************************
 // Shader Program
@@ -68,14 +68,14 @@ void main()
 	vec3 norm = normalize(normal);
 
 	//get the direction of the fragment to the light
-	vec3 dir = normalize(difLightPos - pixelPos);
+	vec3 dir = normalize(lightPos - pixelPos);
 
 	//get the dot product of cosine angle between frag normal and light.
 	//calculates the "strength" of the light on this fragment.
 	float strength = max(dot(norm, dir), 0.0);
 
 	//calculate diffuse light (color of light * strength of light)
-	vec3 diffuse = difLightColor * strength;
+	vec3 diffuse = lightColor * strength;
 
 	//////////////////////////////////////////////
 	//output color

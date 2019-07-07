@@ -249,6 +249,9 @@
     <ClCompile Include="source\game_object\objects\floor.cpp">
       <Filter>source\game_object\objects</Filter>
     </ClCompile>
+    <ClCompile Include="source\lighting\diffuseLight.cpp">
+      <Filter>source\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\shaders\color_cube\colored_cube.vert">

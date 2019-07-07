@@ -72,6 +72,7 @@
     <ClCompile Include="source\game_object\objects\multBoxes.cpp" />
     <ClCompile Include="source\input\keyboard.cpp" />
     <ClCompile Include="source\input\mouse.cpp" />
+    <ClCompile Include="source\lighting\diffuseLight.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math_lib\mat3.cpp" />
     <ClCompile Include="source\math_lib\mat4.cpp" />

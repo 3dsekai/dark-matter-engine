@@ -43,20 +43,24 @@ public:
 	~LightBase() = default;
 
 protected:
-	LightBase(const Vec3& pos,const Vec3& color) :
+	LightBase(const char* shader_name, const Vec3& pos,const Vec3& color) :
+		_shader(shader_name),
 		_pos(pos),
 		_color(color)
 	{
 	};
 
 public:
+	virtual void Draw() = 0;
+
 	void SetPosition(const Vec3& pos) {_pos = pos;};
 	const Vec3 GetPosition() const {_pos;};
 
 	void SetColor(const Vec3& col) {_color = col;};
 	const Vec3 GetColor() const {_color;};
 
-private:
+protected:
+	const char* _shader;
 	Vec3 _pos;
 	Vec3 _color;
 };

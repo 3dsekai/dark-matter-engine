@@ -39,14 +39,9 @@
 class DiffuseLight : public LightBase
 {
 public:
-	DiffuseLight(const Vec3& pos, const Vec3& color)
-			: LightBase(pos, color)
-	{
-	};
-
-	~DiffuseLight()
-	{
-	};
+	DiffuseLight(const char* shader_name, const Vec3& pos, const Vec3& color);
+	~DiffuseLight();
+	void Draw() override;
 };
 
 #endif

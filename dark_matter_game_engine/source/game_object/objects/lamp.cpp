@@ -33,7 +33,7 @@
 #include "../../define/shader_define.h"
 #include "../../meshes/cube.h"
 #include "../../lighting/diffuseLight.h"
-
+#include "../../math_lib/mat4.h"
 //*************************************************************************
 // Class: Lamp
 // Function Name: Lamp
@@ -78,7 +78,7 @@ void Lamp::Init()
 
 	//lamp light
 	Vec4 col = _lamp->GetColor();
-	_light = new DiffuseLight(_lamp->GetPosition(), Vec3(col.x, col.y, col.z));
+	_light = new DiffuseLight(TEXTURE_MESH_SHADER_NAME, _lamp->GetPosition(), Vec3(col.x, col.y, col.z));
 
 }
 
@@ -90,6 +90,22 @@ void Lamp::Init()
 //*************************************************************************
 void Lamp::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
+	Mat4 t = Mat4::TranslateMat(Vec3(10.0f, 0.0f, 0.0f));
+	Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(_rot));
+	Mat4 w = r * t;
+
+	if(_lamp != nullptr)
+	{
+		_lamp->SetPosition(w.GetTranslation());
+		_lamp->SetRotation(Quat::Mat2Quat(w));
+	}
+	if(_light != nullptr)
+	{
+		_light->SetPosition(w.GetTranslation());
+	}
+
+	_rot.y += 0.5f;
+
 }
 
 //*************************************************************************
@@ -103,6 +119,10 @@ void Lamp::Draw()
 	if(_lamp != nullptr)
 	{
 		_lamp->Draw();
+	}
+	if(_light != nullptr)
+	{
+		_light->Draw();
 	}
 }
 
