@@ -52,33 +52,29 @@ void main()
 	//ambient light
 	//////////////////////////////////////////////
 
-	//strength of the ambient light
-	float ambientStrength = ambientCol.w;
-	//calculate the ambient light (color of light * strength of light)
-	vec4 ambient = vec4(ambientCol.x * ambientStrength,
-						ambientCol.y * ambientStrength,
-						ambientCol.z * ambientStrength,
-						1.0);
+	float ambientStrength = ambientCol.w; //strength of the ambient light
+	vec3 ambient = vec3(ambientCol) * ambientStrength; //calculate the ambient light (color of light * strength of light)
 
 	//////////////////////////////////////////////
 	//diffuse light
 	//////////////////////////////////////////////
 
-	//normalize the fragment's normal
-	vec3 norm = normalize(normal);
+	vec3 norm = normalize(normal); //normalize the fragment's normal
+	vec3 dir = normalize(lightPos - pixelPos); //get the direction of the fragment to the light
+	float diff = max(dot(norm, dir), 0.0); //get the dot product of cosine angle between frag normal and light. calculates the "strength" of the light on this fragment.
+	vec3 diffuse = diff * lightColor; //calculate diffuse light (color of light * strength of light)
 
-	//get the direction of the fragment to the light
-	vec3 dir = normalize(lightPos - pixelPos);
-
-	//get the dot product of cosine angle between frag normal and light.
-	//calculates the "strength" of the light on this fragment.
-	float strength = max(dot(norm, dir), 0.0);
-
-	//calculate diffuse light (color of light * strength of light)
-	vec3 diffuse = lightColor * strength;
+	//////////////////////////////////////////////
+	//specular light
+	//////////////////////////////////////////////
+	
+	float specStrength = 10.0; //specular strength
+	vec3 reflectDir = reflect(-dir, norm); //get the direction of the reflection
+	float spec = pow(max(dot(normalize(pixelPos), reflectDir), 0.0f), 32); //specular value: cos(angle between frag and view dir)^32
+	vec3 specular = specStrength * spec * lightColor;
 
 	//////////////////////////////////////////////
 	//output color
 	//////////////////////////////////////////////
-	color = (ambient + diffuse) * meshColor;
+	color = vec4(ambient + diffuse, 1.0f) * meshColor;
 }

@@ -40,3 +40,75 @@ Graphics Gems pg. 766 has a matrix inverse algo I could try using.
 Finally got the matrix inverse algo working.
 I scrapped the old one, and recreated it based on the
 algorithm from Graphics Games.
+
+=================================================
+
+7/10/2019 Log
+
+=================================================
+My normals for my cube are totally wrong.
+The vertex normals are supposed to be vectors, but for some reason I'm storing
+them as one float per vertex (not sure why I'm doing that...).
+The cube vertices should look like this:
+
+//  pos coords         tex coords   normals
+	//front
+    -1.0, -1.0,  1.0,  0.0f, 0.0f,  0.0f,  0.0f,  1.0f, //bottom left
+     1.0, -1.0,  1.0,  1.0f, 0.0f,  0.0f,  0.0f,  1.0f, //bottom right
+     1.0,  1.0,  1.0,  1.0f, 1.0f,  0.0f,  0.0f,  1.0f, //top right
+    -1.0,  1.0,  1.0,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f, //top left
+    // top
+    -1.0,  1.0,  1.0,  0.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+     1.0,  1.0,  1.0,  1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+     1.0,  1.0, -1.0,  1.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+    -1.0,  1.0, -1.0,  0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+    // back
+     1.0, -1.0, -1.0,  0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+    -1.0, -1.0, -1.0,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+    -1.0,  1.0, -1.0,  1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+     1.0,  1.0, -1.0,  0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+    // bottom
+    -1.0, -1.0, -1.0,  0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+     1.0, -1.0, -1.0,  1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+     1.0, -1.0,  1.0,  1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+    -1.0, -1.0,  1.0,  0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+    // left
+    -1.0, -1.0, -1.0,  0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+    -1.0, -1.0,  1.0,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+    -1.0,  1.0,  1.0,  1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+    -1.0,  1.0, -1.0,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+    // right
+     1.0, -1.0,  1.0,  0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+     1.0, -1.0, -1.0,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+     1.0,  1.0, -1.0,  1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+     1.0,  1.0,  1.0,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+
+
+Explanation by Madsy9 on why 8 vertices and indices can't define a cube with tex coords and normals:
+https://www.reddit.com/r/opengl/comments/4oozww/indexed_buffers_and_face_normals/
+
+	Indices in OpenGL refer to vertices, and a vertex in OpenGL is the group of all
+	the attributes to be interpolated over a primitive, in addition to a position.
+	A vertex is not uniquely defined by its position or any of its attributes!
+	It's quite common to have multiple vertices both share normals as well as positions.
+	Again, there are no index arrays for "individual" attributes, only per vertex element.
+
+	With that out of the way, I think this confusion often stems from beginners being
+	introduced to the dreaded cube as their first 3D object to experiment with,
+	which is absolutely the worst 3D primitive / polyhedron for that purpose.
+	When challenged to add normals and texture coordinates to a cube, beginners gets
+	really confused because they think the cube only consists of 8 vertices.
+	But as I mentioned, in OpenGL a vertex is not unique based on its position.
+	So when beginners feel compelled to optimize their cubes, they start looking
+	for ways to keep the misconception maintained, by finding a way to separate the
+	vertex attributes so they can still hold the belief that the cube has only 8 vertices.
+
+	And sure, a cube in OpenGL does have 8 vertices if you don't have any extra
+	vertex attributes. It's just that vertex data such as normals and texture coordinates
+	throw a spanner in the works because suddenly, you have 3 vertices for every vertex position
+	since the normals point in three different directions. Facing this new problem,
+	beginners start wondering what the point with OpenGL vertex indices is, since you
+	apparently can't reuse any data. That's the cube's fault for being such a difficult object.
+	OpenGL indices do open for a lot of reuse as soon as your mesh consists of more
+	vertices inside the boundary and with no sharp 90 degree corners.
+	Same idea applies to triangle strips.

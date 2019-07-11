@@ -92,18 +92,6 @@ void MultBoxes::Init()
 	{
 		(*it)->SetTexture(BOX_TEXTURE);
 	}
-
-	//Mat4 t = Mat4::TranslateMat(Vec3(0.0f, 5.0f, 0.0f));
-	//Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(Vec3(45.0f, 45.0f, 0.0f)));
-	//Mat4 l = t * r;
-
-	//auto it = _cubes.begin();
-	//(*it)->SetPosition(l.GetTranslation());
-	//(*it)->SetRotation(Quat::Mat2Quat(l));
-
-	//Mat4 inv = l.GetInverse();
-	//(*it)->SetPosition(inv.GetTranslation());
-	//(*it)->SetRotation(Quat::Mat2Quat(inv));
 }
 
 //*************************************************************************

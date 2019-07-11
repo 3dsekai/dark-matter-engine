@@ -66,7 +66,6 @@ void DiffuseLight::Draw()
 	Shader* shader = ShaderManager::GetInstance()->GetShader(_shader);
 	if(shader != nullptr)
 	{
-		//set the model-view-projection matrix to the shader
 		shader->UseProgram();
 
 		//diffuse light pos

@@ -35,7 +35,7 @@
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
-#define VERTICES_NUM (24)
+#define ATTRIBUTE_NUM (32)
 #define INDICES_NUM (6)
 
 //*************************************************************************
@@ -44,14 +44,14 @@
 namespace
 {
 	//cube vertices
-	const float vertices[VERTICES_NUM] =
+	const float vertices[ATTRIBUTE_NUM] =
 	{
 		/*pos coord           tex coord  normals*/
 		//front
-		-1.0, -1.0,  1.0,    0.0f, 0.0f, 1.0f, //bottom left
-		 1.0, -1.0,  1.0,    1.0f, 0.0f, 1.0f, //bottom right
-		 1.0,  1.0,  1.0,    1.0f, 1.0f, 1.0f, //top right
-		-1.0,  1.0,  1.0,    0.0f, 1.0f, 1.0f, //top left
+		-1.0, -1.0,  1.0,  0.0f, 0.0f,  0.0f, 0.0f, 1.0f, //bottom left
+		 1.0, -1.0,  1.0,  1.0f, 0.0f,  0.0f, 0.0f, 1.0f,//bottom right
+		 1.0,  1.0,  1.0,  1.0f, 1.0f,  0.0f, 0.0f, 1.0f,//top right
+		-1.0,  1.0,  1.0,  0.0f, 1.0f,  0.0f, 0.0f, 1.0f,//top left
 	};
 
 	//indices
@@ -97,7 +97,7 @@ void Plane::Init()
 		va1.size = 3; //size of attribute
 		va1.type = GL_FLOAT; //vertex attribute type
 		va1.norm = GL_FALSE; //vertex attribute normalization bool
-		va1.stride = 6*sizeof(float); //size of vertex stride
+		va1.stride = 8*sizeof(float); //size of vertex stride
 		va1.offset = 0; //offset attribute
 		_renderer->_mParams.vertAttr.push_back(va1);
 	}
@@ -106,22 +106,22 @@ void Plane::Init()
 		va2.size = 2;
 		va2.type = GL_FLOAT;
 		va2.norm = GL_FALSE;
-		va2.stride = 6*sizeof(float);
+		va2.stride = 8*sizeof(float);
 		va2.offset = 3*sizeof(float);
 		_renderer->_mParams.vertAttr.push_back(va2);
 	}
 	{ //normals
 		RenderMesh::VAParams va3;
-		va3.size = 1;
+		va3.size = 3;
 		va3.type = GL_FLOAT;
 		va3.norm = GL_FALSE;
-		va3.stride = 6*sizeof(float);
+		va3.stride = 8*sizeof(float);
 		va3.offset = 5*sizeof(float);
 		_renderer->_mParams.vertAttr.push_back(va3);
 	}
 
 	//set number of vertices and indices
-	_renderer->_mParams.vertNum = VERTICES_NUM;
+	_renderer->_mParams.vertNum = ATTRIBUTE_NUM;
 	_renderer->_mParams.idxNum = INDICES_NUM;
 
 	//initialize the mesh for rendering
