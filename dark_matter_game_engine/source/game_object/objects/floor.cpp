@@ -65,17 +65,12 @@ Floor::~Floor()
 //*************************************************************************
 void Floor::Init()
 {
-	_plane = new Plane(SOLID_MESH_SHADER_NAME,
-					  Vec3(0.0f, 0.0f, 0.0f),
-					  Vec3(1.0, 1.0f, 1.0f),
-					  Quat(0.0f, 0.0f, 0.0f, 1.0f),
+	_plane = new Plane(TEXTURE_MESH_SHADER_NAME,
+					  Vec3(1.0f, -13.0f, 0.0f),
+					  Vec3(10.0f, 10.0f, 10.0f),
+					  Quat(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(-90.0f, 0.0f, 0.0f)))),
 					  Vec4(1.0f, 0.0f, 1.0f, 1.0f));
-
-	//init plane
-	_plane->SetPosition(Vec3(1.0f, 8.0f, 0.0f));
-	_plane->SetRotation(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(90.0f, 0.0f, 0.0f))));
-	_plane->SetScale(Vec3(10.0f, 10.0f, 10.0f));
-
+	_plane->SetTexture(BOX_TEXTURE);
 }
 
 //*************************************************************************
