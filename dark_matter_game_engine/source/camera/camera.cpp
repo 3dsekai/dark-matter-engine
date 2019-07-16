@@ -30,11 +30,15 @@
 // Include
 //*************************************************************************
 #include <math.h>
+#include <iostream>
 #include "camera.h"
 #include "../main.h"
 #include "../input/mouse.h"
 #include "../math_lib/mat4.h"
 #include "../math_lib/mathUtil.h"
+#include "../draw/shaderManager.h"
+#include "../draw/shader.h"
+#include "../define/shader_define.h"
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
@@ -73,6 +77,28 @@ Camera::Camera(const Vec3& pos, const Vec3& target, float fov, float yaw, float 
 		_last_y(SCREEN_HEIGHT / 2)
 {
 };
+
+//*************************************************************************
+// Class: Camera
+// Function Name: Update
+// Argument{s}: - 
+// Explanation: update camera
+//*************************************************************************
+void Camera::Update()
+{
+	Shader* shader = ShaderManager::GetInstance()->GetShader(TEXTURE_MESH_SHADER_NAME);
+	if(shader != nullptr)
+	{
+		shader->UseProgram();
+
+		//camera pos
+		shader->SetUniformVec3(_pos, "viewPos");
+	}
+	else
+	{
+		std::cout << "Couldn't load shader: " << TEXTURE_MESH_SHADER_NAME << std::endl;
+	}
+}
 
 //*************************************************************************
 // Class: Camera

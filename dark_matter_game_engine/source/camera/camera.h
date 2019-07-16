@@ -55,6 +55,8 @@ public:
 	Camera(const Vec3& pos, const Vec3& target, float fov, float yaw, float pitch);
 	~Camera() = default;
 
+	void Update();
+
 	Mat4 GetViewMatrix() const;
 	float GetFieldOfView() const;
 

@@ -44,6 +44,7 @@ uniform sampler2D texture; //texture data
 uniform vec4 meshColor; //mesh color
 uniform vec3 lightPos; //diffuse light position
 uniform vec3 lightColor; //diffuse light color
+uniform vec3 viewPos; //camera position
 
 //*************************************************************************
 // Shader Program
@@ -54,29 +55,50 @@ void main()
 	//ambient light
 	//////////////////////////////////////////////
 
-	float ambientStrength = ambientCol.w; //strength of the ambient light
-	vec3 ambient = vec3(ambientCol) * ambientStrength; //calculate the ambient light (color of light * strength of light)
+	//strength of the ambient light
+	float ambientStrength = ambientCol.w;
+
+	//calculate the ambient light (color of light * strength of light)
+	vec3 ambient = vec3(ambientCol) * ambientStrength;
 
 	//////////////////////////////////////////////
 	//diffuse light
 	//////////////////////////////////////////////
 
-	vec3 norm = normalize(normal); //normalize the fragment's normal
-	vec3 dir = normalize(lightPos - pixelPos); //get the direction of the fragment to the light
-	float diff = max(dot(norm, dir), 0.0); //get the dot product of cosine angle between frag normal and light. calculates the "strength" of the light on this fragment.
-	vec3 diffuse = diff * lightColor; //calculate diffuse light (color of light * strength of light)
+	//normalize the fragment's normal
+	vec3 fragNorm = normalize(normal);
+
+	//get the direction of the fragment to the light
+	vec3 dir = normalize(lightPos - pixelPos);
+
+	//get the dot product of cosine angle between frag normal and light.
+	//calculates the "strength" of the light on this fragment.
+	float diff = max(dot(fragNorm, dir), 0.0);
+
+	//calculate diffuse light (color of light * strength of light)
+	vec3 diffuse = diff * lightColor;
 
 	//////////////////////////////////////////////
 	//specular light
 	//////////////////////////////////////////////
-	
-	float specStrength = 10.0; //specular strength
-	vec3 reflectDir = reflect(-dir, norm); //get the direction of the reflection
-	float spec = pow(max(dot(normalize(pixelPos), reflectDir), 0.0f), 32); //specular value: cos(angle between frag and view dir)^32
+
+	//specular strength
+	float specStrength = 0.5;
+
+	//direction of fragment to camera
+	vec3 viewDir = normalize(viewPos - pixelPos);
+
+	//get the direction of the reflection
+	vec3 reflectDir = reflect(-dir, fragNorm);
+
+	//specular value: cos(angle between reflect and view dir)^32
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32);
+
+	//calculate specular lighting
 	vec3 specular = specStrength * spec * lightColor;
 
 	//////////////////////////////////////////////
 	//output color
 	//////////////////////////////////////////////
-	color = texture(texture, texCoord) * vec4(ambient + diffuse, 1.0f) * meshColor;
+	color = texture(texture, texCoord) * vec4(ambient + diffuse + specular, 1.0f) * meshColor;
 }

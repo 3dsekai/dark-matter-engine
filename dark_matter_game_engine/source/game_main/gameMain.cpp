@@ -135,6 +135,7 @@ void GameMain::Update()
 	{ //move right
 		_cam->Move(Camera::CamDir::DIR_RIGHT);
 	}
+	_cam->Update();
 
 	//update the game objects
 	_game_obj->Update(*_mouse, *_keyboard);
@@ -150,7 +151,7 @@ void GameMain::Draw()
 {
 	//store global values in the UBO.
 	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*_cam);//get the projection-view matrix for this frame
-	UBOManager::_uboParams.ambientLight = Vec4(1.0f, 1.0f, 1.0f, 0.3f);//set the global ambient light
+	UBOManager::_uboParams.ambientLight = Vec4(1.0f, 1.0f, 1.0f, 0.2f);//set the global ambient light
 
 	//set uniform buffer objects
 	UBOManager::UpdateUniformBufferObject();
