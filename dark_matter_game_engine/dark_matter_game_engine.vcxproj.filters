@@ -166,6 +166,15 @@
     <ClInclude Include="source\game_object\objects\floor.h">
       <Filter>source\game_object\objects</Filter>
     </ClInclude>
+    <ClInclude Include="source\define\material_define.h">
+      <Filter>source\define</Filter>
+    </ClInclude>
+    <ClInclude Include="source\define\light_define.h">
+      <Filter>source\define</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lighting\light.h">
+      <Filter>source\lighting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -250,6 +259,9 @@
       <Filter>source\game_object\objects</Filter>
     </ClCompile>
     <ClCompile Include="source\lighting\diffuseLight.cpp">
+      <Filter>source\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="source\lighting\light.cpp">
       <Filter>source\lighting</Filter>
     </ClCompile>
   </ItemGroup>

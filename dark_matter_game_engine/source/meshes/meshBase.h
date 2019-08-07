@@ -32,6 +32,7 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
+#include "../define/material_define.h"
 #include "../draw/renderMesh.h"
 #include "../math_lib/vec3.h"
 #include "../math_lib/quat.h"
@@ -52,11 +53,19 @@ protected:
 		_scale(scale),
 		_rot(rot)
 	{
-		_renderer = new RenderMesh();
-		_renderer->_mParams.shaderName = shaderName;
-		_renderer->_mParams.VAO = vao;
-		_renderer->_mParams.texId = 0;
-		_renderer->_mParams.color = color;
+		{ //set renderer
+			_renderer = new RenderMesh();
+			_renderer->_mParams.shaderName = shaderName;
+			_renderer->_mParams.VAO = vao;
+			_renderer->_mParams.texId = 0;
+			_renderer->_mParams.color = color;
+		}
+		{ //set material
+			_renderer->_mParams.material.ambient = Vec3(color.x, color.y, color.z);
+			_renderer->_mParams.material.diffuse = Vec3(color.x, color.y, color.z);
+			_renderer->_mParams.material.specular = Vec3(0.5f, 0.5f, 0.5f);
+			_renderer->_mParams.material.shininess = 32;
+		}
 	};
 
 protected:

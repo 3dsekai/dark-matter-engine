@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h" />
     <ClInclude Include="source\define\draw_define.h" />
+    <ClInclude Include="source\define\light_define.h" />
+    <ClInclude Include="source\define\material_define.h" />
     <ClInclude Include="source\define\shader_define.h" />
     <ClInclude Include="source\define\texture_define.h" />
     <ClInclude Include="source\draw\drawUtil.h" />
@@ -41,6 +43,7 @@
     <ClInclude Include="source\input\keyboard.h" />
     <ClInclude Include="source\input\mouse.h" />
     <ClInclude Include="source\lighting\diffuseLight.h" />
+    <ClInclude Include="source\lighting\light.h" />
     <ClInclude Include="source\lighting\lightBase.h" />
     <ClInclude Include="source\main.h" />
     <ClInclude Include="source\math_lib\mat3.h" />
@@ -73,6 +76,7 @@
     <ClCompile Include="source\input\keyboard.cpp" />
     <ClCompile Include="source\input\mouse.cpp" />
     <ClCompile Include="source\lighting\diffuseLight.cpp" />
+    <ClCompile Include="source\lighting\light.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math_lib\mat3.cpp" />
     <ClCompile Include="source\math_lib\mat4.cpp" />

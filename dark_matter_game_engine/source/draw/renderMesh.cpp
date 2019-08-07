@@ -114,6 +114,12 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		Mat4 norm = model;
 		norm = norm.GetMatrixNormal();
 		shader->SetUniformMat3(Mat3::Mat4ToMat3(norm), "normModelMat");
+
+		// set material
+		shader->SetUniformVec3(_mParams.material.ambient, "material.ambient");
+		shader->SetUniformVec3(_mParams.material.diffuse, "material.diffuse");
+		shader->SetUniformVec3(_mParams.material.specular, "material.specular");
+		shader->SetUniformFloat(_mParams.material.shininess, "material.shininess");
 	}
 	else
 	{

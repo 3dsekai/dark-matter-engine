@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Lamp
-// Source File: [lamp.h]
+// Class Name: Light
+// Source File: [light.cpp]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,40 +25,58 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _LAMP_H_
-#define _LAMP_H_
 
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include <vector>
-#include "../gameObjBase.h"
-#include "../../math_lib/vec3.h"
-class Cube;
-class Light;
+#include <iostream>
+#include "light.h"
+#include "../draw/shaderManager.h"
+#include "../draw/shader.h"
+
 //*************************************************************************
-// Lamp Class
+// Class: Light
+// Function Name: Light
+// Argument{s}: -
+// Explanation: Light constructor
 //*************************************************************************
-class Lamp : public GameObjBase
+Light::Light(const char* shader_name, lightDef light) :
+		_shader(shader_name),
+		_light(light)
 {
-public:
-	Lamp();
-	~Lamp();
+}
 
-	void Init() override;
-	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
-	void Draw() override;
-	void Release() override;
-	//set position
-	inline void SetPosition(const Vec3& pos) {_pos = pos;};
-	//set rotation
-	inline void SetRotation(const Vec3& rot) {_rot = rot;};
+//*************************************************************************
+// Class: Light
+// Function Name: ~Light
+// Argument{s}: -
+// Explanation: Diffuse light destructor
+//*************************************************************************
+Light::~Light()
+{
+}
 
-private:
-	Cube* _lamp;
-	Light* _light;
-	Vec3 _pos;
-	Vec3 _rot;
-};
+//*************************************************************************
+// Class: Light
+// Function Name: Draw
+// Argument{s}: -
+// Explanation: Diffuse light draw
+//*************************************************************************
+void Light::Draw()
+{
+	Shader* shader = ShaderManager::GetInstance()->GetShader(_shader);
+	if(shader != nullptr)
+	{
+		shader->UseProgram();
 
-#endif
+		//set light properties
+		shader->SetUniformVec3(_light.position, "light.position");
+		shader->SetUniformVec3(_light.ambient, "light.ambient");
+		shader->SetUniformVec3(_light.diffuse, "light.diffuse");
+		shader->SetUniformVec3(_light.specular, "light.specular");
+	}
+	else
+	{
+		std::cout << "Couldn't load shader: " << _shader << std::endl;
+	}
+}

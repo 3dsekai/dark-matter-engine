@@ -112,3 +112,12 @@ https://www.reddit.com/r/opengl/comments/4oozww/indexed_buffers_and_face_normals
 	OpenGL indices do open for a lot of reuse as soon as your mesh consists of more
 	vertices inside the boundary and with no sharp 90 degree corners.
 	Same idea applies to triangle strips.
+
+
+=================================================
+
+8/7/2019 Log
+
+=================================================
+Finished the basic mesh material and light shading.
+Time for a celebratory drink!

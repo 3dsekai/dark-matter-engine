@@ -36,7 +36,7 @@ layout (location = 1) in vec2 attrTex;
 layout (location = 2) in vec3 attrNormal;
 
 out vec2 texCoord; //texture coordinates
-out vec4 ambientCol; //the ambient light
+//out vec4 ambientCol; //the ambient light
 out vec3 pixelPos; //position of the fragment
 out vec3 normal; //vertex normal
 
@@ -62,7 +62,7 @@ void main()
 {
 	gl_Position = projView * model * vec4(attrPos, 1.0);//calculate position
 	texCoord = attrTex; //pass the texture coordinates
-	ambientCol = ambientLight;//pass the ambient light color
+//	ambientCol = ambientLight;//pass the ambient light color *made redundant for now*
 	pixelPos = vec3(model * vec4(attrPos, 1.0));
 	normal = normModelMat * attrNormal; //calculate the vertex normal
 }

@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: RenderMesh
-// Source File: [renderMesh.h]
+// Class Name: -
+// Source File: [light_define.h]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,71 +25,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _RENDERMESH_H_
-#define _RENDERMESH_H_
+#ifndef _LIGHT_DEFINE_H_
+#define _LIGHT_DEFINE_H_
 
 //*************************************************************************
-// Include
+// include
 //*************************************************************************
-#include <vector>
-#include <GL/glew.h>
-#include "../math_lib/vec4.h"
-#include "../define/material_define.h"
-class Vec4;
-class Mat4;
+#include "../math_lib/vec3.h"
 
-//*************************************************************************
-// Class
-//*************************************************************************
-class RenderMesh
+//light struct
+struct lightDef
 {
-public:
-//vertex attribute parameters
-struct VAParams
-{
-	int size; //size of attribute
-	GLenum type; //vertex attribute type
-	GLboolean norm; //vertex attribute normalization bool
-	GLuint stride; //size of vertex stride
-	int offset; //offset attribute
-};
-
-//mesh parameters
-struct MeshParams
-{
-	//shader name
-	const char* shaderName;
-
-	//vertex aray object
-	GLuint VAO;
-
-	//color
-	Vec4 color;
-
-	//texture id
-	GLuint texId;
-
-	//material
-	materialDef material;
-
-	//vertex attributes
-	std::vector<VAParams> vertAttr;
-
-	int vertNum; //number of vertices
-	int idxNum; //number of indices
-};
-
-public:
-	RenderMesh() {};
-	~RenderMesh() {};
-
-	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Mat4& model);
-	void Set2DTextureMesh(const char* texName);
-	void DeleteMesh();
-
-public:
-	MeshParams _mParams;
+	Vec3 position; //light position
+	Vec3 ambient; //ambient light property
+	Vec3 diffuse; //diffuse light property
+	Vec3 specular; //specular reflection property
 };
 
 #endif

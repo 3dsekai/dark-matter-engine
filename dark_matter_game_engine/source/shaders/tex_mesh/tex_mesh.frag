@@ -29,10 +29,32 @@
 #version 330 core
 
 //*************************************************************************
+// structs
+//*************************************************************************
+
+//object lighting material
+struct Material
+{
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
+
+//light source
+struct Light
+{
+	vec3 position;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+//*************************************************************************
 // input/output variables
 //*************************************************************************
 in vec2 texCoord; //texture coordinates
-in vec4 ambientCol; //ambient color
+//in vec4 ambientCol; //ambient color *made redundant for now*
 in vec3 normal; //fragment normal vector
 in vec3 pixelPos; //the position of this fragment (pixel)
 out vec4 color; //output color
@@ -41,10 +63,10 @@ out vec4 color; //output color
 // Uniforms
 //*************************************************************************
 uniform sampler2D texture; //texture data
-uniform vec4 meshColor; //mesh color
-uniform vec3 lightPos; //diffuse light position
-uniform vec3 lightColor; //diffuse light color
 uniform vec3 viewPos; //camera position
+uniform Material material; //mesh's material
+uniform Light light; //light source
+
 
 //*************************************************************************
 // Shader Program
@@ -55,11 +77,8 @@ void main()
 	//ambient light
 	//////////////////////////////////////////////
 
-	//strength of the ambient light
-	float ambientStrength = ambientCol.w;
-
-	//calculate the ambient light (color of light * strength of light)
-	vec3 ambient = vec3(ambientCol) * ambientStrength;
+	//calculate the ambient light
+	vec3 ambient = light.ambient * material.ambient;
 
 	//////////////////////////////////////////////
 	//diffuse light
@@ -69,14 +88,14 @@ void main()
 	vec3 fragNorm = normalize(normal);
 
 	//get the direction of the fragment to the light
-	vec3 dir = normalize(lightPos - pixelPos);
+	vec3 dir = normalize(light.position - pixelPos);
 
 	//get the dot product of cosine angle between frag normal and light.
 	//calculates the "strength" of the light on this fragment.
 	float diff = max(dot(fragNorm, dir), 0.0);
 
-	//calculate diffuse light (color of light * strength of light)
-	vec3 diffuse = diff * lightColor;
+	//calculate diffuse light
+	vec3 diffuse = light.diffuse * (diff * material.diffuse);
 
 	//////////////////////////////////////////////
 	//specular light
@@ -92,13 +111,13 @@ void main()
 	vec3 reflectDir = reflect(-dir, fragNorm);
 
 	//specular value: cos(angle between reflect and view dir)^32
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
 
 	//calculate specular lighting
-	vec3 specular = specStrength * spec * lightColor;
+	vec3 specular = light.specular * (spec * material.specular);
 
 	//////////////////////////////////////////////
 	//output color
 	//////////////////////////////////////////////
-	color = texture(texture, texCoord) * vec4(ambient + diffuse + specular, 1.0f) * meshColor;
+	color = texture(texture, texCoord) * vec4(ambient + diffuse + specular, 1.0f);
 }

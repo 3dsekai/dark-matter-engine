@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: RenderMesh
-// Source File: [renderMesh.h]
+// Class Name: Light
+// Source File: [light.h]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,71 +25,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _RENDERMESH_H_
-#define _RENDERMESH_H_
+#ifndef _LIGHT_H_
+#define _LIGHT_H_
 
 //*************************************************************************
-// Include
+// Includes
 //*************************************************************************
-#include <vector>
-#include <GL/glew.h>
-#include "../math_lib/vec4.h"
-#include "../define/material_define.h"
-class Vec4;
-class Mat4;
+#include "../define/light_define.h"
 
 //*************************************************************************
-// Class
+// Light Class
 //*************************************************************************
-class RenderMesh
+class Light
 {
 public:
-//vertex attribute parameters
-struct VAParams
-{
-	int size; //size of attribute
-	GLenum type; //vertex attribute type
-	GLboolean norm; //vertex attribute normalization bool
-	GLuint stride; //size of vertex stride
-	int offset; //offset attribute
-};
+	Light(const char* shader_name, lightDef light);
+	~Light();
+	void Draw();
+	void SetPosition(const Vec3& pos) { _light.position = pos; };
 
-//mesh parameters
-struct MeshParams
-{
-	//shader name
-	const char* shaderName;
-
-	//vertex aray object
-	GLuint VAO;
-
-	//color
-	Vec4 color;
-
-	//texture id
-	GLuint texId;
-
-	//material
-	materialDef material;
-
-	//vertex attributes
-	std::vector<VAParams> vertAttr;
-
-	int vertNum; //number of vertices
-	int idxNum; //number of indices
-};
-
-public:
-	RenderMesh() {};
-	~RenderMesh() {};
-
-	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Mat4& model);
-	void Set2DTextureMesh(const char* texName);
-	void DeleteMesh();
-
-public:
-	MeshParams _mParams;
+private:
+	lightDef _light;
+	const char* _shader;
 };
 
 #endif

@@ -31,8 +31,9 @@
 //*************************************************************************
 #include "lamp.h"
 #include "../../define/shader_define.h"
+#include "../../define/light_define.h"
 #include "../../meshes/cube.h"
-#include "../../lighting/diffuseLight.h"
+#include "../../lighting/light.h"
 #include "../../math_lib/mat4.h"
 //*************************************************************************
 // Class: Lamp
@@ -78,7 +79,13 @@ void Lamp::Init()
 
 	//lamp light
 	Vec4 col = _lamp->GetColor();
-	_light = new DiffuseLight(TEXTURE_MESH_SHADER_NAME, _lamp->GetPosition(), Vec3(col.x, col.y, col.z));
+
+	lightDef light;
+	light.position = _lamp->GetPosition();
+	light.ambient = Vec3(col.x, col.y, col.z) * 0.1f;
+	light.diffuse = Vec3(col.x, col.y, col.z) * 0.5f;
+	light.specular = Vec3(1.0f, 1.0f, 1.0f);
+	_light = new Light(TEXTURE_MESH_SHADER_NAME, light);
 
 }
 
