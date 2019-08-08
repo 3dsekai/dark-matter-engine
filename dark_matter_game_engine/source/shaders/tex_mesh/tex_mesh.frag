@@ -101,9 +101,6 @@ void main()
 	//specular light
 	//////////////////////////////////////////////
 
-	//specular strength
-	float specStrength = 0.5;
-
 	//direction of fragment to camera
 	vec3 viewDir = normalize(viewPos - pixelPos);
 
@@ -111,7 +108,7 @@ void main()
 	vec3 reflectDir = reflect(-dir, fragNorm);
 
 	//specular value: cos(angle between reflect and view dir)^32
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material.shininess);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	//calculate specular lighting
 	vec3 specular = light.specular * (spec * material.specular);
