@@ -66,8 +66,8 @@ struct MeshParams
 	//color
 	Vec4 color;
 
-	//texture id
-	GLuint texId;
+//	//texture id
+//	GLuint texId;
 
 	//material
 	materialDef material;

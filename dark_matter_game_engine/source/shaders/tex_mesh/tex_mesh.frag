@@ -35,8 +35,7 @@
 //object lighting material
 struct Material
 {
-	vec3 ambient;
-	vec3 diffuse;
+	sampler2D diffuse;
 	vec3 specular;
 	float shininess;
 };
@@ -62,7 +61,6 @@ out vec4 color; //output color
 //*************************************************************************
 // Uniforms
 //*************************************************************************
-uniform sampler2D texture; //texture data
 uniform vec3 viewPos; //camera position
 uniform Material material; //mesh's material
 uniform Light light; //light source
@@ -78,7 +76,7 @@ void main()
 	//////////////////////////////////////////////
 
 	//calculate the ambient light
-	vec3 ambient = light.ambient * material.ambient;
+	vec3 ambient = light.ambient * texture(material.diffuse, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//diffuse light
@@ -95,7 +93,7 @@ void main()
 	float diff = max(dot(fragNorm, dir), 0.0);
 
 	//calculate diffuse light
-	vec3 diffuse = light.diffuse * (diff * material.diffuse);
+	vec3 diffuse = light.diffuse * diff * texture(material.diffuse, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//specular light
@@ -116,5 +114,5 @@ void main()
 	//////////////////////////////////////////////
 	//output color
 	//////////////////////////////////////////////
-	color = texture(texture, texCoord) * vec4(ambient + diffuse + specular, 1.0f);
+	color = vec4(ambient + diffuse + specular, 1.0f);
 }

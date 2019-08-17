@@ -51,3 +51,10 @@
 // https://www.deviantart.com/dactilardesign/art/Crate-generator-342135330
 //*************************************************************************
 #define BOX_TEXTURE ("cube/box.jpg")
+//*************************************************************************
+// box2 texture
+// source:
+// https://learnopengl.com/img/textures/container2.png
+//*************************************************************************
+#define BOX2_TEXTURE ("cube/box2.jpg")
+#define BOX2_SPEC_TEX ("cube/box2_specular.jpg")

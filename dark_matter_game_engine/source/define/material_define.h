@@ -36,8 +36,7 @@
 //object material struct
 struct materialDef
 {
-	Vec3 ambient; //ambient light property
-	Vec3 diffuse; //diffuse light property
+	GLuint diffuse; //diffuse light property
 	Vec3 specular; //specular reflection property
 	float shininess; //the shininess of the material (strength of specular reflection)
 };

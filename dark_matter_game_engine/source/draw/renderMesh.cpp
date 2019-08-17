@@ -107,7 +107,6 @@ void RenderMesh::DrawMesh(const Mat4& model)
 	{
 		//set the model-view-projection matrix to the shader
 		shader->UseProgram();
-		shader->SetUniformVec4(_mParams.color, "meshColor");
 		shader->SetUniformMat4(model, "model");
 		
 		//get matrix normal		
@@ -116,8 +115,6 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		shader->SetUniformMat3(Mat3::Mat4ToMat3(norm), "normModelMat");
 
 		// set material
-		shader->SetUniformVec3(_mParams.material.ambient, "material.ambient");
-		shader->SetUniformVec3(_mParams.material.diffuse, "material.diffuse");
 		shader->SetUniformVec3(_mParams.material.specular, "material.specular");
 		shader->SetUniformFloat(_mParams.material.shininess, "material.shininess");
 	}
@@ -126,11 +123,11 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
 	}
 
-	if(_mParams.texId != 0)
+	if(_mParams.material.diffuse != 0)
 	{
 		//activate and bind the texture
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _mParams.texId);
+		glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse);
 	}
 
 	//bind the vertex array object
@@ -155,8 +152,14 @@ void RenderMesh::Set2DTextureMesh(const char* texName)
 
 	if (texData.imgData != nullptr)
 	{
-		glGenTextures(1, &_mParams.texId); //generate texture name
-		glBindTexture(GL_TEXTURE_2D, _mParams.texId); //bind the texture to the texture target
+		GLenum format;
+		if      (texData.n == 1) format = GL_RED;
+		else if (texData.n == 2) format = GL_RG;
+		else if (texData.n == 3) format = GL_RGB;
+		else if (texData.n == 4) format = GL_RGBA;
+
+		glGenTextures(1, &_mParams.material.diffuse); //generate texture name
+		glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse); //bind the texture to the texture target
 
 		// set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -169,11 +172,11 @@ void RenderMesh::Set2DTextureMesh(const char* texName)
 		//generate texture image on currently bound texture object
 		glTexImage2D(GL_TEXTURE_2D,
 					 0,
-					 GL_RGB,
+					 format,
 					 texData.w,
 					 texData.h,
 					 0,
-					 GL_RGB,
+					 format,
 					 GL_UNSIGNED_BYTE,
 					 texData.imgData);
 		//generate mipmaps for currently bound texture object
@@ -184,7 +187,7 @@ void RenderMesh::Set2DTextureMesh(const char* texName)
 		if (shader != nullptr)
 		{
 			shader->UseProgram();
-			shader->SetUniformUint(_mParams.texId, "texture");
+			shader->SetUniformUint(0, "material.diffuse");
 		}
 		else
 		{

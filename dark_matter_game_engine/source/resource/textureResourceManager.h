@@ -35,12 +35,13 @@ class TextureResourceManager
 {
 public:
 	//stb_image library, texture load data
+	//https://github.com/nothings/stb/blob/master/stb_image.h
 	struct stbImgData
 	{
-		int w;
-		int h;
-		int n;
-		unsigned char* imgData;
+		int w; //outputs image width in pixels
+		int h; //outputs image height in pixels
+		int n; //outputs # of image components in image file
+		unsigned char* imgData; //output image data
 	};
 
 public:
