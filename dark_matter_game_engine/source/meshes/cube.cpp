@@ -208,7 +208,7 @@ void Cube::Delete()
 // Argument{s}: -
 // Explanation: Load image and set texture to cube shader
 //*************************************************************************
-void Cube::SetTexture(const char* texName)
-{
-	_renderer->Set2DTextureMesh(texName);
-}
+//void Cube::SetTexture(const char* texName)
+//{
+//	_renderer->Set2DTextureMesh(texName);
+//}

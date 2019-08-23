@@ -37,8 +37,15 @@
 struct materialDef
 {
 	GLuint diffuse; //diffuse light property
-	Vec3 specular; //specular reflection property
+	GLuint specular; //specular reflection property
 	float shininess; //the shininess of the material (strength of specular reflection)
+};
+
+//material types
+enum MATERIAL_TYPE
+{
+	MATERIAL_DIFFUSE = 0,
+	MATERIAL_SPECULAR
 };
 
 #endif

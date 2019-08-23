@@ -36,7 +36,7 @@
 struct Material
 {
 	sampler2D diffuse;
-	vec3 specular;
+	sampler2D specular;
 	float shininess;
 };
 
@@ -87,11 +87,11 @@ void main()
 
 	//get the direction of the fragment to the light
 	vec3 dir = normalize(light.position - pixelPos);
-
+	
 	//get the dot product of cosine angle between frag normal and light.
 	//calculates the "strength" of the light on this fragment.
 	float diff = max(dot(fragNorm, dir), 0.0);
-
+	
 	//calculate diffuse light
 	vec3 diffuse = light.diffuse * diff * texture(material.diffuse, texCoord).rgb;
 
@@ -109,10 +109,10 @@ void main()
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	//calculate specular lighting
-	vec3 specular = light.specular * (spec * material.specular);
+	vec3 specular = light.specular * spec * texture(material.specular, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//output color
 	//////////////////////////////////////////////
-	color = vec4(ambient + diffuse + specular, 1.0f);
+	color = vec4(ambient + diffuse + specular, 1.0);
 }

@@ -32,7 +32,10 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
+#include <iostream>
 #include "../define/material_define.h"
+#include "../draw/shaderManager.h"
+#include "../draw/shader.h"
 #include "../draw/renderMesh.h"
 #include "../math_lib/vec3.h"
 #include "../math_lib/quat.h"
@@ -61,8 +64,8 @@ protected:
 		}
 		{ //set material
 			_renderer->_mParams.material.diffuse = 0;
-			_renderer->_mParams.material.specular = Vec3(0.5f, 0.5f, 0.5f);
-			_renderer->_mParams.material.shininess = 32;
+			_renderer->_mParams.material.specular = 1;
+			_renderer->_mParams.material.shininess = 64;
 		}
 	};
 
@@ -70,7 +73,6 @@ protected:
 	virtual void Init() = 0;
 
 public:
-	virtual void SetTexture(const char* texName) = 0;
 	virtual void Draw() = 0;
 	virtual void Delete() = 0;
 
@@ -84,6 +86,36 @@ public:
 	inline const Quat GetRotation() const { return _rot; };
 	inline const Vec3 GetScale() const { return _scale; };
 	inline const Vec4 GetColor() const { return _renderer->_mParams.color; };
+
+	void SetTexture(const char* texName, MATERIAL_TYPE type)
+	{
+		if(_renderer != nullptr)
+		{
+			GLuint texId = _renderer->LoadTexture(texName);
+	
+			//set the cube color and texture to the shader
+			Shader* shader = ShaderManager::GetInstance()->GetShader(_renderer->_mParams.shaderName);
+			if (shader != nullptr)
+			{
+				shader->UseProgram();
+				switch(type)
+				{
+				case MATERIAL_DIFFUSE:
+					shader->SetUniformInt(0, "material.diffuse");
+					_renderer->_mParams.material.diffuse = texId;
+					break;
+				case MATERIAL_SPECULAR:
+					shader->SetUniformInt(1, "material.specular");
+					_renderer->_mParams.material.specular = texId;
+					break;
+				}
+			}
+			else
+			{
+				std::cout << "Couldn't load shader: " << _renderer->_mParams.shaderName << std::endl;
+			}
+		}
+	};
 
 protected:
 	RenderMesh* _renderer;		//mesh renderer

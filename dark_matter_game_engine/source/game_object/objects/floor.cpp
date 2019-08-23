@@ -70,7 +70,7 @@ void Floor::Init()
 					  Vec3(10.0f, 10.0f, 10.0f),
 					  Quat(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(-90.0f, 0.0f, 0.0f)))),
 					  Vec4(1.0f, 0.0f, 1.0f, 1.0f));
-	_plane->SetTexture(BOX_TEXTURE);
+	_plane->SetTexture(BOX_TEXTURE, MATERIAL_DIFFUSE);
 }
 
 //*************************************************************************

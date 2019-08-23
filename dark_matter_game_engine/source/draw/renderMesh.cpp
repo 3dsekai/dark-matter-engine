@@ -115,7 +115,6 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		shader->SetUniformMat3(Mat3::Mat4ToMat3(norm), "normModelMat");
 
 		// set material
-		shader->SetUniformVec3(_mParams.material.specular, "material.specular");
 		shader->SetUniformFloat(_mParams.material.shininess, "material.shininess");
 	}
 	else
@@ -123,12 +122,12 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
 	}
 
-	if(_mParams.material.diffuse != 0)
-	{
-		//activate and bind the texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse);
-	}
+	//activate and bind the texture
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, _mParams.material.specular);
+
 
 	//bind the vertex array object
 	glBindVertexArray(_mParams.VAO);
@@ -143,8 +142,9 @@ void RenderMesh::DrawMesh(const Mat4& model)
 // const char* texName: the name of the texture to load
 // Explanation: set the texture onto the mesh
 //*************************************************************************
-void RenderMesh::Set2DTextureMesh(const char* texName)
+GLuint RenderMesh::LoadTexture(const char* texName)
 {
+	GLuint texId;
 	//load texture
 	std::string dir = "resources/img/" + std::string(texName);
 	TextureResourceManager::stbImgData texData;
@@ -158,8 +158,8 @@ void RenderMesh::Set2DTextureMesh(const char* texName)
 		else if (texData.n == 3) format = GL_RGB;
 		else if (texData.n == 4) format = GL_RGBA;
 
-		glGenTextures(1, &_mParams.material.diffuse); //generate texture name
-		glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse); //bind the texture to the texture target
+		glGenTextures(1, &texId); //generate texture name
+		glBindTexture(GL_TEXTURE_2D, texId); //bind the texture to the texture target
 
 		// set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -181,22 +181,12 @@ void RenderMesh::Set2DTextureMesh(const char* texName)
 					 texData.imgData);
 		//generate mipmaps for currently bound texture object
 		glGenerateMipmap(GL_TEXTURE_2D);
-
-		//set the cube color and texture to the shader
-		Shader* shader = ShaderManager::GetInstance()->GetShader(_mParams.shaderName);
-		if (shader != nullptr)
-		{
-			shader->UseProgram();
-			shader->SetUniformUint(0, "material.diffuse");
-		}
-		else
-		{
-			std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
-		}
 	}
 
 	//unload texture
 	TextureResourceManager::UnloadTexture(&texData);
+
+	return texId;
 }
 
 //*************************************************************************

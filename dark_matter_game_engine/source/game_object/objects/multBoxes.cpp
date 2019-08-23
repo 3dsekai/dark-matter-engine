@@ -90,7 +90,8 @@ void MultBoxes::Init()
 
 	for (auto it = _cubes.begin(); it != _cubes.end(); it++)
 	{
-		(*it)->SetTexture(BOX2_TEXTURE);
+		(*it)->SetTexture(BOX2_TEXTURE, MATERIAL_DIFFUSE);
+		(*it)->SetTexture(BOX2_SPEC_TEX, MATERIAL_SPECULAR);
 	}
 }
 

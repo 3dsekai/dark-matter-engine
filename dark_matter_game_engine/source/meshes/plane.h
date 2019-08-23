@@ -51,7 +51,7 @@ private:
 	void Init() override;
 
 public:
-	void SetTexture(const char* texName) override;
+//	void SetTexture(const char* texName) override;
 	void Draw() override;
 	void Delete() override;
 };

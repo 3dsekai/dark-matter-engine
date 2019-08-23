@@ -85,7 +85,7 @@ public:
 
 	void InitMesh(const float* vertices, const int* indices);
 	void DrawMesh(const Mat4& model);
-	void Set2DTextureMesh(const char* texName);
+	GLuint LoadTexture(const char* texName);
 	void DeleteMesh();
 
 public:

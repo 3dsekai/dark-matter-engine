@@ -167,7 +167,7 @@ void Plane::Delete()
 // Argument{s}: -
 // Explanation: Load image and set texture to shader
 //*************************************************************************
-void Plane::SetTexture(const char* texName)
-{
-	_renderer->Set2DTextureMesh(texName);
-}
+//void Plane::SetTexture(const char* texName)
+//{
+//	_renderer->Set2DTextureMesh(texName);
+//}
