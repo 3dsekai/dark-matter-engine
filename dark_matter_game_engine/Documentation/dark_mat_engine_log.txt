@@ -121,3 +121,23 @@ https://www.reddit.com/r/opengl/comments/4oozww/indexed_buffers_and_face_normals
 =================================================
 Finished the basic mesh material and light shading.
 Time for a celebratory drink!
+
+=================================================
+
+8/23/2019 Log
+
+=================================================
+I got diffuse/specular light maps to work.
+
+important point 1:
+I think I need to revamp my texture loading process.
+I'm loading, deleting, then realoading a texture everytime I apply it to
+a new object - creating a new texture id every time.
+I should load all textures ONCE on startup, then appropriately apply the id
+to the mesh.
+
+important point 2:
+In my current setup, the shader expects two material textures - diffuse and
+specular. This is fine if I've created a texture for both, but breaks down if
+a mesh lacks one. I need to devise a shader algorithm that calculates a default
+fragment color in the absence of a material texture.
