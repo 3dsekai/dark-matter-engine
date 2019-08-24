@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: RenderMesh
-// Source File: [renderMesh.h]
+// Class Name: TextureManager
+// Source File: [textureManager.h]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -25,67 +25,44 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _RENDERMESH_H_
-#define _RENDERMESH_H_
+#ifndef _TEXTURE_MANAGER_H_
+#define _TEXTURE_MANAGER_H_
 
 //*************************************************************************
-// Include
+// Includes
 //*************************************************************************
-#include <vector>
+#include <map>
 #include <GL/glew.h>
-#include "../math_lib/vec4.h"
-#include "../define/material_define.h"
-class Vec4;
-class Mat4;
+#include "../define/texture_define.h"
 
 //*************************************************************************
-// Class
+// Texture Manager Class
 //*************************************************************************
-class RenderMesh
+class TextureManager
 {
 public:
-//vertex attribute parameters
-struct VAParams
-{
-	int size; //size of attribute
-	GLenum type; //vertex attribute type
-	GLboolean norm; //vertex attribute normalization bool
-	GLuint stride; //size of vertex stride
-	int offset; //offset attribute
-};
+	static TextureManager* GetInstance();
+	static void DestroyInstance();
 
-//mesh parameters
-struct MeshParams
-{
-	//shader name
-	const char* shaderName;
+	void LoadAllTextures();
+	void LoadTexture(const char* name);
+	void DeleteTexture(const char* name);
+	GLuint GetTextureId(const char* name);
 
-	//vertex aray object
-	GLuint VAO;
+private:
+	static void ClearAllTextures();
 
-	//color
-	Vec4 color;
+private:
+	TextureManager() {};
+	~TextureManager() {};
 
-	//material
-	materialDef material;
+	TextureManager(const TextureManager &obj) {};
 
-	//vertex attributes
-	std::vector<VAParams> vertAttr;
 
-	int vertNum; //number of vertices
-	int idxNum; //number of indices
-};
-
-public:
-	RenderMesh() {};
-	~RenderMesh() {};
-
-	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Mat4& model);
-	void DeleteMesh();
-
-public:
-	MeshParams _mParams;
+private:
+	static TextureManager* _instance;
+	static std::map<const char*, GLuint> _textures;
 };
 
 #endif
+

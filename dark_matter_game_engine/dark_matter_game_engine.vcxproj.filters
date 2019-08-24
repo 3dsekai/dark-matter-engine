@@ -175,6 +175,9 @@
     <ClInclude Include="source\lighting\light.h">
       <Filter>source\lighting</Filter>
     </ClInclude>
+    <ClInclude Include="source\resource\textureManager.h">
+      <Filter>source\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="source\lighting\light.cpp">
       <Filter>source\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resource\textureManager.cpp">
+      <Filter>source\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

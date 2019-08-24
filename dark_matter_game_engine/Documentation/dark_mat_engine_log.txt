@@ -160,3 +160,7 @@ For more on binding textures to samplers, check the
 "Binding textures to samplers" section on this document:
 https://www.khronos.org/opengl/wiki/Sampler_(GLSL)
 
+fix2:
+I fixed important point 1 from 8/23 by creating a texture manager,
+loading all textures on startup, and fetching the texture ids from the manager
+whenever I need them.

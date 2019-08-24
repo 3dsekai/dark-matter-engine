@@ -35,6 +35,7 @@
 #include <iostream>
 #include "../define/material_define.h"
 #include "../draw/shaderManager.h"
+#include "../resource/textureManager.h"
 #include "../draw/shader.h"
 #include "../draw/renderMesh.h"
 #include "../math_lib/vec3.h"
@@ -93,7 +94,7 @@ public:
 	{
 		if(_renderer != nullptr)
 		{
-			GLuint texId = _renderer->LoadTexture(texName);
+			GLuint texId = TextureManager::GetInstance()->GetTextureId(texName);
 	
 			//set the cube color and texture to the shader
 			Shader* shader = ShaderManager::GetInstance()->GetShader(_renderer->_mParams.shaderName);

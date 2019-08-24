@@ -36,7 +36,6 @@
 #include "../math_lib/mat3.h"
 #include "../math_lib/mat4.h"
 #include "../math_lib/vec3.h"
-#include "../resource/textureResourceManager.h"
 //*************************************************************************
 // Class: RenderMesh
 // Function Name: InitMesh
@@ -134,59 +133,6 @@ void RenderMesh::DrawMesh(const Mat4& model)
 
 	//draw the triangles to the buffer
 	glDrawElements(GL_TRIANGLES, _mParams.idxNum, GL_UNSIGNED_INT, 0);
-}
-//*************************************************************************
-// Class: RenderMesh
-// Function Name: SetTextureMesh
-// Argument{s}:
-// const char* texName: the name of the texture to load
-// Explanation: set the texture onto the mesh
-//*************************************************************************
-GLuint RenderMesh::LoadTexture(const char* texName)
-{
-	GLuint texId;
-	//load texture
-	std::string dir = "resources/img/" + std::string(texName);
-	TextureResourceManager::stbImgData texData;
-	TextureResourceManager::LoadTexture(dir.c_str(), &texData);
-
-	if (texData.imgData != nullptr)
-	{
-		GLenum format;
-		if      (texData.n == 1) format = GL_RED;
-		else if (texData.n == 2) format = GL_RG;
-		else if (texData.n == 3) format = GL_RGB;
-		else if (texData.n == 4) format = GL_RGBA;
-
-		glGenTextures(1, &texId); //generate texture name
-		glBindTexture(GL_TEXTURE_2D, texId); //bind the texture to the texture target
-
-		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//generate texture image on currently bound texture object
-		glTexImage2D(GL_TEXTURE_2D,
-					 0,
-					 format,
-					 texData.w,
-					 texData.h,
-					 0,
-					 format,
-					 GL_UNSIGNED_BYTE,
-					 texData.imgData);
-		//generate mipmaps for currently bound texture object
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-
-	//unload texture
-	TextureResourceManager::UnloadTexture(&texData);
-
-	return texId;
 }
 
 //*************************************************************************

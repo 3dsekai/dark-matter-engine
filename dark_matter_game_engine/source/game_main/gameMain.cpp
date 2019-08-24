@@ -34,6 +34,7 @@
 #include "../input/inputCodes.h"
 
 #include "../draw/shaderManager.h"
+#include "../resource/textureManager.h"
 #include "../draw/drawUtil.h"
 #include "../draw/uboManager.h"
 #include "../define/shader_define.h"
@@ -81,6 +82,7 @@ GameMain::~GameMain()
 	_game_obj = nullptr;
 	//delete shaders
 	ShaderManager::GetInstance()->DestroyInstance();
+	TextureManager::GetInstance()->DestroyInstance();
 }
 
 //*************************************************************************
@@ -105,6 +107,9 @@ void GameMain::Start()
 	TEXTURE_MESH_SHADER_NAME,
 	TEXTURE_MESH_VERTEX_SHADER,
 	TEXTURE_MESH_FRAGMENT_SHADER);
+
+	//load the textures
+	TextureManager::GetInstance()->LoadAllTextures();
 
 	//initialize the game objects
 	_game_obj->Init();
