@@ -36,9 +36,11 @@
 //object material struct
 struct materialDef
 {
-	GLuint diffuse; //diffuse light property
-	GLuint specular; //specular reflection property
-	float shininess; //the shininess of the material (strength of specular reflection)
+	GLint  diffuse; //diffuse material sampler
+	GLuint diffTexId; //diffuse material texture id
+	GLint  specular; //specular material sampler
+	GLuint specTexId; //specular material texture id
+	float  shininess; //the shininess of the material (strength of specular reflection)
 };
 
 //material types

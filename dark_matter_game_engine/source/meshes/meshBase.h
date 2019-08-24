@@ -63,8 +63,10 @@ protected:
 			_renderer->_mParams.color = color;
 		}
 		{ //set material
-			_renderer->_mParams.material.diffuse = 0;
-			_renderer->_mParams.material.specular = 1;
+			_renderer->_mParams.material.diffuse   = 0;
+			_renderer->_mParams.material.specular  = 1;
+			_renderer->_mParams.material.diffTexId = 0;
+			_renderer->_mParams.material.specTexId = 0;
 			_renderer->_mParams.material.shininess = 64;
 		}
 	};
@@ -101,12 +103,12 @@ public:
 				switch(type)
 				{
 				case MATERIAL_DIFFUSE:
-					shader->SetUniformInt(0, "material.diffuse");
-					_renderer->_mParams.material.diffuse = texId;
+					shader->SetUniformInt(_renderer->_mParams.material.diffuse, "material.diffuse");
+					_renderer->_mParams.material.diffTexId = texId;
 					break;
 				case MATERIAL_SPECULAR:
-					shader->SetUniformInt(1, "material.specular");
-					_renderer->_mParams.material.specular = texId;
+					shader->SetUniformInt(_renderer->_mParams.material.specular, "material.specular");
+					_renderer->_mParams.material.specTexId = texId;
 					break;
 				}
 			}

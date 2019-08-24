@@ -141,3 +141,22 @@ In my current setup, the shader expects two material textures - diffuse and
 specular. This is fine if I've created a texture for both, but breaks down if
 a mesh lacks one. I need to devise a shader algorithm that calculates a default
 fragment color in the absence of a material texture.
+
+=================================================
+
+8/24/2019 Log
+
+=================================================
+
+fix 1:
+I was configuring my material textures incorrectly.
+the sampler2D shader uniform does NOT correspond to the texture ID.
+It corresponds to the texture unit!
+glActiveTexture() sets the active texture unit (GL_TEXTURE0...etc).
+I set the diffuse/specular material properties to their appropriate texture units.
+I created two new properties (diffTexId/specTexId) to save the texture's Id.
+This Id is bound to the shader via glBindTexture.
+For more on binding textures to samplers, check the
+"Binding textures to samplers" section on this document:
+https://www.khronos.org/opengl/wiki/Sampler_(GLSL)
+

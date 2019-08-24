@@ -123,10 +123,10 @@ void RenderMesh::DrawMesh(const Mat4& model)
 	}
 
 	//activate and bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _mParams.material.diffuse);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, _mParams.material.specular);
+	glActiveTexture(GL_TEXTURE0 + _mParams.material.diffuse);
+	glBindTexture(GL_TEXTURE_2D, _mParams.material.diffTexId);
+	glActiveTexture(GL_TEXTURE0 + _mParams.material.specular);
+	glBindTexture(GL_TEXTURE_2D, _mParams.material.specTexId);
 
 
 	//bind the vertex array object
