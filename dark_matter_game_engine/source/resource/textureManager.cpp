@@ -83,6 +83,7 @@ void TextureManager::LoadAllTextures()
 	LoadTexture(BOX_TEXTURE);
 	LoadTexture(BOX2_TEXTURE);
 	LoadTexture(BOX2_SPEC_TEX);
+	LoadTexture(BLACK_TEXTURE);
 }
 
 //*************************************************************************

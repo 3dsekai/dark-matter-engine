@@ -164,3 +164,15 @@ fix2:
 I fixed important point 1 from 8/23 by creating a texture manager,
 loading all textures on startup, and fetching the texture ids from the manager
 whenever I need them.
+
+=================================================
+
+9/1/2019 Log
+
+=================================================
+
+fix:
+I fixed important point 2 from 8/23.
+I created a one pixel black texture, and initialized all mesh
+material textures with it. Therefore, for any objects lacking a material texture,
+the missing texture will have the default RGBA: 0,0,0,0.

@@ -70,6 +70,9 @@ protected:
 			_renderer->_mParams.material.specTexId = 0;
 			_renderer->_mParams.material.shininess = 64;
 		}
+		//initialize textures
+		SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
+		SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
 	};
 
 protected:
