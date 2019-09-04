@@ -74,8 +74,4 @@ void DiffuseLight::Draw()
 		//diffuse light color
 		shader->SetUniformVec3(_color, "lightColor");
 	}
-	else
-	{
-		std::cout << "Couldn't load shader: " << _shader << std::endl;
-	}
 }

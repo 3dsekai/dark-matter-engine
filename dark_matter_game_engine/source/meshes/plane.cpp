@@ -44,7 +44,7 @@
 namespace
 {
 	//cube vertices
-	const float vertices[ATTRIBUTE_NUM] =
+	const float planeVerts[ATTRIBUTE_NUM] =
 	{
 		/*pos coord           tex coord  normals*/
 		//front
@@ -55,7 +55,7 @@ namespace
 	};
 
 	//indices
-	const int indices[INDICES_NUM] =
+	const int planeIdx[INDICES_NUM] =
 	{
 		0, 1, 2,
 		2, 3, 0
@@ -67,10 +67,10 @@ namespace
 // Argument{s}: -
 // Explanation: Plane constructor
 //*************************************************************************
-Plane::Plane(const char* shaderName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color) :
-	MeshBase(shaderName, pos, scale, rot, color, 0)
+Plane::Plane(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
+	MeshBase(shaderName, pos, rot, scale)
 {
-	Init();
+	Init(planeVerts, planeIdx, ATTRIBUTE_NUM, INDICES_NUM);
 }
 
 //*************************************************************************
@@ -90,7 +90,7 @@ Plane::~Plane()
 // Argument{s}: -
 // Explanation: Initialize the plane
 //*************************************************************************
-void Plane::Init()
+void Plane::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
 {
 	{ //position coordinates
 		RenderMesh::VAParams va1;
@@ -121,8 +121,8 @@ void Plane::Init()
 	}
 
 	//set number of vertices and indices
-	_renderer->_mParams.vertNum = ATTRIBUTE_NUM;
-	_renderer->_mParams.idxNum = INDICES_NUM;
+	_renderer->_mParams.vertNum = vertNum;
+	_renderer->_mParams.idxNum = idxNum;
 
 	//initialize the mesh for rendering
 	_renderer->InitMesh(vertices, indices);

@@ -64,7 +64,7 @@ struct MeshParams
 	GLuint VAO;
 
 	//color
-	Vec4 color;
+//	Vec4 color;
 
 	//material
 	materialDef material;

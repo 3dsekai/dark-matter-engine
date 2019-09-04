@@ -73,12 +73,11 @@ void Lamp::Init()
 	//lamp
 	_lamp = new Cube(SOLID_MESH_SHADER_NAME,
 			 		 Vec3(10.0f, 0.0f, 0.0f),
-					 Vec3(0.5, 0.5f, 0.5f),
-					 Quat(0.0f, 0.0f, 0.0f, 1.0f),
-					 Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					 Quat(Quat::Identity()),
+					 Vec3(0.5, 0.5f, 0.5f));
 
 	//lamp light
-	Vec4 col = _lamp->GetColor();
+	Vec4 col = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	lightDef light;
 	light.position = _lamp->GetPosition();

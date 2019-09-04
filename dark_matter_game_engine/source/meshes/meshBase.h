@@ -52,16 +52,19 @@ public:
 	~MeshBase() = default;
 
 protected:
-	MeshBase(const char* shaderName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color, GLuint vao) :
-		_pos(pos),
-		_scale(scale),
-		_rot(rot)
+	MeshBase(const char* shaderName,
+			 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
+			 const Quat& rot = Quat::Identity(),
+			 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f)) :
+				_pos(pos),
+				_rot(rot),
+				_scale(scale)
 	{
 		{ //set renderer
 			_renderer = new RenderMesh();
 			_renderer->_mParams.shaderName = shaderName;
-			_renderer->_mParams.VAO = vao;
-			_renderer->_mParams.color = color;
+			_renderer->_mParams.VAO = 0;
+//			_renderer->_mParams.color = color;
 		}
 		{ //set material
 			_renderer->_mParams.material.diffuse   = 0;
@@ -76,7 +79,7 @@ protected:
 	};
 
 protected:
-	virtual void Init() = 0;
+	virtual void Init(const float* vertices, const int* indices, int vertNum, int idxNum) = 0;
 
 public:
 	virtual void Draw() = 0;
@@ -86,12 +89,12 @@ public:
 	inline void SetPosition(const Vec3& pos) { _pos = pos; };
 	inline void SetRotation(const Quat& rot) { _rot = rot; };
 	inline void SetScale(const Vec3& scale) { _scale = scale; };
-	inline void SetColor(const Vec4& color) { _renderer->_mParams.color = color; };
+//	inline void SetColor(const Vec4& color) { _renderer->_mParams.color = color; };
 
 	inline const Vec3 GetPosition() const { return _pos; };
 	inline const Quat GetRotation() const { return _rot; };
 	inline const Vec3 GetScale() const { return _scale; };
-	inline const Vec4 GetColor() const { return _renderer->_mParams.color; };
+//	inline const Vec4 GetColor() const { return _renderer->_mParams.color; };
 
 	void SetTexture(const char* texName, MATERIAL_TYPE type)
 	{
@@ -115,10 +118,6 @@ public:
 					_renderer->_mParams.material.specTexId = texId;
 					break;
 				}
-			}
-			else
-			{
-				std::cout << "Couldn't load shader: " << _renderer->_mParams.shaderName << std::endl;
 			}
 		}
 	};

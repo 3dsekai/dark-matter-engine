@@ -116,10 +116,6 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		// set material
 		shader->SetUniformFloat(_mParams.material.shininess, "material.shininess");
 	}
-	else
-	{
-		std::cout << "Couldn't load shader: " << _mParams.shaderName << std::endl;
-	}
 
 	//activate and bind the texture
 	glActiveTexture(GL_TEXTURE0 + _mParams.material.diffuse);
@@ -133,6 +129,9 @@ void RenderMesh::DrawMesh(const Mat4& model)
 
 	//draw the triangles to the buffer
 	glDrawElements(GL_TRIANGLES, _mParams.idxNum, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0); //reset vao bind
+	glActiveTexture(GL_TEXTURE0); //reset active texture
 }
 
 //*************************************************************************
@@ -145,3 +144,4 @@ void RenderMesh::DeleteMesh()
 {
 	glDeleteVertexArrays(1, &_mParams.VAO);
 }
+

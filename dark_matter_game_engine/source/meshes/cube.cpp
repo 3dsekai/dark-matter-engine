@@ -44,7 +44,7 @@
 namespace
 {
 	//cube vertices
-	const float vertices[ATTRIBUTE_NUM] =
+	const float cubeVerts[ATTRIBUTE_NUM] =
 	{
 		//  pos coords     tex coords   normals
 		//front
@@ -80,7 +80,7 @@ namespace
 	};
 
 	//cube indices
-	const int indices[INDICES_NUM] =
+	const int cubeIdx[INDICES_NUM] =
 	{
 		// front
 		0, 1, 2,
@@ -108,10 +108,10 @@ namespace
 // Argument{s}: -
 // Explanation: Cube constructor
 //*************************************************************************
-Cube::Cube(const char* shaderName, const Vec3& pos, const Vec3& scale, const Quat& rot, const Vec4& color) :
-	MeshBase(shaderName, pos, scale, rot, color, 0)
+Cube::Cube(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
+	MeshBase(shaderName, pos, rot, scale)
 {
-	Init();
+	Init(cubeVerts, cubeIdx, ATTRIBUTE_NUM, INDICES_NUM);
 }
 
 //*************************************************************************
@@ -131,7 +131,7 @@ Cube::~Cube()
 // Argument{s}: -
 // Explanation: Initialize the cube
 //*************************************************************************
-void Cube::Init()
+void Cube::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
 {
 	{ //position coordinates
 		RenderMesh::VAParams va1;
@@ -162,8 +162,8 @@ void Cube::Init()
 	}
 
 	//set number of vertices and indices
-	_renderer->_mParams.vertNum = ATTRIBUTE_NUM;
-	_renderer->_mParams.idxNum = INDICES_NUM;
+	_renderer->_mParams.vertNum = vertNum;
+	_renderer->_mParams.idxNum = idxNum;
 
 	//initialize the mesh for rendering
 	_renderer->InitMesh(vertices, indices);

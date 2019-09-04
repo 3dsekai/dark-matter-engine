@@ -75,8 +75,4 @@ void Light::Draw()
 		shader->SetUniformVec3(_light.diffuse, "light.diffuse");
 		shader->SetUniformVec3(_light.specular, "light.specular");
 	}
-	else
-	{
-		std::cout << "Couldn't load shader: " << _shader << std::endl;
-	}
 }

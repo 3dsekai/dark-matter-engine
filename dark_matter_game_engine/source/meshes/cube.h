@@ -41,14 +41,13 @@ class Cube : public MeshBase
 {
 public:
 	Cube(const char* shaderName,
-		 const Vec3& pos   = Vec3(0.0f, 0.0f, 0.0f),
-		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f),
-		 const Quat& rot   = Quat(0.0f, 0.0f, 0.0f, 1.0f),
-		 const Vec4& color = Vec4(1.0f, 1.0f, 1.0f, 0.0f));
+		 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
+		 const Quat& rot = Quat::Identity(),
+		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Cube();
 
 private:
-	void Init() override;
+	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
 
 public:
 //	void SetTexture(const char* texName) override;

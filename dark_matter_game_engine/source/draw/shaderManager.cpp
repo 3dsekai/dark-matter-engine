@@ -29,6 +29,7 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
+#include <iostream>
 #include "shaderManager.h"
 #include "shader.h"
 #include "uboManager.h"
@@ -145,6 +146,10 @@ Shader* ShaderManager::GetShader(const char* name)
 	if(_shaders.find(name) != _shaders.end())
 	{
 		shader = _shaders[name];
+	}
+	if (shader == nullptr)
+	{
+		std::cout << "Error: Could not find shader: " << name << std::endl;
 	}
 	return shader;
 }

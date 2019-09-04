@@ -94,10 +94,6 @@ void Camera::Update()
 		//camera pos
 		shader->SetUniformVec3(_pos, "viewPos");
 	}
-	else
-	{
-		std::cout << "Couldn't load shader: " << TEXTURE_MESH_SHADER_NAME << std::endl;
-	}
 }
 
 //*************************************************************************
