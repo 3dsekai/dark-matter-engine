@@ -60,18 +60,19 @@ protected:
 				_rot(rot),
 				_scale(scale)
 	{
-		{ //set renderer
-			_renderer = new RenderMesh();
-			_renderer->_mParams.shaderName = shaderName;
-			_renderer->_mParams.VAO = 0;
+		{ //initialize shader parameters
+			_mDrawParam.shaderName = shaderName;
+			_mDrawParam.mesh.VAO = 0;
+			_mDrawParam.mesh.vertNum = 0;
+			_mDrawParam.mesh.idxNum = 0;
 //			_renderer->_mParams.color = color;
 		}
-		{ //set material
-			_renderer->_mParams.material.diffuse   = 0;
-			_renderer->_mParams.material.specular  = 1;
-			_renderer->_mParams.material.diffTexId = 0;
-			_renderer->_mParams.material.specTexId = 0;
-			_renderer->_mParams.material.shininess = 64;
+		{ //initialize material parameters
+			_mDrawParam.material.diffuse   = 0;
+			_mDrawParam.material.specular  = 1;
+			_mDrawParam.material.diffTexId = 0;
+			_mDrawParam.material.specTexId = 0;
+			_mDrawParam.material.shininess = 64;
 		}
 		//initialize textures
 		SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
@@ -98,32 +99,29 @@ public:
 
 	void SetTexture(const char* texName, MATERIAL_TYPE type)
 	{
-		if(_renderer != nullptr)
+		GLuint texId = TextureManager::GetInstance()->GetTextureId(texName);
+
+		//set the cube color and texture to the shader
+		Shader* shader = ShaderManager::GetInstance()->GetShader(_mDrawParam.shaderName);
+		if (shader != nullptr)
 		{
-			GLuint texId = TextureManager::GetInstance()->GetTextureId(texName);
-	
-			//set the cube color and texture to the shader
-			Shader* shader = ShaderManager::GetInstance()->GetShader(_renderer->_mParams.shaderName);
-			if (shader != nullptr)
+			shader->UseProgram();
+			switch(type)
 			{
-				shader->UseProgram();
-				switch(type)
-				{
-				case MATERIAL_DIFFUSE:
-					shader->SetUniformInt(_renderer->_mParams.material.diffuse, "material.diffuse");
-					_renderer->_mParams.material.diffTexId = texId;
-					break;
-				case MATERIAL_SPECULAR:
-					shader->SetUniformInt(_renderer->_mParams.material.specular, "material.specular");
-					_renderer->_mParams.material.specTexId = texId;
-					break;
-				}
+			case MATERIAL_DIFFUSE:
+				shader->SetUniformInt(_mDrawParam.material.diffuse, "material.diffuse");
+				_mDrawParam.material.diffTexId = texId;
+				break;
+			case MATERIAL_SPECULAR:
+				shader->SetUniformInt(_mDrawParam.material.specular, "material.specular");
+				_mDrawParam.material.specTexId = texId;
+				break;
 			}
 		}
 	};
 
 protected:
-	RenderMesh* _renderer;		//mesh renderer
+	RenderMesh::MeshRenderParam _mDrawParam;	//mesh render parameters
 
 	Vec3 _pos;					//position
 	Vec3 _scale;				//scale
@@ -131,3 +129,4 @@ protected:
 };
 
 #endif
+

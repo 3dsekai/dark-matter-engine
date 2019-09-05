@@ -35,6 +35,7 @@
 
 #include "../draw/shaderManager.h"
 #include "../resource/textureManager.h"
+#include "../resource/meshManager.h"
 #include "../draw/drawUtil.h"
 #include "../draw/uboManager.h"
 #include "../define/shader_define.h"
@@ -83,6 +84,7 @@ GameMain::~GameMain()
 	//delete shaders
 	ShaderManager::GetInstance()->DestroyInstance();
 	TextureManager::GetInstance()->DestroyInstance();
+	MeshManager::GetInstance()->DestroyInstance();
 }
 
 //*************************************************************************

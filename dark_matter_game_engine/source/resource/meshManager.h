@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Cube
-// Source File: [cube.h]
+// Class Name: MeshManager
+// Source File: [meshManager.h]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2019>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -25,33 +25,44 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _CUBE_H_
-#define _CUBE_H_
+#ifndef _MESH_MANAGER_H_
+#define _MESH_MANAGER_H_
 
 //*************************************************************************
 // Includes
 //*************************************************************************
+#include <map>
 #include <GL/glew.h>
-#include "meshBase.h"
+#include "../draw/renderMesh.h"
 
 //*************************************************************************
-// Cube Class
+// Mesh Manager Class
 //*************************************************************************
-class Cube : public MeshBase
+class MeshManager
 {
+
 public:
-	Cube(const char* shaderName,
-		 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
-		 const Quat& rot = Quat::Identity(),
-		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
-	~Cube();
+	static MeshManager* GetInstance();
+	static void DestroyInstance();
+
+	void InitAllMeshes();
+	void InitMesh(const char* name, const float* vertices, const int* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va);
+	void DeleteMesh(const char* name);
+	RenderMesh::MeshParam* GetMesh(const char* name);
 
 private:
-	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
+	static void ClearAllMeshes();
 
-public:
-	void Draw() override;
-	void Delete() override;
+private:
+	MeshManager() {};
+	~MeshManager() {};
+
+	MeshManager(const MeshManager &obj) {};
+
+
+private:
+	static MeshManager* _instance;
+	static std::map<const char*, RenderMesh::MeshParam*> _meshes;
 };
 
 #endif

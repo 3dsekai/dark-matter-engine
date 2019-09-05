@@ -176,3 +176,18 @@ I fixed important point 2 from 8/23.
 I created a one pixel black texture, and initialized all mesh
 material textures with it. Therefore, for any objects lacking a material texture,
 the missing texture will have the default RGBA: 0,0,0,0.
+
+=================================================
+
+9/5/2019 Log
+
+=================================================
+
+optimization:
+For each instance of a mesh, I was re-initializing the mesh with opengl every
+time I created a new instance. Generating a new VAO for every instance of a
+mesh is unecessary. Each unique mesh needs only one VAO, and only needs to be
+initialized once.
+I created a mesh manager. The manager generates the VAO and binds buffer data
+once for each unique mesh and saves it. Each instance of that mesh just references
+that data.

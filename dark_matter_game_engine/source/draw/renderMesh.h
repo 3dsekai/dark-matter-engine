@@ -55,37 +55,33 @@ struct VAParams
 };
 
 //mesh parameters
-struct MeshParams
+struct MeshParam
+{
+	GLuint VAO; //vertex aray object
+	int vertNum; //number of vertices
+	int idxNum; //number of indices
+};
+
+//mesh render parameters
+struct MeshRenderParam
 {
 	//shader name
 	const char* shaderName;
 
-	//vertex aray object
-	GLuint VAO;
-
-	//color
-//	Vec4 color;
-
-	//material
+	//mesh material
 	materialDef material;
-
-	//vertex attributes
-	std::vector<VAParams> vertAttr;
-
-	int vertNum; //number of vertices
-	int idxNum; //number of indices
+	
+	//mesh parameters
+	MeshParam mesh;
 };
 
 public:
 	RenderMesh() {};
 	~RenderMesh() {};
 
-	void InitMesh(const float* vertices, const int* indices);
-	void DrawMesh(const Mat4& model);
-	void DeleteMesh();
-
-public:
-	MeshParams _mParams;
+	static void InitMesh(const float* vertices, const int* indices, MeshParam* mParam, const std::vector<VAParams>& va);
+	static void DrawMesh(const Mat4& model, const MeshRenderParam& mDrawParam);
+	static void DeleteMesh(MeshParam* mParam);
 };
 
 #endif

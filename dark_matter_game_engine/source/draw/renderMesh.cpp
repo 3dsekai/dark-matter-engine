@@ -36,6 +36,7 @@
 #include "../math_lib/mat3.h"
 #include "../math_lib/mat4.h"
 #include "../math_lib/vec3.h"
+
 //*************************************************************************
 // Class: RenderMesh
 // Function Name: InitMesh
@@ -44,50 +45,57 @@
 // const int* indices: the mesh's indices
 // Explanation: initializes the mesh for rendering
 //*************************************************************************
-void RenderMesh::InitMesh(const float* vertices, const int* indices)
+void RenderMesh::InitMesh(const float* vertices, const int* indices, MeshParam* mParam, const std::vector<VAParams>& va)
 {
-	//generate a vertex array object
-	glGenVertexArrays(1, &_mParams.VAO);
-
-	//generate the vertex buffer and element buffer objects
-	GLuint buffObj[2];
-	glGenBuffers(2, buffObj);
-
-	//bind the vertex array object
-	glBindVertexArray(_mParams.VAO);
-
-	//bind the vertex data to the position vertex buffer object
-	glBindBuffer(GL_ARRAY_BUFFER, buffObj[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*_mParams.vertNum, vertices, GL_STATIC_DRAW);
-
-	//bind the index data to the element buffer object
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffObj[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*_mParams.idxNum, indices, GL_STATIC_DRAW);
-
-	//set vertex attributes
-	for(unsigned int i = 0; i < _mParams.vertAttr.size(); i++)
+	if(mParam != nullptr)
 	{
-		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(
-		i,
-		_mParams.vertAttr[i].size,
-		_mParams.vertAttr[i].type,
-		_mParams.vertAttr[i].norm,
-		_mParams.vertAttr[i].stride,
-		(GLvoid*)(_mParams.vertAttr[i].offset));
+		//generate a vertex array object
+		glGenVertexArrays(1, &mParam->VAO);
+	
+		//generate the vertex buffer and element buffer objects
+		GLuint buffObj[2];
+		glGenBuffers(2, buffObj);
+	
+		//bind the vertex array object
+		glBindVertexArray(mParam->VAO);
+	
+		//bind the vertex data to the position vertex buffer object
+		glBindBuffer(GL_ARRAY_BUFFER, buffObj[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*mParam->vertNum, vertices, GL_STATIC_DRAW);
+	
+		//bind the index data to the element buffer object
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffObj[1]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*mParam->idxNum, indices, GL_STATIC_DRAW);
+	
+		//set vertex attributes
+		for(unsigned int i = 0; i < va.size(); i++)
+		{
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(
+			i,
+			va[i].size,
+			va[i].type,
+			va[i].norm,
+			va[i].stride,
+			(GLvoid*)(va[i].offset));
+		}
+	
+		//unbind the vertex buffer object
+		//NOTE: can't unbind the element buffer object until the VAO is done being used
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+		//unbind the vertex array object
+		glBindVertexArray(0);
+	
+		//delete the buffer objects
+		for (int i = 0; i < 2; i++)
+		{
+			glDeleteBuffers(1, &buffObj[i]);
+		}
 	}
-
-	//unbind the vertex buffer object
-	//NOTE: can't unbind the element buffer object until the VAO is done being used
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//unbind the vertex array object
-	glBindVertexArray(0);
-
-	//delete the buffer objects
-	for (int i = 0; i < 2; i++)
+	else
 	{
-		glDeleteBuffers(1, &buffObj[i]);
+		std::cout << "Error: could not initialize mesh." << std::endl;
 	}
 }
 
@@ -95,13 +103,13 @@ void RenderMesh::InitMesh(const float* vertices, const int* indices)
 // Class: RenderMesh
 // Function Name: DrawMesh
 // Argument{s}:
-// const Camera& cam: the world camera
 // Mat4 model: the local matrix for the mesh
+// MeshRenderParam mDrawParam: the mesh parameters necessary for rendering 
 // Explanation: draw mesh
 //*************************************************************************
-void RenderMesh::DrawMesh(const Mat4& model)
+void RenderMesh::DrawMesh(const Mat4& model, const MeshRenderParam& mDrawParam)
 {
-	Shader* shader = ShaderManager::GetInstance()->GetShader(_mParams.shaderName);
+	Shader* shader = ShaderManager::GetInstance()->GetShader(mDrawParam.shaderName);
 	if(shader != nullptr)
 	{
 		//set the model-view-projection matrix to the shader
@@ -114,21 +122,21 @@ void RenderMesh::DrawMesh(const Mat4& model)
 		shader->SetUniformMat3(Mat3::Mat4ToMat3(norm), "normModelMat");
 
 		// set material
-		shader->SetUniformFloat(_mParams.material.shininess, "material.shininess");
+		shader->SetUniformFloat(mDrawParam.material.shininess, "material.shininess");
 	}
 
 	//activate and bind the texture
-	glActiveTexture(GL_TEXTURE0 + _mParams.material.diffuse);
-	glBindTexture(GL_TEXTURE_2D, _mParams.material.diffTexId);
-	glActiveTexture(GL_TEXTURE0 + _mParams.material.specular);
-	glBindTexture(GL_TEXTURE_2D, _mParams.material.specTexId);
+	glActiveTexture(GL_TEXTURE0 + mDrawParam.material.diffuse);
+	glBindTexture(GL_TEXTURE_2D, mDrawParam.material.diffTexId);
+	glActiveTexture(GL_TEXTURE0 + mDrawParam.material.specular);
+	glBindTexture(GL_TEXTURE_2D, mDrawParam.material.specTexId);
 
 
 	//bind the vertex array object
-	glBindVertexArray(_mParams.VAO);
+	glBindVertexArray(mDrawParam.mesh.VAO);
 
 	//draw the triangles to the buffer
-	glDrawElements(GL_TRIANGLES, _mParams.idxNum, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, mDrawParam.mesh.idxNum, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0); //reset vao bind
 	glActiveTexture(GL_TEXTURE0); //reset active texture
@@ -140,8 +148,10 @@ void RenderMesh::DrawMesh(const Mat4& model)
 // Argument{s}:
 // Explanation: delete mesh renderer
 //*************************************************************************
-void RenderMesh::DeleteMesh()
+void RenderMesh::DeleteMesh(MeshParam* mParam)
 {
-	glDeleteVertexArrays(1, &_mParams.VAO);
+	if(mParam != nullptr)
+	{
+		glDeleteVertexArrays(1, &mParam->VAO);
+	}
 }
-

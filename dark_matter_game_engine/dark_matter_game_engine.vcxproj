@@ -56,6 +56,7 @@
     <ClInclude Include="source\meshes\cube.h" />
     <ClInclude Include="source\meshes\meshBase.h" />
     <ClInclude Include="source\meshes\plane.h" />
+    <ClInclude Include="source\resource\meshManager.h" />
     <ClInclude Include="source\resource\textureManager.h" />
     <ClInclude Include="source\resource\textureResourceManager.h" />
     <ClInclude Include="source\window\window.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="source\math_lib\vec4.cpp" />
     <ClCompile Include="source\meshes\cube.cpp" />
     <ClCompile Include="source\meshes\plane.cpp" />
+    <ClCompile Include="source\resource\meshManager.cpp" />
     <ClCompile Include="source\resource\textureManager.cpp" />
     <ClCompile Include="source\resource\textureResourceManager.cpp" />
     <ClCompile Include="source\window\window.cpp" />

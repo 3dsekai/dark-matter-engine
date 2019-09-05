@@ -31,12 +31,13 @@
 //*************************************************************************
 #include "cube.h"
 #include "../math_lib/mat4.h"
+#include "../resource/meshManager.h"
 
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
-#define ATTRIBUTE_NUM (192)
-#define INDICES_NUM (36)
+#define CUBE_ATTRIBUTE_NUM (192)
+#define CUBE_INDICES_NUM (36)
 
 //*************************************************************************
 // constants definitions
@@ -44,7 +45,7 @@
 namespace
 {
 	//cube vertices
-	const float cubeVerts[ATTRIBUTE_NUM] =
+	const float cubeVerts[CUBE_ATTRIBUTE_NUM] =
 	{
 		//  pos coords     tex coords   normals
 		//front
@@ -80,7 +81,7 @@ namespace
 	};
 
 	//cube indices
-	const int cubeIdx[INDICES_NUM] =
+	const int cubeIdx[CUBE_INDICES_NUM] =
 	{
 		// front
 		0, 1, 2,
@@ -111,7 +112,7 @@ namespace
 Cube::Cube(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
 	MeshBase(shaderName, pos, rot, scale)
 {
-	Init(cubeVerts, cubeIdx, ATTRIBUTE_NUM, INDICES_NUM);
+	Init(cubeVerts, cubeIdx, CUBE_ATTRIBUTE_NUM, CUBE_INDICES_NUM);
 }
 
 //*************************************************************************
@@ -133,40 +134,41 @@ Cube::~Cube()
 //*************************************************************************
 void Cube::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
 {
-	{ //position coordinates
-		RenderMesh::VAParams va1;
-		va1.size = 3; //size of attribute
-		va1.type = GL_FLOAT; //vertex attribute type
-		va1.norm = GL_FALSE; //vertex attribute normalization bool
-		va1.stride = 8*sizeof(float); //size of vertex stride
-		va1.offset = 0; //offset attribute
-		_renderer->_mParams.vertAttr.push_back(va1);
-	}
-	{ //texture coordinates
-		RenderMesh::VAParams va2;
-		va2.size = 2;
-		va2.type = GL_FLOAT;
-		va2.norm = GL_FALSE;
-		va2.stride = 8*sizeof(float);
-		va2.offset = 3*sizeof(float);
-		_renderer->_mParams.vertAttr.push_back(va2);
-	}
-	{ //normals
-		RenderMesh::VAParams va3;
-		va3.size = 3;
-		va3.type = GL_FLOAT;
-		va3.norm = GL_FALSE;
-		va3.stride = 8*sizeof(float);
-		va3.offset = 5*sizeof(float);
-		_renderer->_mParams.vertAttr.push_back(va3);
-	}
+	if(MeshManager::GetInstance()->GetMesh("cube") == nullptr)
+	{
+		std::vector<RenderMesh::VAParams> va;
+		{ //position coordinates
+			RenderMesh::VAParams va1;
+			va1.size = 3; //size of attribute
+			va1.type = GL_FLOAT; //vertex attribute type
+			va1.norm = GL_FALSE; //vertex attribute normalization bool
+			va1.stride = 8*sizeof(float); //size of vertex stride
+			va1.offset = 0; //offset attribute
+			va.push_back(va1);
+		}
+		{ //texture coordinates
+			RenderMesh::VAParams va2;
+			va2.size = 2;
+			va2.type = GL_FLOAT;
+			va2.norm = GL_FALSE;
+			va2.stride = 8*sizeof(float);
+			va2.offset = 3*sizeof(float);
+			va.push_back(va2);
+		}
+		{ //normals
+			RenderMesh::VAParams va3;
+			va3.size = 3;
+			va3.type = GL_FLOAT;
+			va3.norm = GL_FALSE;
+			va3.stride = 8*sizeof(float);
+			va3.offset = 5*sizeof(float);
+			va.push_back(va3);
+		}
 
-	//set number of vertices and indices
-	_renderer->_mParams.vertNum = vertNum;
-	_renderer->_mParams.idxNum = idxNum;
-
-	//initialize the mesh for rendering
-	_renderer->InitMesh(vertices, indices);
+		//initialize the mesh for rendering
+		MeshManager::GetInstance()->InitMesh("cube", vertices, indices, vertNum, idxNum, va);
+	}
+	_mDrawParam.mesh = *(MeshManager::GetInstance()->GetMesh("cube"));
 }
 
 
@@ -185,7 +187,7 @@ void Cube::Draw()
 	Mat4 model = translation * rotation * scale;
 
 	//draw the mesh
-	_renderer->DrawMesh(model);
+	RenderMesh::DrawMesh(model, _mDrawParam);
 }
 
 //*************************************************************************
@@ -196,19 +198,4 @@ void Cube::Draw()
 //*************************************************************************
 void Cube::Delete()
 {
-	//delete renderer
-	_renderer->DeleteMesh();
-	delete _renderer;
-	_renderer = nullptr;
 }
-
-//*************************************************************************
-// Class: Cube
-// Function Name: SetTexture
-// Argument{s}: -
-// Explanation: Load image and set texture to cube shader
-//*************************************************************************
-//void Cube::SetTexture(const char* texName)
-//{
-//	_renderer->Set2DTextureMesh(texName);
-//}

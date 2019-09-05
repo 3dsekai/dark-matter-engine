@@ -31,12 +31,12 @@
 //*************************************************************************
 #include "plane.h"
 #include "../math_lib/mat4.h"
-
+#include "../resource/meshManager.h"
 //*************************************************************************
 // Macro Definitions
 //*************************************************************************
-#define ATTRIBUTE_NUM (32)
-#define INDICES_NUM (6)
+#define PLANE_ATTRIBUTE_NUM (32)
+#define PLANE_INDICES_NUM (6)
 
 //*************************************************************************
 // constants definitions
@@ -44,7 +44,7 @@
 namespace
 {
 	//cube vertices
-	const float planeVerts[ATTRIBUTE_NUM] =
+	const float planeVerts[PLANE_ATTRIBUTE_NUM] =
 	{
 		/*pos coord           tex coord  normals*/
 		//front
@@ -55,7 +55,7 @@ namespace
 	};
 
 	//indices
-	const int planeIdx[INDICES_NUM] =
+	const int planeIdx[PLANE_INDICES_NUM] =
 	{
 		0, 1, 2,
 		2, 3, 0
@@ -70,7 +70,7 @@ namespace
 Plane::Plane(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
 	MeshBase(shaderName, pos, rot, scale)
 {
-	Init(planeVerts, planeIdx, ATTRIBUTE_NUM, INDICES_NUM);
+	Init(planeVerts, planeIdx, PLANE_ATTRIBUTE_NUM, PLANE_INDICES_NUM);
 }
 
 //*************************************************************************
@@ -92,40 +92,41 @@ Plane::~Plane()
 //*************************************************************************
 void Plane::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
 {
-	{ //position coordinates
-		RenderMesh::VAParams va1;
-		va1.size = 3; //size of attribute
-		va1.type = GL_FLOAT; //vertex attribute type
-		va1.norm = GL_FALSE; //vertex attribute normalization bool
-		va1.stride = 8*sizeof(float); //size of vertex stride
-		va1.offset = 0; //offset attribute
-		_renderer->_mParams.vertAttr.push_back(va1);
-	}
-	{ //texture coordinates
-		RenderMesh::VAParams va2;
-		va2.size = 2;
-		va2.type = GL_FLOAT;
-		va2.norm = GL_FALSE;
-		va2.stride = 8*sizeof(float);
-		va2.offset = 3*sizeof(float);
-		_renderer->_mParams.vertAttr.push_back(va2);
-	}
-	{ //normals
-		RenderMesh::VAParams va3;
-		va3.size = 3;
-		va3.type = GL_FLOAT;
-		va3.norm = GL_FALSE;
-		va3.stride = 8*sizeof(float);
-		va3.offset = 5*sizeof(float);
-		_renderer->_mParams.vertAttr.push_back(va3);
-	}
+	if (MeshManager::GetInstance()->GetMesh("plane") == nullptr)
+	{
+		std::vector<RenderMesh::VAParams> va;
+		{ //position coordinates
+			RenderMesh::VAParams va1;
+			va1.size = 3; //size of attribute
+			va1.type = GL_FLOAT; //vertex attribute type
+			va1.norm = GL_FALSE; //vertex attribute normalization bool
+			va1.stride = 8 * sizeof(float); //size of vertex stride
+			va1.offset = 0; //offset attribute
+			va.push_back(va1);
+		}
+		{ //texture coordinates
+			RenderMesh::VAParams va2;
+			va2.size = 2;
+			va2.type = GL_FLOAT;
+			va2.norm = GL_FALSE;
+			va2.stride = 8 * sizeof(float);
+			va2.offset = 3 * sizeof(float);
+			va.push_back(va2);
+		}
+		{ //normals
+			RenderMesh::VAParams va3;
+			va3.size = 3;
+			va3.type = GL_FLOAT;
+			va3.norm = GL_FALSE;
+			va3.stride = 8 * sizeof(float);
+			va3.offset = 5 * sizeof(float);
+			va.push_back(va3);
+		}
 
-	//set number of vertices and indices
-	_renderer->_mParams.vertNum = vertNum;
-	_renderer->_mParams.idxNum = idxNum;
-
-	//initialize the mesh for rendering
-	_renderer->InitMesh(vertices, indices);
+		//initialize the mesh for rendering
+		MeshManager::GetInstance()->InitMesh("plane", vertices, indices, vertNum, idxNum, va);
+	}
+	_mDrawParam.mesh = *(MeshManager::GetInstance()->GetMesh("plane"));
 }
 
 
@@ -144,7 +145,7 @@ void Plane::Draw()
 	Mat4 model = translation * rotation * scale;
 
 	//draw the mesh
-	_renderer->DrawMesh(model);
+	RenderMesh::DrawMesh(model, _mDrawParam);
 }
 
 //*************************************************************************
@@ -155,10 +156,6 @@ void Plane::Draw()
 //*************************************************************************
 void Plane::Delete()
 {
-	//delete renderer
-	_renderer->DeleteMesh();
-	delete _renderer;
-	_renderer = nullptr;
 }
 
 //*************************************************************************
