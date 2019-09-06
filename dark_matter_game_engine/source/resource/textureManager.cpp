@@ -104,38 +104,8 @@ void TextureManager::LoadTexture(const char* name)
 		TextureResourceManager::stbImgData texData;
 		TextureResourceManager::LoadTexture(dir.c_str(), &texData);
 
-		if (texData.imgData != nullptr)
-		{
-			GLenum format;
-			if (texData.n == 1) format = GL_RED;
-			else if (texData.n == 2) format = GL_RG;
-			else if (texData.n == 3) format = GL_RGB;
-			else if (texData.n == 4) format = GL_RGBA;
-
-			glGenTextures(1, &texId); //generate texture name
-			glBindTexture(GL_TEXTURE_2D, texId); //bind the texture to the texture target
-
-												 // set the texture wrapping parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-			// set texture filtering parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-			//generate texture image on currently bound texture object
-			glTexImage2D(GL_TEXTURE_2D,
-				0,
-				format,
-				texData.w,
-				texData.h,
-				0,
-				format,
-				GL_UNSIGNED_BYTE,
-				texData.imgData);
-			//generate mipmaps for currently bound texture object
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
+		//initialize texture
+		TextureResourceManager::InitTexture(texData, texId);
 
 		//unload texture
 		TextureResourceManager::UnloadTexture(&texData);

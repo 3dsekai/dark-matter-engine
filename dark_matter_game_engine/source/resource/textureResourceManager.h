@@ -46,6 +46,7 @@ public:
 
 public:
 	static void LoadTexture(const char* textureName, stbImgData* textureData);
+	static void InitTexture(const stbImgData& textureData, GLuint& texId);
 	static void UnloadTexture(stbImgData* textureData);
 };
 
