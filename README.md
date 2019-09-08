@@ -15,3 +15,4 @@ third-party libraries
 - freeglut (http://freeglut.sourceforge.net/)
 - glew (http://glew.sourceforge.net/)
 - stb_image (https://github.com/nothings/stb/blob/master/stb_image.h)
+- assimp (http://assimp.org/)
