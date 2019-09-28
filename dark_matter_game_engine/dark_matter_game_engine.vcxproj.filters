@@ -181,6 +181,9 @@
     <ClInclude Include="source\resource\meshManager.h">
       <Filter>source\resource</Filter>
     </ClInclude>
+    <ClInclude Include="source\meshes\mesh.h">
+      <Filter>source\meshes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -275,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="source\resource\meshManager.cpp">
       <Filter>source\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="source\meshes\mesh.cpp">
+      <Filter>source\meshes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

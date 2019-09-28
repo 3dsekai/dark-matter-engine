@@ -110,9 +110,10 @@ namespace
 // Explanation: Cube constructor
 //*************************************************************************
 Cube::Cube(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
-	MeshBase(shaderName, pos, rot, scale)
+	Mesh(shaderName, pos, rot, scale)
 {
-	Init(cubeVerts, cubeIdx, CUBE_ATTRIBUTE_NUM, CUBE_INDICES_NUM);
+//	Init(cubeVerts, cubeIdx, CUBE_ATTRIBUTE_NUM, CUBE_INDICES_NUM);
+	Init("cube", cubeVerts, cubeIdx, CUBE_ATTRIBUTE_NUM, CUBE_INDICES_NUM);
 }
 
 //*************************************************************************
@@ -132,44 +133,44 @@ Cube::~Cube()
 // Argument{s}: -
 // Explanation: Initialize the cube
 //*************************************************************************
-void Cube::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
-{
-	if(MeshManager::GetInstance()->GetMesh("cube") == nullptr)
-	{
-		std::vector<RenderMesh::VAParams> va;
-		{ //position coordinates
-			RenderMesh::VAParams va1;
-			va1.size = 3; //size of attribute
-			va1.type = GL_FLOAT; //vertex attribute type
-			va1.norm = GL_FALSE; //vertex attribute normalization bool
-			va1.stride = 8*sizeof(float); //size of vertex stride
-			va1.offset = 0; //offset attribute
-			va.push_back(va1);
-		}
-		{ //texture coordinates
-			RenderMesh::VAParams va2;
-			va2.size = 2;
-			va2.type = GL_FLOAT;
-			va2.norm = GL_FALSE;
-			va2.stride = 8*sizeof(float);
-			va2.offset = 3*sizeof(float);
-			va.push_back(va2);
-		}
-		{ //normals
-			RenderMesh::VAParams va3;
-			va3.size = 3;
-			va3.type = GL_FLOAT;
-			va3.norm = GL_FALSE;
-			va3.stride = 8*sizeof(float);
-			va3.offset = 5*sizeof(float);
-			va.push_back(va3);
-		}
-
-		//initialize the mesh for rendering
-		MeshManager::GetInstance()->InitMesh("cube", vertices, indices, vertNum, idxNum, va);
-	}
-	_mDrawParam.mesh = *(MeshManager::GetInstance()->GetMesh("cube"));
-}
+//void Cube::Init(const float* vertices, const int* indices, int vertNum, int idxNum)
+//{
+//	if(MeshManager::GetInstance()->GetMesh("cube") == nullptr)
+//	{
+//		std::vector<RenderMesh::VAParams> va;
+//		{ //position coordinates
+//			RenderMesh::VAParams va1;
+//			va1.size = 3; //size of attribute
+//			va1.type = GL_FLOAT; //vertex attribute type
+//			va1.norm = GL_FALSE; //vertex attribute normalization bool
+//			va1.stride = 8*sizeof(float); //size of vertex stride
+//			va1.offset = 0; //offset attribute
+//			va.push_back(va1);
+//		}
+//		{ //texture coordinates
+//			RenderMesh::VAParams va2;
+//			va2.size = 2;
+//			va2.type = GL_FLOAT;
+//			va2.norm = GL_FALSE;
+//			va2.stride = 8*sizeof(float);
+//			va2.offset = 3*sizeof(float);
+//			va.push_back(va2);
+//		}
+//		{ //normals
+//			RenderMesh::VAParams va3;
+//			va3.size = 3;
+//			va3.type = GL_FLOAT;
+//			va3.norm = GL_FALSE;
+//			va3.stride = 8*sizeof(float);
+//			va3.offset = 5*sizeof(float);
+//			va.push_back(va3);
+//		}
+//
+//		//initialize the mesh for rendering
+//		MeshManager::GetInstance()->InitMesh("cube", vertices, indices, vertNum, idxNum, va);
+//	}
+//	_mDrawParam.mesh = *(MeshManager::GetInstance()->GetMesh("cube"));
+//}
 
 
 //*************************************************************************
@@ -178,24 +179,24 @@ void Cube::Init(const float* vertices, const int* indices, int vertNum, int idxN
 // Argument{s}: -
 // Explanation: Draw cube
 //*************************************************************************
-void Cube::Draw()
-{
-	//prepare model matrix
-	Mat4 rotation = Mat4::Identity().Rotate(_rot);
-	Mat4 translation = Mat4::Identity().Translate(_pos);
-	Mat4 scale = Mat4::Identity().Scale(_scale);
-	Mat4 model = translation * rotation * scale;
-
-	//draw the mesh
-	RenderMesh::DrawMesh(model, _mDrawParam);
-}
-
-//*************************************************************************
-// Class: Cube
-// Function Name: Delete
-// Argument{s}: -
-// Explanation: Delete cube
-//*************************************************************************
-void Cube::Delete()
-{
-}
+//void Cube::Draw()
+//{
+//	//prepare model matrix
+//	Mat4 rotation = Mat4::Identity().Rotate(_rot);
+//	Mat4 translation = Mat4::Identity().Translate(_pos);
+//	Mat4 scale = Mat4::Identity().Scale(_scale);
+//	Mat4 model = translation * rotation * scale;
+//
+//	//draw the mesh
+//	RenderMesh::DrawMesh(model, _mDrawParam);
+//}
+//
+////*************************************************************************
+//// Class: Cube
+//// Function Name: Delete
+//// Argument{s}: -
+//// Explanation: Delete cube
+////*************************************************************************
+//void Cube::Delete()
+//{
+//}

@@ -128,18 +128,20 @@ void MeshManager::DeleteMesh(const char* name)
 // const char* name: name of the mesh to retrieve
 // Other: -
 //*************************************************************************
-RenderMesh::MeshParam* MeshManager::GetMesh(const char* name)
+bool MeshManager::GetMesh(const char* name, RenderMesh::MeshParam* mesh)
 {
-	RenderMesh::MeshParam* mesh = nullptr;
+//	RenderMesh::MeshParam* mesh = nullptr;
+	bool success = true;
 	if(_meshes.find(name) != _meshes.end())
 	{
-		mesh = _meshes[name];
+		*mesh = *_meshes[name];
 	}
-	if(mesh == nullptr)
+	else
 	{
 		std::cout << "Error: Could not find mesh: " << name << std::endl;
+		success = false;
 	}
-	return mesh;
+	return success;
 }
 
 //*************************************************************************

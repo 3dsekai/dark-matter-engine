@@ -32,12 +32,12 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "meshBase.h"
+#include "mesh.h"
 
 //*************************************************************************
 // Cube Class
 //*************************************************************************
-class Cube : public MeshBase
+class Cube : public Mesh
 {
 public:
 	Cube(const char* shaderName,
@@ -46,12 +46,12 @@ public:
 		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Cube();
 
-private:
-	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
+//private:
+//	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
 
-public:
-	void Draw() override;
-	void Delete() override;
+//public:
+//	void Draw() override;
+//	void Delete() override;
 };
 
 #endif

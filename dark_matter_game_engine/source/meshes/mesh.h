@@ -1,18 +1,17 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: MeshManager
-// Source File: [meshManager.h]
+// Class Name: Mesh
+// Source File: [mesh.h]
 //
 // License:
-// Copyright(C) <2019>  <Christopher Tall>
+// Copyright(C) <2019> <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
 // preserved in every copy of the document AS IS. Attribution to the
-// original author of this software (see name/website next to "Author:")
-// must be given in either the modified source OR in the
-// product's documentation.
+// original author of this software must be given in either the
+// modified source OR in the product's documentation.
 //
 // This software is licensed under the terms of the GNU General Public License
 // version 3, as published by the Free Software Foundation.
@@ -25,44 +24,52 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <https://www.gnu.org/licenses/>.
 //*************************************************************************
-#ifndef _MESH_MANAGER_H_
-#define _MESH_MANAGER_H_
+#ifndef _MESH_H_
+#define _MESH_H_
 
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include <map>
-#include <GL/glew.h>
+#include "../define/material_define.h"
 #include "../draw/renderMesh.h"
+#include "../math_lib/quat.h"
 
+class Vec3;
 //*************************************************************************
-// Mesh Manager Class
+// Mesh Class
 //*************************************************************************
-class MeshManager
+class Mesh
 {
+protected:
+	Mesh(const char* shaderName,
+			 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
+			 const Quat& rot = Quat::Identity(),
+			 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
+	~Mesh();
+
+	virtual void Init(const float* vertices, const int* indices, int vertNum, int idxNum) {};
+	virtual void Init(const char* meshName, const float* vertices, const int* indices, int vertNum, int idxNum);
 
 public:
-	static MeshManager* GetInstance();
-	static void DestroyInstance();
+	virtual void Draw();
+	virtual void Delete();
 
-	void InitAllMeshes();
-	void InitMesh(const char* name, const float* vertices, const int* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va);
-	void DeleteMesh(const char* name);
-	bool GetMesh(const char* name, RenderMesh::MeshParam* mesh);
+	inline void SetPosition(const Vec3& pos) { _pos = pos; };
+	inline void SetRotation(const Quat& rot) { _rot = rot; };
+	inline void SetScale(const Vec3& scale) { _scale = scale; };
 
-private:
-	static void ClearAllMeshes();
+	inline const Vec3 GetPosition() const { return _pos; };
+	inline const Quat GetRotation() const { return _rot; };
+	inline const Vec3 GetScale() const { return _scale; };
 
-private:
-	MeshManager() {};
-	~MeshManager() {};
+	void SetTexture(const char* texName, MATERIAL_TYPE type);
 
-	MeshManager(const MeshManager &obj) {};
+protected:
+	RenderMesh::MeshRenderParam* _mDrawParam;	//mesh render parameters
 
-
-private:
-	static MeshManager* _instance;
-	static std::map<const char*, RenderMesh::MeshParam*> _meshes;
+	Vec3 _pos;					//position
+	Vec3 _scale;				//scale
+	Quat _rot;					//rotation
 };
 
 #endif

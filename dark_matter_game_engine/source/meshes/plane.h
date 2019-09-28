@@ -32,12 +32,12 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "meshBase.h"
+#include "mesh.h"
 
 //*************************************************************************
 // Plane Class
 //*************************************************************************
-class Plane : public MeshBase
+class Plane : public Mesh
 {
 public:
 	Plane(const char* shaderName,
@@ -46,13 +46,13 @@ public:
 		  const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Plane();
 
-private:
-	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
-
-public:
-//	void SetTexture(const char* texName) override;
-	void Draw() override;
-	void Delete() override;
+//private:
+//	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
+//
+//public:
+////	void SetTexture(const char* texName) override;
+//	void Draw() override;
+//	void Delete() override;
 };
 
 #endif
