@@ -45,14 +45,6 @@ public:
 		  const Quat& rot = Quat::Identity(),
 		  const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Plane();
-
-//private:
-//	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
-//
-//public:
-////	void SetTexture(const char* texName) override;
-//	void Draw() override;
-//	void Delete() override;
 };
 
 #endif

@@ -45,13 +45,6 @@ public:
 		 const Quat& rot = Quat::Identity(),
 		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Cube();
-
-//private:
-//	void Init(const float* vertices, const int* indices, int vertNum, int idxNum) override;
-
-//public:
-//	void Draw() override;
-//	void Delete() override;
 };
 
 #endif

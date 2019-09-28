@@ -48,7 +48,6 @@ Mesh::Mesh(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3&
 		_mDrawParam->mesh.VAO = 0;
 		_mDrawParam->mesh.vertNum = 0;
 		_mDrawParam->mesh.idxNum = 0;
-//			_renderer->_mParams.color = color;
 	}
 	{ //initialize material parameters
 		_mDrawParam->material.diffuse   = 0;
@@ -68,6 +67,9 @@ Mesh::~Mesh()
 }
 
 
+//*************************************************************************
+// default initialization
+//*************************************************************************
 void Mesh::Init(const char* meshName, const float* vertices, const int* indices, int vertNum, int idxNum)
 {
 	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
@@ -107,6 +109,9 @@ void Mesh::Init(const char* meshName, const float* vertices, const int* indices,
 	}
 }
 
+//*************************************************************************
+// Render Mesh
+//*************************************************************************
 void Mesh::Draw()
 {
 	//prepare model matrix
@@ -119,12 +124,18 @@ void Mesh::Draw()
 	RenderMesh::DrawMesh(model, *_mDrawParam);
 }
 
+//*************************************************************************
+// Delete Mesh
+//*************************************************************************
 void Mesh::Delete()
 {
 	delete _mDrawParam;
 	_mDrawParam = nullptr;
 }
 
+//*************************************************************************
+// Set Texture to Mesh
+//*************************************************************************
 void Mesh::SetTexture(const char* texName, MATERIAL_TYPE type)
 {
 	GLuint texId = TextureManager::GetInstance()->GetTextureId(texName);
