@@ -40,13 +40,14 @@ class Vec3;
 //*************************************************************************
 class Mesh
 {
-protected:
+public:
 	Mesh(const char* shaderName,
 			 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
 			 const Quat& rot = Quat::Identity(),
 			 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Mesh();
 
+protected:
 	//default mesh initialization
 	virtual void Init(const char* meshName, const float* vertices, const int* indices, int vertNum, int idxNum);
 	//overriding initialization in case default isn't applicable
