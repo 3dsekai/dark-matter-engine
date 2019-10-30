@@ -187,6 +187,9 @@
     <ClInclude Include="source\resource\modelManager.h">
       <Filter>source\resource</Filter>
     </ClInclude>
+    <ClInclude Include="source\resource\modelResourceLib.h">
+      <Filter>source\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -286,6 +289,9 @@
       <Filter>source\meshes</Filter>
     </ClCompile>
     <ClCompile Include="source\resource\modelManager.cpp">
+      <Filter>source\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resource\modelResourceLib.cpp">
       <Filter>source\resource</Filter>
     </ClCompile>
   </ItemGroup>

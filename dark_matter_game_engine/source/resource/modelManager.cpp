@@ -30,6 +30,7 @@
 //*************************************************************************
 #include <iostream>
 #include "modelManager.h"
+#include "modelResourceLib.h"
 #include "../meshes/mesh.h"
 
 //*************************************************************************
@@ -84,7 +85,7 @@ void ModelManager::LoadModel(const char* name)
 	if (_model.find(name) == _model.end())
 	{
 		_model[name] = std::vector<Mesh*>(0);
-//		ModelResourceLib::InitModel(name, _model[name]);
+		ModelResourceLib::InitModel(name, &_model[name]);
 	}
 }
 
