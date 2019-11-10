@@ -90,7 +90,7 @@ void MeshManager::InitAllMeshes()
 // const char* name: the name of the mesh
 // Other: -
 //*************************************************************************
-void MeshManager::InitMesh(const char* name, const float* vertices, const int* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va)
+void MeshManager::InitMesh(const char* name, const float* vertices, const uint32_t* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va)
 {
 	if (_meshes.find(name) == _meshes.end())
 	{

@@ -45,7 +45,7 @@
 // const int* indices: the mesh's indices
 // Explanation: initializes the mesh for rendering
 //*************************************************************************
-void RenderMesh::InitMesh(const float* vertices, const int* indices, MeshParam* mParam, const std::vector<VAParams>& va)
+void RenderMesh::InitMesh(const float* vertices, const uint32_t* indices, MeshParam* mParam, const std::vector<VAParams>& va)
 {
 	if(mParam != nullptr)
 	{

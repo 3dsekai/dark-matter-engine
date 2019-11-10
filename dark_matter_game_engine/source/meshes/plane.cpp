@@ -55,7 +55,7 @@ namespace
 	};
 
 	//indices
-	const int planeIdx[PLANE_INDICES_NUM] =
+	const uint32_t planeIdx[PLANE_INDICES_NUM] =
 	{
 		0, 1, 2,
 		2, 3, 0

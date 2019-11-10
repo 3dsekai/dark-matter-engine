@@ -79,7 +79,7 @@ public:
 	RenderMesh() {};
 	~RenderMesh() {};
 
-	static void InitMesh(const float* vertices, const int* indices, MeshParam* mParam, const std::vector<VAParams>& va);
+	static void InitMesh(const float* vertices, const uint32_t* indices, MeshParam* mParam, const std::vector<VAParams>& va);
 	static void DrawMesh(const Mat4& model, const MeshRenderParam& mDrawParam);
 	static void DeleteMesh(MeshParam* mParam);
 };

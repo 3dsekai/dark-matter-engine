@@ -81,7 +81,7 @@ namespace
 	};
 
 	//cube indices
-	const int cubeIdx[CUBE_INDICES_NUM] =
+	const uint32_t cubeIdx[CUBE_INDICES_NUM] =
 	{
 		// front
 		0, 1, 2,

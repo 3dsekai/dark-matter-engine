@@ -47,13 +47,12 @@ public:
 			 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Mesh();
 
-protected:
-	//default mesh initialization
-	virtual void Init(const char* meshName, const float* vertices, const int* indices, int vertNum, int idxNum);
-	//overriding initialization in case default isn't applicable
-	virtual void Init(const float* vertices, const int* indices, int vertNum, int idxNum) {};
 
-public:
+	//default mesh initialization
+	void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum);
+	//overriding initialization in case default isn't applicable
+//	virtual void Init(const float* vertices, const int* indices, int vertNum, int idxNum) {};
+
 	virtual void Draw();
 	virtual void Delete();
 

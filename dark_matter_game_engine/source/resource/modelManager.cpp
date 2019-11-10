@@ -85,7 +85,7 @@ void ModelManager::LoadModel(const char* name)
 	if (_model.find(name) == _model.end())
 	{
 		_model[name] = std::vector<Mesh*>(0);
-		ModelResourceLib::InitModel(name, &_model[name]);
+		lib_initModel(name, &_model[name]);
 	}
 }
 
@@ -101,7 +101,7 @@ void ModelManager::UnloadModel(const char* name)
 {
 	if(_model.find(name) != _model.end())
 	{
-//		ModelResourceLib::DeleteModel(_model[name]);
+//		lib_deleteModel(_model[name]);
 		for (auto it = _model[name].begin(); it != _model[name].end(); it++)
 		{
 			delete *it;

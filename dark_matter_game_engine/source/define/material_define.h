@@ -33,6 +33,7 @@
 //*************************************************************************
 #include "../math_lib/vec3.h"
 #include <GL/glew.h>
+#include <assimp/scene.h>
 
 //object material struct
 struct materialDef
@@ -47,8 +48,14 @@ struct materialDef
 //material types
 enum MATERIAL_TYPE
 {
-	MATERIAL_DIFFUSE = 0,
-	MATERIAL_SPECULAR
+	MATERIAL_DIFFUSE = aiTextureType_DIFFUSE,
+	MATERIAL_SPECULAR = aiTextureType_SPECULAR
 };
 
+//basic basic data
+struct materialData
+{
+	const char* texName; //name of texture
+	MATERIAL_TYPE type; //type of material
+};
 #endif
