@@ -45,19 +45,5 @@ void lib_aiProcessNode(aiNode *aiNode, const aiScene *aiScene, std::vector<Mesh*
 Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene);
 void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<materialData>* maps);
 void lib_deleteModel(const char* path);
-//*************************************************************************
-// Class
-//*************************************************************************
-//class ModelResourceLib
-//{
-//public:
-//	static void InitModel(const char* path, std::vector<Mesh*>* model);
-//	static void DeleteModel();
-//
-//private:
-//	void InitNode();
-//	void InitMesh();
-////	void InitModelTexture();
-//};
 
 #endif

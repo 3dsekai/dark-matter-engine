@@ -50,15 +50,17 @@ Mesh::Mesh(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3&
 		_mDrawParam->mesh.idxNum = 0;
 	}
 	{ //initialize material parameters
-		_mDrawParam->material.diffuse   = 0;
-		_mDrawParam->material.specular  = 1;
-		_mDrawParam->material.diffTexId = 0;
-		_mDrawParam->material.specTexId = 0;
+		_mDrawParam->material.diffuse[0]   = 0;
+		_mDrawParam->material.specular[0]  = 1;
+		_mDrawParam->material.diffTexId[0] = 0;
+		_mDrawParam->material.specTexId[0] = 0;
+		_mDrawParam->material.diffMaterialNum = 0;
+		_mDrawParam->material.specMaterialNum = 0;
 		_mDrawParam->material.shininess = 64;
 	}
 	//initialize textures
-	SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
-	SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
+//	SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
+//	SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
 };
 
 Mesh::~Mesh()
@@ -148,12 +150,28 @@ void Mesh::SetTexture(const char* texName, MATERIAL_TYPE type)
 		switch(type)
 		{
 		case MATERIAL_DIFFUSE:
-			shader->SetUniformInt(_mDrawParam->material.diffuse, "material.diffuse");
-			_mDrawParam->material.diffTexId = texId;
+			{
+				if((_mDrawParam->material.diffMaterialNum+1) < MATERIAL_SAMPLER_MAX_NUM)
+				{
+					int idx = _mDrawParam->material.diffMaterialNum;
+					std::string diffSamplerName = "material.diffuse" + std::to_string(idx);
+					shader->SetUniformInt(_mDrawParam->material.diffuse[idx], diffSamplerName.c_str());
+					_mDrawParam->material.diffTexId[idx] = texId;
+					_mDrawParam->material.diffMaterialNum++;
+				}
+			}
 			break;
 		case MATERIAL_SPECULAR:
-			shader->SetUniformInt(_mDrawParam->material.specular, "material.specular");
-			_mDrawParam->material.specTexId = texId;
+			{
+				if ((_mDrawParam->material.specMaterialNum+1) < MATERIAL_SAMPLER_MAX_NUM)
+				{
+					int idx = _mDrawParam->material.specMaterialNum;
+					std::string name = "material.specular" + std::to_string(idx);
+					shader->SetUniformInt(_mDrawParam->material.specular[idx], name.c_str());
+					_mDrawParam->material.specTexId[idx] = texId;
+					_mDrawParam->material.specMaterialNum++;
+				}
+			}
 			break;
 		}
 	}

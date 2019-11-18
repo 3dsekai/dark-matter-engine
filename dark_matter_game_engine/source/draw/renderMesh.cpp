@@ -124,13 +124,18 @@ void RenderMesh::DrawMesh(const Mat4& model, const MeshRenderParam& mDrawParam)
 		// set material
 		shader->SetUniformFloat(mDrawParam.material.shininess, "material.shininess");
 	}
-
-	//activate and bind the texture
-	glActiveTexture(GL_TEXTURE0 + mDrawParam.material.diffuse);
-	glBindTexture(GL_TEXTURE_2D, mDrawParam.material.diffTexId);
-	glActiveTexture(GL_TEXTURE0 + mDrawParam.material.specular);
-	glBindTexture(GL_TEXTURE_2D, mDrawParam.material.specTexId);
-
+	int samplerIdx = 0;
+	for(int i = 0; i < mDrawParam.material.diffMaterialNum; i++)
+	{
+		//activate and bind the texture
+		glActiveTexture(GL_TEXTURE0 + samplerIdx++);
+		glBindTexture(GL_TEXTURE_2D, mDrawParam.material.diffTexId[i]);
+	}
+	for(int i = 0; i < mDrawParam.material.specMaterialNum; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + samplerIdx++);
+		glBindTexture(GL_TEXTURE_2D, mDrawParam.material.specTexId[i]);
+	}
 
 	//bind the vertex array object
 	glBindVertexArray(mDrawParam.mesh.VAO);

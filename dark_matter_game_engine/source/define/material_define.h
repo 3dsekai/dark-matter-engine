@@ -35,13 +35,18 @@
 #include <GL/glew.h>
 #include <assimp/scene.h>
 
+//#define MAX_SAMPLERS (GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS) //the maximum number of sampler's per material
+#define MATERIAL_SAMPLER_MAX_NUM (16) //the maximum number of sampler's per material type
+
 //object material struct
 struct materialDef
 {
-	GLint  diffuse; //diffuse material sampler
-	GLuint diffTexId; //diffuse material texture id
-	GLint  specular; //specular material sampler
-	GLuint specTexId; //specular material texture id
+	GLint  diffuse[MATERIAL_SAMPLER_MAX_NUM]; //diffuse material sampler
+	GLuint diffTexId[MATERIAL_SAMPLER_MAX_NUM]; //diffuse material texture id
+	int diffMaterialNum;			//number of diffuse materials
+	GLint  specular[MATERIAL_SAMPLER_MAX_NUM]; //specular material sampler
+	GLuint specTexId[MATERIAL_SAMPLER_MAX_NUM]; //specular material texture id
+	int specMaterialNum;				//number of specular materials
 	float  shininess; //the shininess of the material (strength of specular reflection)
 };
 

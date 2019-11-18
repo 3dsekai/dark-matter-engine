@@ -35,8 +35,8 @@
 //object lighting material
 struct Material
 {
-	sampler2D diffuse;
-	sampler2D specular;
+	sampler2D diffuse0;
+	sampler2D specular0;
 	float shininess;
 };
 
@@ -76,7 +76,7 @@ void main()
 	//////////////////////////////////////////////
 
 	//calculate the ambient light
-	vec3 ambient = light.ambient * texture(material.diffuse, texCoord).rgb;
+	vec3 ambient = light.ambient * texture(material.diffuse0, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//diffuse light
@@ -93,7 +93,7 @@ void main()
 	float diff = max(dot(fragNorm, dir), 0.0);
 	
 	//calculate diffuse light
-	vec3 diffuse = light.diffuse * diff * texture(material.diffuse, texCoord).rgb;
+	vec3 diffuse = light.diffuse * diff * texture(material.diffuse0, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//specular light
@@ -109,7 +109,7 @@ void main()
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	//calculate specular lighting
-	vec3 specular = light.specular * spec * texture(material.specular, texCoord).rgb;
+	vec3 specular = light.specular * spec * texture(material.specular0, texCoord).rgb;
 
 	//////////////////////////////////////////////
 	//output color

@@ -34,7 +34,11 @@
 #include "../meshes/mesh.h"
 #include "../define/material_define.h"
 #include "../resource/textureManager.h"
-using namespace std;
+#include "../define/shader_define.h"
+
+//global variables
+std::string modelName = "new_mesh"; //name of model
+int meshNum = 0; //number of mesh
 
 //*************************************************************************
 // Function Name: InitModel
@@ -49,15 +53,15 @@ void lib_initModel(std::string path, std::vector<Mesh*>* model)
 	const aiScene* aiScene = aiImporter.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if(aiScene != nullptr)
 	{
-		if(!(aiScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) && aiScene->mRootNode != nullptr)
+		if(aiScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || aiScene->mRootNode == nullptr)
 		{
 			// retrieve the directory path of the filepath
-			string directory = path.substr(0, path.find_last_of('/'));
-			lib_aiProcessNode(aiScene->mRootNode, aiScene, model);
+			std::cout << "Assimp Error: " << aiImporter.GetErrorString() << std::endl;
 			return;
 		}
 	}
-	cout << "Assimp Error: " << aiImporter.GetErrorString() << endl;
+	modelName = path.substr(path.find_last_of('/') + 1);
+	lib_aiProcessNode(aiScene->mRootNode, aiScene, model);
 }
 //*************************************************************************
 // Function Name: aiProcessNodes
@@ -88,12 +92,11 @@ void lib_aiProcessNode(aiNode *aiNode, const aiScene *aiScene, std::vector<Mesh*
 //*************************************************************************
 Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 {
-	vector<float> vertices;
-	vector<uint32_t> indices;
+	std::vector<float> vertices;
+	std::vector<uint32_t> indices;
 
-	for(unsigned int i = 0; i < aiMesh->mNumVertices; i++)
+	for (unsigned int i = 0; i < aiMesh->mNumVertices; i++)
 	{
-		Vec3 vec;
 		// positions
 		vertices.push_back(aiMesh->mVertices[i].x);
 		vertices.push_back(aiMesh->mVertices[i].y);
@@ -103,48 +106,49 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 		vertices.push_back(aiMesh->mNormals[i].y);
 		vertices.push_back(aiMesh->mNormals[i].z);
 		// texture coordinates
-		float texCoords[2] = {0.0f, 0.0f};
-		if(aiMesh->mTextureCoords[0])
+		float texCoords[2] = { 0.0f, 0.0f };
+		if (aiMesh->mTextureCoords[0])
 		{
 			texCoords[0] = aiMesh->mTextureCoords[0][i].x;
 			texCoords[1] = aiMesh->mTextureCoords[0][i].y;
 		}
 		vertices.push_back(texCoords[0]);
 		vertices.push_back(texCoords[1]);
-//		// tangent
-//		vertices.push_back(aiMesh->mTangents[i].x);
-//		vertices.push_back(aiMesh->mTangents[i].y);
-//		vertices.push_back(aiMesh->mTangents[i].z);
-//		// bitangent
-//		vertices.push_back(mesh->mBitangents[i].x);
-//		vertices.push_back(mesh->mBitangents[i].y);
-//		vertices.push_back(mesh->mBitangents[i].z);
+		//		// tangent
+		//		vertices.push_back(aiMesh->mTangents[i].x);
+		//		vertices.push_back(aiMesh->mTangents[i].y);
+		//		vertices.push_back(aiMesh->mTangents[i].z);
+		//		// bitangent
+		//		vertices.push_back(mesh->mBitangents[i].x);
+		//		vertices.push_back(mesh->mBitangents[i].y);
+		//		vertices.push_back(mesh->mBitangents[i].z);
 	}
-	for(uint32_t i = 0; i < aiMesh->mNumFaces; i++)
+	for (uint32_t i = 0; i < aiMesh->mNumFaces; i++)
 	{
 		aiFace aiFace = aiMesh->mFaces[i];
-		for(uint32_t j = 0; j < aiFace.mNumIndices; j++)
+		for (uint32_t j = 0; j < aiFace.mNumIndices; j++)
 		{
 			indices.push_back(aiFace.mIndices[j]);
 		}
 	}
 	// process materials
 	aiMaterial* aiMaterial = aiScene->mMaterials[aiMesh->mMaterialIndex];
-	
+
 	//diffuse maps
-	vector<materialData> diffuseMaps;
+	std::vector<materialData> diffuseMaps;
 	lib_loadMaterials(aiMaterial, aiTextureType_DIFFUSE, &diffuseMaps);
 	//specular maps
-	vector<materialData> specularMaps;
+	std::vector<materialData> specularMaps;
 	lib_loadMaterials(aiMaterial, aiTextureType_SPECULAR, &specularMaps);
 	//normal maps
 	//height maps
-	
+
 	//create and return mesh
-	Mesh* mesh = new Mesh("someshader");
-	mesh->Init("somemesh", vertices.data(), indices.data(), vertices.size(), indices.size());
-	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) mesh->SetTexture(it->texName, it->type);
-	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) mesh->SetTexture(it->texName, it->type);
+	Mesh* mesh = new Mesh(TEXTURE_MESH_SHADER_NAME);
+	std::string meshName = modelName + "_mesh" + std::to_string(++meshNum);
+	mesh->Init(meshName.c_str(), vertices.data(), indices.data(), vertices.size(), indices.size());
+	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
+	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
 	return mesh;
 }
 
@@ -155,23 +159,25 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 // aiTextureType matType: the type of material to retrieve
 // vector<materialData>* maps: the material data array to set
 //*************************************************************************
-void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, vector<materialData>* maps)
+void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<materialData>* maps)
 {
 	if(aiMat != nullptr)
 	{
 		for (uint32_t i = 0; i < aiMat->GetTextureCount(matType); i++)
 		{
 			//load texture
-			aiString texPath;
-			aiMat->GetTexture(matType, i, &texPath);
-			TextureManager::GetInstance()->LoadTexture(texPath.C_Str());
-			if (TextureManager::GetInstance()->GetTextureId(texPath.C_Str()) == 0)
+			aiString aiPath;
+			aiMat->GetTexture(matType, i, &aiPath);
+			std::string strPath = std::string(aiPath.C_Str());
+			const char* texName = (strPath.substr(strPath.find_last_of('/') + 1)).c_str();
+			TextureManager::GetInstance()->LoadTexture(texName);
+			if (TextureManager::GetInstance()->GetTextureId(texName) == 0)
 			{
-				cout << "modelResourceLib Error: Texture could not be loaded." << endl;
+				std::cout << "modelResourceLib Error: Texture could not be loaded." << std::endl;
 			}
 			//set material data
 			materialData data;
-			data.texName = texPath.C_Str();
+			data.texName = texName;
 			data.type = (MATERIAL_TYPE)matType;
 			maps->push_back(data);
 		}
