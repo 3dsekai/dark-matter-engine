@@ -57,6 +57,7 @@
     <ClInclude Include="source\meshes\mesh.h" />
     <ClInclude Include="source\meshes\meshBase.h" />
     <ClInclude Include="source\meshes\plane.h" />
+    <ClInclude Include="source\model\model.h" />
     <ClInclude Include="source\resource\meshManager.h" />
     <ClInclude Include="source\resource\modelManager.h" />
     <ClInclude Include="source\resource\modelResourceLib.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="source\meshes\cube.cpp" />
     <ClCompile Include="source\meshes\mesh.cpp" />
     <ClCompile Include="source\meshes\plane.cpp" />
+    <ClCompile Include="source\model\model.cpp" />
     <ClCompile Include="source\resource\meshManager.cpp" />
     <ClCompile Include="source\resource\modelManager.cpp" />
     <ClCompile Include="source\resource\modelResourceLib.cpp" />

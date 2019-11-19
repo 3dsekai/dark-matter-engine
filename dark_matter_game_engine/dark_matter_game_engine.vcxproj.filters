@@ -56,6 +56,9 @@
     <Filter Include="source\lighting">
       <UniqueIdentifier>{8cd9d450-983d-410e-aa9e-aefe62326817}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\model">
+      <UniqueIdentifier>{c53a4cf5-c128-404b-9625-a201ac0392e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h">
@@ -190,6 +193,9 @@
     <ClInclude Include="source\resource\modelResourceLib.h">
       <Filter>source\resource</Filter>
     </ClInclude>
+    <ClInclude Include="source\model\model.h">
+      <Filter>source\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -293,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="source\resource\modelResourceLib.cpp">
       <Filter>source\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="source\model\model.cpp">
+      <Filter>source\model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
