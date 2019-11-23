@@ -37,7 +37,8 @@
 #include "../define/shader_define.h"
 
 //global variables
-std::string modelName = "new_mesh"; //name of model
+std::string g_modelPath;
+std::string g_modelName = "new_mesh"; //name of model
 int meshNum = 0; //number of mesh
 
 //*************************************************************************
@@ -60,7 +61,9 @@ void lib_initModel(std::string path, std::vector<Mesh*>* model)
 			return;
 		}
 	}
-	modelName = path.substr(path.find_last_of('/') + 1);
+	g_modelPath = path.substr(0, path.find_last_of('/')) + "/";
+	std::string extName = path.substr(path.find_last_of('/') + 1); //name with extension
+	g_modelName = extName.substr(0, extName.find_last_of('.')); //name without extension
 	lib_aiProcessNode(aiScene->mRootNode, aiScene, model);
 }
 //*************************************************************************
@@ -114,14 +117,14 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 		}
 		vertices.push_back(texCoords[0]);
 		vertices.push_back(texCoords[1]);
-		//		// tangent
-		//		vertices.push_back(aiMesh->mTangents[i].x);
-		//		vertices.push_back(aiMesh->mTangents[i].y);
-		//		vertices.push_back(aiMesh->mTangents[i].z);
-		//		// bitangent
-		//		vertices.push_back(mesh->mBitangents[i].x);
-		//		vertices.push_back(mesh->mBitangents[i].y);
-		//		vertices.push_back(mesh->mBitangents[i].z);
+		// tangent
+		vertices.push_back(aiMesh->mTangents[i].x);
+		vertices.push_back(aiMesh->mTangents[i].y);
+		vertices.push_back(aiMesh->mTangents[i].z);
+		// bitangent
+		vertices.push_back(aiMesh->mBitangents[i].x);
+		vertices.push_back(aiMesh->mBitangents[i].y);
+		vertices.push_back(aiMesh->mBitangents[i].z);
 	}
 	for (uint32_t i = 0; i < aiMesh->mNumFaces; i++)
 	{
@@ -145,7 +148,7 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 
 	//create and return mesh
 	Mesh* mesh = new Mesh(TEXTURE_MESH_SHADER_NAME);
-	std::string meshName = modelName + "_mesh" + std::to_string(++meshNum);
+	std::string meshName = g_modelName + "_mesh" + std::to_string(++meshNum);
 	mesh->Init(meshName.c_str(), vertices.data(), indices.data(), vertices.size(), indices.size());
 	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
 	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
@@ -168,16 +171,15 @@ void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<mat
 			//load texture
 			aiString aiPath;
 			aiMat->GetTexture(matType, i, &aiPath);
-			std::string strPath = std::string(aiPath.C_Str());
-			const char* texName = (strPath.substr(strPath.find_last_of('/') + 1)).c_str();
-			TextureManager::GetInstance()->LoadTexture(texName);
-			if (TextureManager::GetInstance()->GetTextureId(texName) == 0)
+			std::string path = g_modelPath + std::string(aiPath.C_Str());
+			TextureManager::GetInstance()->LoadTexture(path.c_str());
+			if (TextureManager::GetInstance()->GetTextureId(path.c_str()) == 0)
 			{
 				std::cout << "modelResourceLib Error: Texture could not be loaded." << std::endl;
 			}
 			//set material data
 			materialData data;
-			data.texName = texName;
+			data.texName = path.c_str();
 			data.type = (MATERIAL_TYPE)matType;
 			maps->push_back(data);
 		}

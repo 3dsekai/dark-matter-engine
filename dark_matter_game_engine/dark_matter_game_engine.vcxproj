@@ -39,6 +39,7 @@
     <ClInclude Include="source\game_object\objects\floor.h" />
     <ClInclude Include="source\game_object\objects\lamp.h" />
     <ClInclude Include="source\game_object\objects\multBoxes.h" />
+    <ClInclude Include="source\game_object\objects\nanosuit.h" />
     <ClInclude Include="source\input\inputCodes.h" />
     <ClInclude Include="source\input\keyboard.h" />
     <ClInclude Include="source\input\mouse.h" />
@@ -79,6 +80,7 @@
     <ClCompile Include="source\game_object\objects\floor.cpp" />
     <ClCompile Include="source\game_object\objects\lamp.cpp" />
     <ClCompile Include="source\game_object\objects\multBoxes.cpp" />
+    <ClCompile Include="source\game_object\objects\nanosuit.cpp" />
     <ClCompile Include="source\input\keyboard.cpp" />
     <ClCompile Include="source\input\mouse.cpp" />
     <ClCompile Include="source\lighting\diffuseLight.cpp" />

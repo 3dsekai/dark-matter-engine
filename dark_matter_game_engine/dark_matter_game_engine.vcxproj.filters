@@ -196,6 +196,9 @@
     <ClInclude Include="source\model\model.h">
       <Filter>source\model</Filter>
     </ClInclude>
+    <ClInclude Include="source\game_object\objects\nanosuit.h">
+      <Filter>source\game_object\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp">
@@ -302,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="source\model\model.cpp">
       <Filter>source\model</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_object\objects\nanosuit.cpp">
+      <Filter>source\game_object\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

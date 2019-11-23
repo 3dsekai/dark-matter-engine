@@ -94,15 +94,14 @@ void TextureManager::LoadAllTextures()
 // const char* name: the name of the texture
 // Other: -
 //*************************************************************************
-void TextureManager::LoadTexture(const char* name)
+void TextureManager::LoadTexture(const char* path)
 {
-	if (_textures.find(name) == _textures.end())
+	if (_textures.find(path) == _textures.end())
 	{
 		GLuint texId;
 		//load texture
-		std::string dir = "resources/img/" + std::string(name);
 		TextureResourceManager::stbImgData texData;
-		TextureResourceManager::LoadTexture(dir.c_str(), &texData);
+		TextureResourceManager::LoadTexture(path, &texData);
 
 		//initialize texture
 		TextureResourceManager::InitTexture(texData, texId);
@@ -111,7 +110,7 @@ void TextureManager::LoadTexture(const char* name)
 		TextureResourceManager::UnloadTexture(&texData);
 
 		//assign the texture id
-		_textures[name] = texId;
+		_textures[path] = texId;
 	}
 }
 
@@ -123,11 +122,11 @@ void TextureManager::LoadTexture(const char* name)
 // const char* name: name of the texture to delete
 // Other: -
 //*************************************************************************
-void TextureManager::DeleteTexture(const char* name)
+void TextureManager::DeleteTexture(const char* path)
 {
-	if(_textures.find(name) != _textures.end())
+	if(_textures.find(path) != _textures.end())
 	{
-		_textures.erase(name);
+		_textures.erase(path);
 	}
 }
 
@@ -139,12 +138,12 @@ void TextureManager::DeleteTexture(const char* name)
 // const char* name: name of the texture to retrieve
 // Other: -
 //*************************************************************************
-GLuint TextureManager::GetTextureId(const char* name)
+GLuint TextureManager::GetTextureId(const char* path)
 {
 	GLuint id = 0;
-	if(_textures.find(name) != _textures.end())
+	if(_textures.find(path) != _textures.end())
 	{
-		id = _textures[name];
+		id = _textures[path];
 	}
 	return id;
 }

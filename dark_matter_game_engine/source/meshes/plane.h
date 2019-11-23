@@ -32,6 +32,7 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
+#include "../math_lib/quat.h"
 #include "mesh.h"
 
 //*************************************************************************
@@ -45,6 +46,9 @@ public:
 		  const Quat& rot = Quat::Identity(),
 		  const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Plane();
+
+protected:
+	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
 };
 
 #endif

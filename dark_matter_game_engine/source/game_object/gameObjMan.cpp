@@ -33,6 +33,7 @@
 #include "objects/multBoxes.h"
 #include "objects/floor.h"
 #include "objects/lamp.h"
+#include "objects/nanosuit.h"
 
 //*************************************************************************
 // Class: GameObjManager
@@ -69,6 +70,7 @@ void GameObjManager::Init()
 	AddNewGameObject(new MultBoxes);
 	AddNewGameObject(new Floor);
 	AddNewGameObject(new Lamp);
+	AddNewGameObject(new Nanosuit);
 }
 
 //*************************************************************************

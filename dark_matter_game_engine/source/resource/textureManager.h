@@ -45,9 +45,9 @@ public:
 	static void DestroyInstance();
 
 	void LoadAllTextures();
-	void LoadTexture(const char* name);
-	void DeleteTexture(const char* name);
-	GLuint GetTextureId(const char* name);
+	void LoadTexture(const char* path);
+	void DeleteTexture(const char* path);
+	GLuint GetTextureId(const char* path);
 
 private:
 	static void ClearAllTextures();

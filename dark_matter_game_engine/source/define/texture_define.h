@@ -50,16 +50,16 @@
 // source:
 // https://www.deviantart.com/dactilardesign/art/Crate-generator-342135330
 //*************************************************************************
-#define BOX_TEXTURE ("cube/box.jpg")
+#define BOX_TEXTURE ("resources/img/cube/box.jpg")
 //*************************************************************************
 // box2 texture
 // source:
 // https://learnopengl.com/img/textures/container2.png
 //*************************************************************************
-#define BOX2_TEXTURE ("cube/box2.jpg")
-#define BOX2_SPEC_TEX ("cube/box2_specular.jpg")
+#define BOX2_TEXTURE ("resources/img/cube/box2.jpg")
+#define BOX2_SPEC_TEX ("resources/img/cube/box2_specular.jpg")
 
 //*************************************************************************
 // miscellaneous
 //*************************************************************************
-#define BLACK_TEXTURE ("misc/black_dot_texture.png")
+#define BLACK_TEXTURE ("resources/img/misc/black_dot_texture.png")

@@ -82,7 +82,7 @@ void Mesh::Init(const char* meshName, const float* vertices, const uint32_t* ind
 			va1.size = 3; //size of attribute
 			va1.type = GL_FLOAT; //vertex attribute type
 			va1.norm = GL_FALSE; //vertex attribute normalization bool
-			va1.stride = 8*sizeof(float); //size of vertex stride
+			va1.stride = 14*sizeof(float); //size of vertex stride
 			va1.offset = 0; //offset attribute
 			va.push_back(va1);
 		}
@@ -91,7 +91,7 @@ void Mesh::Init(const char* meshName, const float* vertices, const uint32_t* ind
 			va2.size = 2;
 			va2.type = GL_FLOAT;
 			va2.norm = GL_FALSE;
-			va2.stride = 8*sizeof(float);
+			va2.stride = 14*sizeof(float);
 			va2.offset = 3*sizeof(float);
 			va.push_back(va2);
 		}
@@ -100,9 +100,27 @@ void Mesh::Init(const char* meshName, const float* vertices, const uint32_t* ind
 			va3.size = 3;
 			va3.type = GL_FLOAT;
 			va3.norm = GL_FALSE;
-			va3.stride = 8*sizeof(float);
+			va3.stride = 14*sizeof(float);
 			va3.offset = 5*sizeof(float);
 			va.push_back(va3);
+		}
+		{ //tangent
+			RenderMesh::VAParams va4;
+			va4.size = 3;
+			va4.type = GL_FLOAT;
+			va4.norm = GL_FALSE;
+			va4.stride = 14*sizeof(float);
+			va4.offset = 8*sizeof(float);
+			va.push_back(va4);
+		}
+		{ //bitangent
+			RenderMesh::VAParams va5;
+			va5.size = 3;
+			va5.type = GL_FLOAT;
+			va5.norm = GL_FALSE;
+			va5.stride = 14*sizeof(float);
+			va5.offset = 11*sizeof(float);
+			va.push_back(va5);
 		}
 
 		//initialize the mesh for rendering
