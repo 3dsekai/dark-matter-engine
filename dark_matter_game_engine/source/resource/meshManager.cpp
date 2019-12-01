@@ -36,7 +36,7 @@
 // static member definition
 //*************************************************************************
 MeshManager* MeshManager::_instance = nullptr;
-std::map<std::string, RenderMesh::MeshParam*> MeshManager::_meshes;
+std::map <std::string, RenderMesh::MeshParam* > MeshManager::_meshes;
 
 //*************************************************************************
 // Class: MeshManager
@@ -90,7 +90,7 @@ void MeshManager::InitAllMeshes()
 // const char* name: the name of the mesh
 // Other: -
 //*************************************************************************
-void MeshManager::InitMesh(std::string name, const float* vertices, const uint32_t* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va)
+void MeshManager::InitMesh(const char* name, const float* vertices, const uint32_t* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va)
 {
 	if (_meshes.find(name) == _meshes.end())
 	{
@@ -109,7 +109,7 @@ void MeshManager::InitMesh(std::string name, const float* vertices, const uint32
 // const char* name: name of the mesh to delete
 // Other: -
 //*************************************************************************
-void MeshManager::DeleteMesh(std::string name)
+void MeshManager::DeleteMesh(const char* name)
 {
 	if(_meshes.find(name) != _meshes.end())
 	{
@@ -128,7 +128,7 @@ void MeshManager::DeleteMesh(std::string name)
 // const char* name: name of the mesh to retrieve
 // Other: -
 //*************************************************************************
-bool MeshManager::GetMesh(std::string name, RenderMesh::MeshParam* mesh)
+bool MeshManager::GetMesh(const char* name, RenderMesh::MeshParam* mesh)
 {
 	bool success = true;
 	if(_meshes.find(name) != _meshes.end())

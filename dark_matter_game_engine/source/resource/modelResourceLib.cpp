@@ -40,7 +40,6 @@
 std::string g_modelPath;
 std::string g_modelName = "new_mesh"; //name of model
 int meshNum = 0; //number of mesh
-
 //*************************************************************************
 // Function Name: InitModel
 // Argument{s}:

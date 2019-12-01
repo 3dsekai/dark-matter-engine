@@ -48,7 +48,7 @@ public:
 	~Plane();
 
 protected:
-	virtual void Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
+	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
 };
 
 #endif

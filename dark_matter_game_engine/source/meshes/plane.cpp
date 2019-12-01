@@ -89,7 +89,7 @@ Plane::~Plane()
 // Function Name: Init
 // Explanation: Initialize plane
 //*************************************************************************
-void Plane::Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
+void Plane::Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
 {
 	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
 	{

@@ -120,7 +120,7 @@ Cube::Cube(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3&
 // Function Name: Init
 // Explanation: Initialize cube
 //*************************************************************************
-void Cube::Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
+void Cube::Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
 {
 	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
 	{

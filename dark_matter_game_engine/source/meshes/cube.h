@@ -46,7 +46,7 @@ public:
 		 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Cube();
 
-	virtual void Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
+	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
 };
 
 #endif

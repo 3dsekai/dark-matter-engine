@@ -74,7 +74,7 @@ Mesh::~Mesh()
 //*************************************************************************
 // default initialization
 //*************************************************************************
-void Mesh::Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
+void Mesh::Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
 {
 	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
 	{

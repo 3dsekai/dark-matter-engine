@@ -45,9 +45,9 @@ public:
 	static void DestroyInstance();
 
 	void InitAllMeshes();
-	void InitMesh(std::string name, const float* vertices, const uint32_t* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va);
-	void DeleteMesh(std::string name);
-	bool GetMesh(std::string name, RenderMesh::MeshParam* mesh);
+	void InitMesh(const char* name, const float* vertices, const uint32_t* indices, int vertNum, int idxNum, const std::vector<RenderMesh::VAParams>& va);
+	void DeleteMesh(const char* name);
+	bool GetMesh(const char* name, RenderMesh::MeshParam* mesh);
 
 private:
 	static void ClearAllMeshes();
