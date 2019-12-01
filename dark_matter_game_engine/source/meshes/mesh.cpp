@@ -59,8 +59,10 @@ Mesh::Mesh(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3&
 		_mDrawParam->material.shininess = 64;
 	}
 	//initialize textures
-//	SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
-//	SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
+	SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
+	SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
+	_mDrawParam->material.diffMaterialNum = 0;
+	_mDrawParam->material.specMaterialNum = 0;
 };
 
 Mesh::~Mesh()
@@ -72,7 +74,7 @@ Mesh::~Mesh()
 //*************************************************************************
 // default initialization
 //*************************************************************************
-void Mesh::Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
+void Mesh::Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
 {
 	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
 	{

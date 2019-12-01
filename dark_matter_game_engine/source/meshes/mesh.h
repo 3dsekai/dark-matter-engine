@@ -49,7 +49,7 @@ public:
 
 public:
 	//mesh initialization
-	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum);
+	virtual void Init(std::string meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum);
 
 	virtual void Draw();
 	virtual void Delete();

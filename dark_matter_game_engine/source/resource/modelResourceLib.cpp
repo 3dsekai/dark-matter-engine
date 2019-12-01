@@ -63,7 +63,7 @@ void lib_initModel(std::string path, std::vector<Mesh*>* model)
 	}
 	g_modelPath = path.substr(0, path.find_last_of('/')) + "/";
 	std::string extName = path.substr(path.find_last_of('/') + 1); //name with extension
-	g_modelName = extName.substr(0, extName.find_last_of('.')); //name without extension
+	g_modelName = extName.substr(0, extName.find_last_of('.')).c_str(); //name without extension
 	lib_aiProcessNode(aiScene->mRootNode, aiScene, model);
 }
 //*************************************************************************
@@ -148,6 +148,7 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 
 	//create and return mesh
 	Mesh* mesh = new Mesh(TEXTURE_MESH_SHADER_NAME);
+	
 	std::string meshName = g_modelName + "_mesh" + std::to_string(++meshNum);
 	mesh->Init(meshName.c_str(), vertices.data(), indices.data(), vertices.size(), indices.size());
 	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
