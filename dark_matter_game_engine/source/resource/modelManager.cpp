@@ -37,7 +37,7 @@
 // static member definition
 //*************************************************************************
 ModelManager* ModelManager::_instance = nullptr;
-std::map<const char*, std::vector<Mesh*>> ModelManager::_model;
+std::map<std::string, std::vector<Mesh*>> ModelManager::_model;
 
 //*************************************************************************
 // Class: ModelManager
@@ -144,7 +144,7 @@ void ModelManager::UnloadAllModels()
 {
 	for(auto it = _model.begin(); it != _model.end(); it++)
 	{
-		_instance->UnloadModel(it->first);
+		_instance->UnloadModel((it->first).c_str());
 	}
 	_model.clear();
 }

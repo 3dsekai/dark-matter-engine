@@ -57,7 +57,7 @@ private:
 
 private:
 	static ModelManager* _instance;
-	static std::map<const char*, std::vector<Mesh*>> _model;
+	static std::map<std::string, std::vector<Mesh*>> _model;
 };
 
 #endif

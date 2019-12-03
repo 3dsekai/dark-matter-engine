@@ -60,7 +60,7 @@ enum MATERIAL_TYPE
 //basic basic data
 struct materialData
 {
-	const char* texName; //name of texture
+	std::string texName; //name of texture
 	MATERIAL_TYPE type; //type of material
 };
 #endif

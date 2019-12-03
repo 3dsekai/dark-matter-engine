@@ -36,7 +36,7 @@
 // static member definition
 //*************************************************************************
 TextureManager* TextureManager::_instance = nullptr;
-std::map<const char*, GLuint> TextureManager::_textures;
+std::map<std::string, GLuint> TextureManager::_textures;
 
 //*************************************************************************
 // Class: TextureManager

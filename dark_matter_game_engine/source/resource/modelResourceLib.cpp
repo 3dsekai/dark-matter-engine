@@ -150,8 +150,8 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 	
 	std::string meshName = g_modelName + "_mesh" + std::to_string(++meshNum);
 	mesh->Init(meshName.c_str(), vertices.data(), indices.data(), vertices.size(), indices.size());
-	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
-	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) { mesh->SetTexture(it->texName, it->type); }
+	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName.c_str(), it->type); }
+	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) { mesh->SetTexture(it->texName.c_str(), it->type); }
 	return mesh;
 }
 
@@ -179,7 +179,7 @@ void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<mat
 			}
 			//set material data
 			materialData data;
-			data.texName = path.c_str();
+			data.texName = path;
 			data.type = (MATERIAL_TYPE)matType;
 			maps->push_back(data);
 		}

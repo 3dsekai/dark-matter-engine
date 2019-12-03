@@ -61,7 +61,7 @@ private:
 
 private:
 	static TextureManager* _instance;
-	static std::map<const char*, GLuint> _textures;
+	static std::map<std::string, GLuint> _textures;
 };
 
 #endif
