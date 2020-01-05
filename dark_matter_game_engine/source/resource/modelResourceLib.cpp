@@ -125,12 +125,12 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 		vertices.push_back(aiMesh->mBitangents[i].y);
 		vertices.push_back(aiMesh->mBitangents[i].z);
 	}
-	for (uint32_t i = 0; i < aiMesh->mNumFaces; i++)
+	for (uint32_t j = 0; j < aiMesh->mNumFaces; j++)
 	{
-		aiFace aiFace = aiMesh->mFaces[i];
-		for (uint32_t j = 0; j < aiFace.mNumIndices; j++)
+		aiFace aiFace = aiMesh->mFaces[j];
+		for (uint32_t k = 0; k < aiFace.mNumIndices; k++)
 		{
-			indices.push_back(aiFace.mIndices[j]);
+			indices.push_back(aiFace.mIndices[k]);
 		}
 	}
 	// process materials

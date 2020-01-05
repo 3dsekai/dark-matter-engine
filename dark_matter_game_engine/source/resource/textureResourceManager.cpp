@@ -77,7 +77,7 @@ void TextureResourceManager::InitTexture(const stbImgData& textureData, GLuint& 
 		glGenTextures(1, &texId); //generate texture name
 		glBindTexture(GL_TEXTURE_2D, texId); //bind the texture to the texture target
 
-											 // set the texture wrapping parameters
+		// set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
