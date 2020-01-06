@@ -103,10 +103,6 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 		vertices.push_back(aiMesh->mVertices[i].x);
 		vertices.push_back(aiMesh->mVertices[i].y);
 		vertices.push_back(aiMesh->mVertices[i].z);
-		// normals
-		vertices.push_back(aiMesh->mNormals[i].x);
-		vertices.push_back(aiMesh->mNormals[i].y);
-		vertices.push_back(aiMesh->mNormals[i].z);
 		// texture coordinates
 		float texCoords[2] = { 0.0f, 0.0f };
 		if (aiMesh->mTextureCoords[0])
@@ -116,6 +112,10 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 		}
 		vertices.push_back(texCoords[0]);
 		vertices.push_back(texCoords[1]);
+		// normals
+		vertices.push_back(aiMesh->mNormals[i].x);
+		vertices.push_back(aiMesh->mNormals[i].y);
+		vertices.push_back(aiMesh->mNormals[i].z);
 		// tangent
 		vertices.push_back(aiMesh->mTangents[i].x);
 		vertices.push_back(aiMesh->mTangents[i].y);

@@ -191,3 +191,39 @@ initialized once.
 I created a mesh manager. The manager generates the VAO and binds buffer data
 once for each unique mesh and saves it. Each instance of that mesh just references
 that data.
+
+=================================================
+
+1/7/2020 Log
+
+=================================================
+
+After hours of futile debugging I've finally figured out why
+textures weren't correctly mapping to their models.
+
+The issue:
+Textures were not correctly mapping to their coordinates for models.
+The reason was in the lib_aiProcessMesh() function.
+I was ordering the vertices in the following order:
+1. position
+2. normals
+3. texture coords
+4. tangent
+5. bitangent
+
+My shader orders vertex attributes in the following order:
+1. position
+2. texture coords
+3. normals
+
+In other words, the ordering of tex coords and normals in the model process
+mesh method was reversed.
+
+Solution:
+The solution was simple. Just insert texture coords into the vertex before
+the normals.
+
+Lesson:
+The ordering of vertex attributes ABSOLUTELY MUST align with the shader.
+If my vertices are rendering funky, this should be one of the first things I
+check.
