@@ -180,18 +180,8 @@ void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<mat
 			//set material data
 			materialData data;
 			data.texName = path;
-			data.type = (MATERIAL_TYPE)matType;
+			data.type = static_cast<MATERIAL_TYPE>(matType);
 			maps->push_back(data);
 		}
 	}
-}
-//*************************************************************************
-// Class: ModelResourceLib
-// Function Name: DeleteModel
-// Argument{s}:
-// const char* path: path for the model data
-// Explanation: delete and release the model data
-//*************************************************************************
-void lib_deleteModel(const char* path)
-{
 }

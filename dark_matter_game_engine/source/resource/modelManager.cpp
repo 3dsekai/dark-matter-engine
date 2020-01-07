@@ -101,7 +101,6 @@ void ModelManager::UnloadModel(const char* name)
 {
 	if(_model.find(name) != _model.end())
 	{
-//		lib_deleteModel(_model[name]);
 		for (auto it = _model[name].begin(); it != _model[name].end(); it++)
 		{
 			delete *it;
@@ -144,7 +143,15 @@ void ModelManager::UnloadAllModels()
 {
 	for(auto it = _model.begin(); it != _model.end(); it++)
 	{
-		_instance->UnloadModel((it->first).c_str());
+		std::string name = it->first;
+		if (_model.find(name) != _model.end())
+		{
+			for (auto it = _model[name].begin(); it != _model[name].end(); it++)
+			{
+				delete *it;
+				*it = nullptr;
+			}
+		}
 	}
 	_model.clear();
 }

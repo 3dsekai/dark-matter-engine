@@ -34,6 +34,8 @@
 layout (location = 0) in vec3 attrPos;
 layout (location = 1) in vec2 attrTex;
 layout (location = 2) in vec3 attrNormal;
+layout (location = 3) in vec3 attrTangent;
+layout (location = 4) in vec3 attrBitangent;
 
 out vec2 texCoord; //texture coordinates
 //out vec4 ambientCol; //the ambient light

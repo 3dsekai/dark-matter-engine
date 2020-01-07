@@ -44,6 +44,5 @@ void lib_initModel(std::string path, std::vector<Mesh*>* model);
 void lib_aiProcessNode(aiNode *aiNode, const aiScene *aiScene, std::vector<Mesh*>* model);
 Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene);
 void lib_loadMaterials(aiMaterial* aiMat, aiTextureType matType, std::vector<materialData>* maps);
-void lib_deleteModel(const char* path);
 
 #endif

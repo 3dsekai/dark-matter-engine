@@ -137,7 +137,7 @@ bool MeshManager::GetMesh(const char* name, RenderMesh::MeshParam* mesh)
 	}
 	else
 	{
-		std::cout << "Error: Could not find mesh: " << name << std::endl;
+		std::cout << "Could not find mesh: " << name << std::endl;
 		success = false;
 	}
 	return success;
