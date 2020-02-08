@@ -1,8 +1,8 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: GameObjectManager
-// Source File: [gameObjMan.cpp]
+// Class Name: Nanosuit
+// Source File: [nanosuit.cpp]
 //
 // License:
 // Copyright(C) <2018>  <Christopher Tall>
@@ -29,120 +29,70 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "gameObjMan.h"
-#include "objects/multBoxes.h"
-#include "objects/player.h"
-#include "objects/floor.h"
-#include "objects/lamp.h"
-#include "objects/nanosuit.h"
-
+#include "nanosuit.h"
+#include "../../define/shader_define.h"
+#include "../../model/model.h"
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: GameObjManager
-// Explanation: constructor
-// Argument{s}:
-// Other: -
+// Class: MultiBoxes
+// Function Name: MulBoxes
+// Argument{s}: -
+// Explanation: Nanosuit constructor
 //*************************************************************************
-GameObjManager::GameObjManager()
+Nanosuit::Nanosuit()
 {
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: GameObjManager
-// Explanation: destructor
-// Argument{s}:
-// Other: -
+// Class: MultiBoxes
+// Function Name: MulBoxes
+// Argument{s}: -
+// Explanation: Nanosuit destructor
 //*************************************************************************
-GameObjManager::~GameObjManager()
+Nanosuit::~Nanosuit()
 {
-	DestroyAllObjects();
+	delete _nanosuit;
+	_nanosuit = nullptr;
 }
 
 //*************************************************************************
-// Class: GameObjManager
+// Class: MultiBoxes
 // Function Name: Init
-// Explanation: Initialize game objects
-// Argument{s}:
-// Other: -
+// Argument{s}: -
+// Explanation: initialize game object
 //*************************************************************************
-void GameObjManager::Init()
+void Nanosuit::Init()
 {
-	AddNewGameObject(new Player);
-	AddNewGameObject(new Floor);
-	//AddNewGameObject(new Lamp);
-	//AddNewGameObject(new MultBoxes);
-	//AddNewGameObject(new Nanosuit);
+	_nanosuit = new Model(TEXTURE_MESH_SHADER_NAME, "resources/models/nanosuit/nanosuit.obj");
 }
 
 //*************************************************************************
-// Class: GameObjManager
+// Class: MultiBoxes
 // Function Name: Update
-// Explanation: Update game objects
-// Argument{s}:
-// Other: -
+// Argument{s}: -
+// Explanation: update game object
 //*************************************************************************
-void GameObjManager::Update(const Mouse& mouse, const Keyboard& keyboard)
+void Nanosuit::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
-	for(auto it = _obj_list.begin(); it != _obj_list.end();)
-	{
-		(*it)->Update(mouse, keyboard);
-		if((*it)->IsKill())
-		{
-			delete (*it);
-			it = _obj_list.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
 }
 
 //*************************************************************************
-// Class: GameObjManager
+// Class: MultiBoxes
 // Function Name: Draw
-// Explanation: Draw game objects
-// Argument{s}:
-// Other: -
+// Argument{s}: -
+// Explanation: draw game object
 //*************************************************************************
-void GameObjManager::Draw()
+void Nanosuit::Draw()
 {
-	for(auto it = _obj_list.begin(); it != _obj_list.end(); it++)
-	{
-		(*it)->Draw();
-	}
+	_nanosuit->Draw();
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: AddNewGameObjet
-// Explanation: Add a new game object to the list
-// Argument{s}:
-// Other: -
+// Class: MultiBoxes
+// Function Name: Release
+// Argument{s}: -
+// Explanation: delete game object
 //*************************************************************************
-void GameObjManager::AddNewGameObject(GameObjBase* obj)
+void Nanosuit::Release()
 {
-	if (obj != nullptr)
-	{
-		_obj_list.push_back(obj);
-		_obj_list.back()->Init();
-	}
-}
-
-//*************************************************************************
-// Class: GameObjManager
-// Function Name: DestroyAllObjects
-// Explanation: destroys all objects in the game
-// Argument{s}:
-// Other: -
-//*************************************************************************
-void GameObjManager::DestroyAllObjects()
-{
-	for(auto it = _obj_list.begin(); it != _obj_list.end(); it++)
-	{
-		delete (*it);
-		*it = nullptr;
-	}
-	_obj_list.clear();
+	_is_kill = true;
 }

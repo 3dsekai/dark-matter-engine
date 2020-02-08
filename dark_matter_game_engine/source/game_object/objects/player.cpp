@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: GameObjectManager
-// Source File: [gameObjMan.cpp]
+// Class Name: Player
+// Source File: [player.cpp]
 //
 // License:
-// Copyright(C) <2018>  <Christopher Tall>
+// Copyright(C) <2020>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -29,120 +29,76 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
-#include "gameObjMan.h"
-#include "objects/multBoxes.h"
-#include "objects/player.h"
-#include "objects/floor.h"
-#include "objects/lamp.h"
-#include "objects/nanosuit.h"
+#include "player.h"
+#include "../../define/shader_define.h"
+#include "../../define/light_define.h"
+#include "../../meshes/cube.h"
+#include "../../lighting/light.h"
+//#include "../../define/texture_define.h"
+//#include "../../math_lib/mat4.h"
+//#include "../../math_lib/mathUtil.h"
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: GameObjManager
-// Explanation: constructor
-// Argument{s}:
-// Other: -
+//constructor
 //*************************************************************************
-GameObjManager::GameObjManager()
+Player::Player()
 {
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: GameObjManager
-// Explanation: destructor
-// Argument{s}:
-// Other: -
+//destructor
 //*************************************************************************
-GameObjManager::~GameObjManager()
+Player::~Player()
 {
-	DestroyAllObjects();
+	delete _player;
+	_player = nullptr;
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: Init
-// Explanation: Initialize game objects
-// Argument{s}:
-// Other: -
+//initialize
 //*************************************************************************
-void GameObjManager::Init()
+void Player::Init()
 {
-	AddNewGameObject(new Player);
-	AddNewGameObject(new Floor);
-	//AddNewGameObject(new Lamp);
-	//AddNewGameObject(new MultBoxes);
-	//AddNewGameObject(new Nanosuit);
+	//player init
+	_player = new Cube(TEXTURE_MESH_SHADER_NAME);
+
+	//light
+	Vec4 col = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	lightDef light;
+	light.position = _pos;
+	light.ambient = Vec3(col.x, col.y, col.z) * 0.1f;
+	light.diffuse = Vec3(col.x, col.y, col.z) * 0.5f;
+	light.specular = Vec3(1.0f, 1.0f, 1.0f);
+	_light = new Light(TEXTURE_MESH_SHADER_NAME, light);
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: Update
-// Explanation: Update game objects
-// Argument{s}:
-// Other: -
+//update
 //*************************************************************************
-void GameObjManager::Update(const Mouse& mouse, const Keyboard& keyboard)
+void Player::Update(const Mouse& mouse, const Keyboard& keyboard)
 {
-	for(auto it = _obj_list.begin(); it != _obj_list.end();)
+	_light->SetPosition(_pos);
+}
+
+//*************************************************************************
+//draw
+//*************************************************************************
+void Player::Draw()
+{
+	if (_player != nullptr)
 	{
-		(*it)->Update(mouse, keyboard);
-		if((*it)->IsKill())
-		{
-			delete (*it);
-			it = _obj_list.erase(it);
-		}
-		else
-		{
-			it++;
-		}
+		_player->Draw();
+	}
+	if (_light != nullptr)
+	{
+		_light->Draw();
 	}
 }
 
 //*************************************************************************
-// Class: GameObjManager
-// Function Name: Draw
-// Explanation: Draw game objects
-// Argument{s}:
-// Other: -
+//delete
 //*************************************************************************
-void GameObjManager::Draw()
+void Player::Release()
 {
-	for(auto it = _obj_list.begin(); it != _obj_list.end(); it++)
-	{
-		(*it)->Draw();
-	}
-}
-
-//*************************************************************************
-// Class: GameObjManager
-// Function Name: AddNewGameObjet
-// Explanation: Add a new game object to the list
-// Argument{s}:
-// Other: -
-//*************************************************************************
-void GameObjManager::AddNewGameObject(GameObjBase* obj)
-{
-	if (obj != nullptr)
-	{
-		_obj_list.push_back(obj);
-		_obj_list.back()->Init();
-	}
-}
-
-//*************************************************************************
-// Class: GameObjManager
-// Function Name: DestroyAllObjects
-// Explanation: destroys all objects in the game
-// Argument{s}:
-// Other: -
-//*************************************************************************
-void GameObjManager::DestroyAllObjects()
-{
-	for(auto it = _obj_list.begin(); it != _obj_list.end(); it++)
-	{
-		delete (*it);
-		*it = nullptr;
-	}
-	_obj_list.clear();
+	_is_kill = true;
 }
