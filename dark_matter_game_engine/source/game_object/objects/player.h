@@ -46,7 +46,7 @@ public:
 	~Player();
 
 	void Init() override;
-	void Update(const Mouse& mouse, const Keyboard& keyboard) override;
+	void Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam) override;
 	void Draw() override;
 	void Release() override;
 	//set position
@@ -63,6 +63,7 @@ public:
 private:
 	Cube* _player;
 	Light* _light; //player light
+	Vec3 _target; //looking dir
 	Vec3 _pos;
 	Vec3 _rot;
 };

@@ -94,7 +94,7 @@ void Lamp::Init()
 // Argument{s}: -
 // Explanation: update game object
 //*************************************************************************
-void Lamp::Update(const Mouse& mouse, const Keyboard& keyboard)
+void Lamp::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 {
 	Mat4 t = Mat4::TranslateMat(Vec3(10.0f, 0.0f, 0.0f));
 	Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(_rot));

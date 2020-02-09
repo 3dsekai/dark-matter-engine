@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Camera\camera.h" />
+    <ClInclude Include="source\camera\cameraManager.h" />
     <ClInclude Include="source\define\draw_define.h" />
     <ClInclude Include="source\define\light_define.h" />
     <ClInclude Include="source\define\material_define.h" />
@@ -69,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Camera\camera.cpp" />
+    <ClCompile Include="source\camera\cameraManager.cpp" />
     <ClCompile Include="source\draw\drawUtil.cpp" />
     <ClCompile Include="source\draw\renderMesh.cpp" />
     <ClCompile Include="source\draw\shader.cpp" />

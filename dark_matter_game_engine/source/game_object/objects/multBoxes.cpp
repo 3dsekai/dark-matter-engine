@@ -95,7 +95,7 @@ void MultBoxes::Init()
 // Argument{s}: -
 // Explanation: update game object
 //*************************************************************************
-void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard)
+void MultBoxes::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 {
 //	for(auto it = _cubes.begin(); it != _cubes.end(); it++)
 //	{

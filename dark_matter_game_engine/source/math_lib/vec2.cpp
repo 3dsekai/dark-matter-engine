@@ -164,8 +164,9 @@ float Vec2::Length() const
 Vec2& Vec2::Normalize()
 {
 	float len = this->Length();
-	x /= len;
-	y /= len;
+	float inv = 1.0f / len;
+	x *= inv;
+	y *= inv;
 
 	return *this;
 }

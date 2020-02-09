@@ -37,6 +37,8 @@
 #include "../game_object/gameObjMan.h"
 #include "../game_object/gameObjBase.h"
 
+class CameraManager;
+
 //*************************************************************************
 // Game Loop Class
 //*************************************************************************
@@ -71,7 +73,7 @@ private:
 	bool _isQuit; //check if user quit game
 	Keyboard* _keyboard;
 	Mouse* _mouse;
-	Camera* _cam;
+	CameraManager* _camMan;
 	static GameObjManager* _game_obj;
 };
 

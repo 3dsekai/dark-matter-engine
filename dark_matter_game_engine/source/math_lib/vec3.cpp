@@ -216,9 +216,10 @@ float Vec3::Length() const
 Vec3& Vec3::Normalize()
 {
 	float len = this->Length();
-	x /= len;
-	y /= len;
-	z /= len;
+	float inv = 1.0f / len;
+	x *= inv;
+	y *= inv;
+	z *= inv;
 
 	return *this;
 }

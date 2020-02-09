@@ -48,4 +48,13 @@ enum BuffObjType
 	INDEX_BUFF_OBJ,				//index array buffer object
 	BUFF_OBJ_NUM
 };
+
+//*************************************************************************
+// render layer
+//*************************************************************************
+enum RENDER_LAYER {
+	RENDER_LAYER_3D = 0, //3d layer (player camera)
+	RENDER_LAYER_UI, //ui layer (ui camera)
+	RENDER_LAYER_NUM
+};
 #endif

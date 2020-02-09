@@ -33,6 +33,7 @@
 //*************************************************************************
 #include "../input/mouse.h"
 #include "../input/keyboard.h"
+#include "../camera/camera.h"
 
 //*************************************************************************
 // Class
@@ -48,7 +49,7 @@ public:
 	//initialize game object
 	virtual void Init() = 0;
 	//update game object
-	virtual void Update(const Mouse& mouse, const Keyboard& keyboard) = 0;
+	virtual void Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam) = 0;
 	//draw game object
 	virtual void Draw() = 0;
 	//delete game object

@@ -230,9 +230,10 @@ float Vec4::Length() const
 Vec4& Vec4::Normalize()
 {
 	float len = this->Length();
-	x /= len;
-	y /= len;
-	z /= len;
+	float inv = 1.0f / len;
+	x *= inv;
+	y *= inv;
+	z *= inv;
 
 	return *this;
 }

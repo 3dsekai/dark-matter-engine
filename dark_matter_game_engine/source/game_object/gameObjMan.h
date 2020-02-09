@@ -36,6 +36,7 @@
 class GameObjBase;
 class Mouse;
 class Keyboard;
+class Camera;
 
 //*************************************************************************
 // Class
@@ -51,7 +52,7 @@ private:
 	void DestroyAllObjects();
 public:
 	void Init();
-	void Update(const Mouse& mouse, const Keyboard& keyboard);
+	void Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam);
 	void Draw();
 	void AddNewGameObject(GameObjBase* obj);
 

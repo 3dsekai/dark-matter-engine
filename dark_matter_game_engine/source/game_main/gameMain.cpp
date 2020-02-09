@@ -41,6 +41,8 @@
 #include "../draw/uboManager.h"
 #include "../define/shader_define.h"
 #include "../math_lib/vec3.h"
+#include "../camera/cameraManager.h"
+#include "../define/draw_define.h"
 
 //*************************************************************************
 // static member definitions
@@ -56,10 +58,10 @@ GameObjManager* GameMain::_game_obj = nullptr;
 GameMain::GameMain()
 {
 	_isQuit = false;
-	_cam = new Camera;
 	_keyboard = new Keyboard;
 	_mouse = new Mouse;
 	_game_obj = new GameObjManager;
+	_camMan = new CameraManager;
 }
 
 //*************************************************************************
@@ -76,12 +78,12 @@ GameMain::~GameMain()
 	//delete keyboard
 	delete _keyboard;
 	_keyboard = nullptr;
-	//delete camera
-	delete _cam;
-	_cam = nullptr;
 	//delete game objects
 	delete _game_obj;
 	_game_obj = nullptr;
+	//delete camera manager
+	delete _camMan;
+	_camMan = nullptr;
 	//delete shaders
 	ShaderManager::GetInstance()->DestroyInstance();
 	TextureManager::GetInstance()->DestroyInstance();
@@ -117,6 +119,8 @@ void GameMain::Start()
 
 	//initialize the game objects
 	_game_obj->Init();
+	//initialize cameras
+	_camMan->Init();
 }
 
 //*************************************************************************
@@ -127,27 +131,11 @@ void GameMain::Start()
 //*************************************************************************
 void GameMain::Update()
 {
-	_cam->ProcessMouseMotion(*_mouse);
-	if (_keyboard->IsKeyPressed(KEY_W))
-	{ //move forward
-		_cam->Move(Camera::CamDir::DIR_FORWARD);
-	}
-	if (_keyboard->IsKeyPressed(KEY_S))
-	{ //move back
-		_cam->Move(Camera::CamDir::DIR_BACK);
-	}
-	if (_keyboard->IsKeyPressed(KEY_A))
-	{ //move left
-		_cam->Move(Camera::CamDir::DIR_LEFT);
-	}
-	if (_keyboard->IsKeyPressed(KEY_D))
-	{ //move right
-		_cam->Move(Camera::CamDir::DIR_RIGHT);
-	}
-	_cam->Update();
-
 	//update the game objects
-	_game_obj->Update(*_mouse, *_keyboard);
+	Camera* cam = _camMan->GetCamera(RENDER_LAYER_3D);
+	_game_obj->Update(*_mouse, *_keyboard, cam);
+	//update cameras
+	_camMan->Update();
 }
 
 //*************************************************************************
@@ -159,7 +147,8 @@ void GameMain::Update()
 void GameMain::Draw()
 {
 	//store global values in the UBO.
-	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*_cam);//get the projection-view matrix for this frame
+	Camera* cam = _camMan->GetCamera(RENDER_LAYER_3D);
+	UBOManager::_uboParams.projView = DrawUtil::GenerateProjectionViewMatrix(*cam);//get the projection-view matrix for this frame
 	UBOManager::_uboParams.ambientLight = Vec4(1.0f, 1.0f, 1.0f, 0.2f);//set the global ambient light
 
 	//set uniform buffer objects

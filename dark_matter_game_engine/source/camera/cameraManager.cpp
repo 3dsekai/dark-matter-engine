@@ -1,11 +1,11 @@
 //*************************************************************************
 // DarkMatter OpenGL 3D Game Engine Framework
 // Author: Christopher Tall (https://github.com/3dsekai)
-// Class Name: Floor
-// Source File: [floor.cpp]
+// Class Name: CameraManager
+// Source File: [cameraManager.cpp]
 //
 // License:
-// Copyright(C) <2019>  <Christopher Tall>
+// Copyright(C) <2020>  <Christopher Tall>
 //
 // This software is copyrighted.
 // The copyright notice and license information in this document must be
@@ -27,82 +27,67 @@
 //*************************************************************************
 
 //*************************************************************************
-// Includes
+// Include
 //*************************************************************************
-#include "floor.h"
-#include "../../define/shader_define.h"
-#include "../../meshes/plane.h"
-#include "../../define/texture_define.h"
+#include "cameraManager.h"
+#include "camera.h"
 
 //*************************************************************************
-// Class: Floor
-// Function Name: Floor
-// Argument{s}: -
-// Explanation: Floor constructor
+// constructor
 //*************************************************************************
-Floor::Floor() :
-	_plane(nullptr)
+CameraManager::CameraManager()
 {
+};
+//*************************************************************************
+// destructor
+//*************************************************************************
+CameraManager::~CameraManager()
+{
+	DestroyAll();
 }
-
 //*************************************************************************
-// Class: Floor
-// Function Name: Floor
-// Argument{s}: -
-// Explanation: Floor destructor
+//initialize
 //*************************************************************************
-Floor::~Floor()
+void CameraManager::Init()
 {
-	delete _plane;
-	_plane = nullptr;
-}
-
-//*************************************************************************
-// Class: Floor
-// Function Name: Init
-// Argument{s}: -
-// Explanation: initialize game object
-//*************************************************************************
-void Floor::Init()
-{
-	_plane = new Plane(TEXTURE_MESH_SHADER_NAME,
-					  Vec3(1.0f, -13.0f, 0.0f),
-					  Quat(Quat::Euler2Quat(Vec3::Deg2RadVec3(Vec3(-90.0f, 0.0f, 0.0f)))),
-					  Vec3(10.0f, 10.0f, 10.0f));
-	_plane->SetTexture(BOX_TEXTURE, MATERIAL_DIFFUSE);
-}
-
-//*************************************************************************
-// Class: Floor
-// Function Name: Update
-// Argument{s}: -
-// Explanation: update game object
-//*************************************************************************
-void Floor::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
-{
-}
-
-//*************************************************************************
-// Class: Floor
-// Function Name: Draw
-// Argument{s}: -
-// Explanation: draw game object
-//*************************************************************************
-void Floor::Draw()
-{
-	if(_plane != nullptr)
+	for(int i = 0; i < RENDER_LAYER_NUM; i++)
 	{
-		_plane->Draw();
+		_cam[i] = new Camera;
+	}
+}
+//*************************************************************************
+//update
+//*************************************************************************
+void CameraManager::Update()
+{
+	for(auto& cam : _cam)
+	{
+		cam.second->Update();
 	}
 }
 
 //*************************************************************************
-// Class: Floor
-// Function Name: Release
-// Argument{s}: -
-// Explanation: delete game object
+//get camera
 //*************************************************************************
-void Floor::Release()
+Camera* CameraManager::GetCamera(RENDER_LAYER layer)
 {
-	_is_kill = true;
+	Camera* cam = nullptr;
+	if(_cam.find(layer) != _cam.end())
+	{
+		cam = _cam[layer];
+	}
+	return cam;
+}
+
+//*************************************************************************
+//destroy all cameras
+//*************************************************************************
+void CameraManager::DestroyAll()
+{
+	for(auto& cam : _cam)
+	{
+		delete cam.second;
+		cam.second = nullptr;
+	}
+	_cam.clear();
 }

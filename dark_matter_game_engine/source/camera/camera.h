@@ -59,6 +59,8 @@ public:
 
 	Mat4 GetViewMatrix() const;
 	float GetFieldOfView() const;
+	void SetPosition(const Vec3& pos) { _pos = pos; };
+	void SetTarget(const Vec3& tar) { _target = tar; };
 
 	void ProcessMouseMotion(const Mouse& mouse);
 	void Move(const CamDir cam_dir);

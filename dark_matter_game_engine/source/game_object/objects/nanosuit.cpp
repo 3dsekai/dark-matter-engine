@@ -71,7 +71,7 @@ void Nanosuit::Init()
 // Argument{s}: -
 // Explanation: update game object
 //*************************************************************************
-void Nanosuit::Update(const Mouse& mouse, const Keyboard& keyboard)
+void Nanosuit::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 {
 }
 
