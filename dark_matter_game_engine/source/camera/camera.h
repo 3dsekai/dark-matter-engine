@@ -65,7 +65,6 @@ public:
 	void ProcessMouseMotion(const Mouse& mouse);
 	void Move(const CamDir cam_dir);
 
-private:
 	void Rotate(float p_amount, float y_amount);
 	void Zoom(float zoom);
 

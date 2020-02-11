@@ -35,15 +35,14 @@
 #include "../../meshes/cube.h"
 #include "../../lighting/light.h"
 #include "../../input/inputCodes.h"
+#include "../../math_lib/mat4.h"
+#include "../../math_lib/mathUtil.h"
 //#include "../../define/texture_define.h"
-//#include "../../math_lib/mat4.h"
-//#include "../../math_lib/mathUtil.h"
 
 //*************************************************************************
 //macro defintions
 //*************************************************************************
 #define SPEED (0.05f) //camera speed
-
 //*************************************************************************
 //constructor
 //*************************************************************************
@@ -83,6 +82,7 @@ void Player::Init()
 //*************************************************************************
 void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 {
+	_target.y = 0.0f; //set y to 0 so player doesn't move up or down
 	if(keyboard.IsKeyPressed(KEY_W))
 	{ //move forward
 		_pos += _target * SPEED;
@@ -105,15 +105,37 @@ void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 		rightVec.Normalize();
 		_pos += rightVec * SPEED;
 	}
+	if(keyboard.IsKeyPressed(KEY_I))
+	{
+	}
+	if(keyboard.IsKeyPressed(KEY_K))
+	{
+	}
+	if(keyboard.IsKeyPressed(KEY_J))
+	{
+		_rot.y += 0.5f;
+	}
+	if(keyboard.IsKeyPressed(KEY_L))
+	{
+	}
+	Vec3 camPos = Vec3(_pos.x, _pos.y + 3.0f, _pos.z + 10.0f);
+	cam->SetPosition(camPos);
+	_target = (_pos - camPos).GetNormalizedVec();
+	cam->SetTarget(_target);
+
 	_player->SetPosition(_pos);
 	_light->SetPosition(_pos);
 	//move cam
 	if (cam != nullptr)
 	{
-		Vec3 camPos = Vec3(_pos.x, _pos.y + 3.0f, _pos.z + 10.0f);
-		cam->SetPosition(camPos);
-		Vec3 tar = (_pos - camPos).GetNormalizedVec();
-		cam->SetTarget(tar);
+		//2. 
+		//Mat4 t = Mat4::TranslateMat(Vec3(_pos.x, _pos.y+3.0f, _pos.z+10.0f));
+		//Mat4 r = Mat4::Identity().Rotate(Vec3::Deg2RadVec3(_rot));
+		//Mat4 w = r * t;
+		//auto camPos = w.GetTranslation();
+		//cam->SetPosition(camPos);
+		//Vec3 tar = (_pos - camPos).GetNormalizedVec();
+		//cam->SetTarget(tar);
 	}
 }
 
