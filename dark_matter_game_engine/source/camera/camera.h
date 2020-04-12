@@ -64,8 +64,13 @@ public:
 
 	void ProcessMouseMotion(const Mouse& mouse);
 	void Move(const CamDir cam_dir);
+	void AddYaw(float y_amount);
+	void AddPitch(float p_amount);
+	void AddYawPitch(float y_amount, float p_amount);
 
-	void Rotate(float p_amount, float y_amount);
+	const Vec3 GetSphericalCoords() const;
+
+	void Rotate(float y_amount, float p_amount);
 	void Zoom(float zoom);
 
 private:

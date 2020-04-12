@@ -192,16 +192,13 @@ void Camera::Move(const CamDir cam_dir)
 // Argument{s}:
 // float p_amount: the amount of pitch rotation for this frame
 // float y_amount: the amount of yaw rotation for this frame
-// Explanation: rotate the camera
+// Explanation: rotate the camera by calculating the spherical coordinates
+// of its target.
 //*************************************************************************
-void Camera::Rotate(float p_amount, float y_amount)
+void Camera::Rotate(float y_amount, float p_amount)
 {
 	//add the movement amount to the angles for rotation
-	_yaw += p_amount;
-	_pitch += y_amount;
-
-	//keep the pitch angle within the [-90, 90] range
-	_pitch = MathUtil::Clamp(_pitch, PITCH_CLAMP, -PITCH_CLAMP);
+	AddYawPitch(y_amount, p_amount);
 
 	//convert angles from degrees to radians
 	float yaw_rad = MathUtil::Deg2Rad(_yaw);
@@ -214,7 +211,54 @@ void Camera::Rotate(float p_amount, float y_amount)
 	_target.z = sinf(yaw_rad) * cosf(pitch_rad);
 	_target.Normalize();
 }
+//*************************************************************************
+// Add yaw rotation to camera
+//*************************************************************************
+void Camera::AddYaw(float y_amount)
+{
+	_yaw += y_amount;
+};
+//*************************************************************************
+// Add pitch rotation to camera
+//*************************************************************************
+void Camera::AddPitch(float p_amount)
+{
+	_pitch += p_amount;
+	//keep the pitch angle within the [-90, 90] range
+	_pitch = MathUtil::Clamp(_pitch, PITCH_CLAMP, -PITCH_CLAMP);
+};
+//*************************************************************************
+// Add yaw and pitch rotation to camera
+//*************************************************************************
+void Camera::AddYawPitch(float y_amount, float p_amount)
+{
+	AddYaw(y_amount);
+	AddPitch(p_amount);
+}
+//*************************************************************************
+// Class: Camera
+// Function Name: GetSphericalCoords
+// Argument{s}:
+// float p_amount: the amount of pitch rotation for this frame
+// float y_amount: the amount of yaw rotation for this frame
+// Explanation: Get spherical coordinates from the pitch and yaw
+// amounts.
+//*************************************************************************
+const Vec3 Camera::GetSphericalCoords() const
+{
+	Vec3 pos = Vec3(0.0f, 0.0f, 0.0f);
 
+	//convert angles from degrees to radians
+	float yaw_rad = MathUtil::Deg2Rad(_yaw);
+	float pitch_rad = MathUtil::Deg2Rad(_pitch);
+
+	//convert the camera looking vector from spherical coordinates to cartesian coordinates
+	pos.x = cosf(yaw_rad) * cosf(pitch_rad);
+	pos.y = sinf(pitch_rad);
+	pos.z = sinf(yaw_rad) * cosf(pitch_rad);
+	pos.Normalize();
+	return pos;
+}
 //*************************************************************************
 // Class: Camera
 // Function Name: Zoom
