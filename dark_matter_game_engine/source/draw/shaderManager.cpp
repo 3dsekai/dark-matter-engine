@@ -38,7 +38,7 @@
 // static member definition
 //*************************************************************************
 ShaderManager* ShaderManager::_instance = nullptr;
-std::map<const char*, Shader*> ShaderManager::_shaders;
+std::map<const char*, Shader*, utils::str_cmp> ShaderManager::_shaders;
 
 //*************************************************************************
 // Class: ShaderManager

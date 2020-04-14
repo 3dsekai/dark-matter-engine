@@ -31,8 +31,10 @@
 //*************************************************************************
 // Includes
 //*************************************************************************
+#include <cstring>
 #include <map>
 #include <GL/glew.h>
+#include "../utils/utils.h"
 
 class Shader;
 
@@ -59,10 +61,9 @@ private:
 
 	ShaderManager(const ShaderManager &obj) {};
 
-
 private:
 	static ShaderManager* _instance;
-	static std::map<const char*, Shader*> _shaders;
+	static std::map<const char*, Shader*, utils::str_cmp> _shaders;
 };
 
 #endif

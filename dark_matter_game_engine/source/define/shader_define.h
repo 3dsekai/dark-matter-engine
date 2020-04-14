@@ -30,19 +30,30 @@
 //solid cube shader files
 //*************************************************************************
 #define SOLID_MESH_SHADER_NAME ("solid_mesh")
-#define SOLID_MESH_VERTEX_SHADER ("source/shaders/solid_mesh/solid_mesh.vert")
-#define SOLID_MESH_FRAGMENT_SHADER ("source/shaders/solid_mesh/solid_mesh.frag")
-
 //*************************************************************************
 //texture cube shader files
 //*************************************************************************
 #define TEXTURE_MESH_SHADER_NAME ("tex_mesh")
-#define TEXTURE_MESH_VERTEX_SHADER ("source/shaders/tex_mesh/tex_mesh.vert")
-#define TEXTURE_MESH_FRAGMENT_SHADER ("source/shaders/tex_mesh/tex_mesh.frag")
-
 //*************************************************************************
 //colored cube shader files
 //*************************************************************************
 #define COLORED_CUBE_SHADER_NAME ("colored_cube")
-#define COLORED_CUBE_VERTEX_SHADER ("source/shaders/color_cube/colored_cube.vert")
+
+//*************************************************************************
+//shader paths
+//*************************************************************************
+#ifdef __linux__ //linux
+#define SOLID_MESH_VERTEX_SHADER   ("../source/shaders/solid_mesh/solid_mesh.vert")
+#define SOLID_MESH_FRAGMENT_SHADER ("../source/shaders/solid_mesh/solid_mesh.frag")
+#define TEXTURE_MESH_VERTEX_SHADER   ("../source/shaders/tex_mesh/tex_mesh.vert")
+#define TEXTURE_MESH_FRAGMENT_SHADER ("../source/shaders/tex_mesh/tex_mesh.frag")
+#define COLORED_CUBE_VERTEX_SHADER   ("../source/shaders/color_cube/colored_cube.vert")
+#define COLORED_CUBE_FRAGMENT_SHADER ("../source/shaders/color_cube/colored_cube.frag")
+#else //windows
+#define SOLID_MESH_VERTEX_SHADER   ("source/shaders/solid_mesh/solid_mesh.vert")
+#define SOLID_MESH_FRAGMENT_SHADER ("source/shaders/solid_mesh/solid_mesh.frag")
+#define TEXTURE_MESH_VERTEX_SHADER   ("source/shaders/tex_mesh/tex_mesh.vert")
+#define TEXTURE_MESH_FRAGMENT_SHADER ("source/shaders/tex_mesh/tex_mesh.frag")
+#define COLORED_CUBE_VERTEX_SHADER   ("source/shaders/color_cube/colored_cube.vert")
 #define COLORED_CUBE_FRAGMENT_SHADER ("source/shaders/color_cube/colored_cube.frag")
+#endif

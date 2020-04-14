@@ -30,7 +30,7 @@
 // Includes
 //*************************************************************************
 #include "../../main.h"
-#include "ColoredCube.h"
+#include "coloredCube.h"
 #include "../../input/inputCodes.h"
 #include "../../define/draw_define.h"
 #include "../../draw/shaderManager.h"

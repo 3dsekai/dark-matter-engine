@@ -45,3 +45,14 @@ The following lines of code need to be in written in the main source file
 to access the GLUT and GLEW libraries:
 #include <GL\glew.h>
 #include <GL\freeglut.h>
+
+----------------------------------------------------------------------------------------
+
+Install Assimp for Debian Linux:
+https://rizaldijs.wordpress.com/
+
+git clone https://github.com/assimp/assimp.git
+cd assimp
+cmake ./
+make
+sudo make install

@@ -65,12 +65,12 @@ $(BUILD_DIR)/$(EXEC): $(OBJ)
 # c source
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -g -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -g -c $< -o $@
 
 .PHONY: clean
 
