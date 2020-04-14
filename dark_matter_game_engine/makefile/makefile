@@ -65,7 +65,7 @@ $(BUILD_DIR)/$(EXEC): $(OBJ)
 # c source
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR) $(dir $@)
-	$(CC) $(CFLAGS) -g -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -g -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
