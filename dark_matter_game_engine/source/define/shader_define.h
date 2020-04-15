@@ -42,18 +42,12 @@
 //*************************************************************************
 //shader paths
 //*************************************************************************
-#ifdef __linux__ //linux
-#define SOLID_MESH_VERTEX_SHADER   ("../source/shaders/solid_mesh/solid_mesh.vert")
-#define SOLID_MESH_FRAGMENT_SHADER ("../source/shaders/solid_mesh/solid_mesh.frag")
-#define TEXTURE_MESH_VERTEX_SHADER   ("../source/shaders/tex_mesh/tex_mesh.vert")
-#define TEXTURE_MESH_FRAGMENT_SHADER ("../source/shaders/tex_mesh/tex_mesh.frag")
-#define COLORED_CUBE_VERTEX_SHADER   ("../source/shaders/color_cube/colored_cube.vert")
-#define COLORED_CUBE_FRAGMENT_SHADER ("../source/shaders/color_cube/colored_cube.frag")
-#else //windows
+//#ifdef __linux__ //linux
+//#else //windows
 #define SOLID_MESH_VERTEX_SHADER   ("source/shaders/solid_mesh/solid_mesh.vert")
 #define SOLID_MESH_FRAGMENT_SHADER ("source/shaders/solid_mesh/solid_mesh.frag")
 #define TEXTURE_MESH_VERTEX_SHADER   ("source/shaders/tex_mesh/tex_mesh.vert")
 #define TEXTURE_MESH_FRAGMENT_SHADER ("source/shaders/tex_mesh/tex_mesh.frag")
 #define COLORED_CUBE_VERTEX_SHADER   ("source/shaders/color_cube/colored_cube.vert")
 #define COLORED_CUBE_FRAGMENT_SHADER ("source/shaders/color_cube/colored_cube.frag")
-#endif
+//#endif

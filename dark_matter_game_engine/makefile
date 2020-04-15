@@ -27,8 +27,8 @@ EXEC ?= a.out
 # build directory to store all .o files
 BUILD_DIR ?= ./build
 # source directory
-# SRC_DIR ?= ../dark_matter_game_engine/source
-SRC_DIR ?= ../
+# SRC_DIR ?= ./dark_matter_game_engine/source
+SRC_DIR ?= ./
 
 #Automatic generation of source object files
 
