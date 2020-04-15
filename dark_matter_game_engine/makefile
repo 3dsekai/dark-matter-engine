@@ -23,7 +23,7 @@
 #*******************************************************************
 
 # name of exe file
-EXEC ?= a.out
+EXEC ?= darkExe
 # build directory to store all .o files
 BUILD_DIR ?= ./build
 # source directory

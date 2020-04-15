@@ -37,7 +37,8 @@
 #include "../../input/inputCodes.h"
 #include "../../math_lib/mat4.h"
 #include "../../math_lib/mathUtil.h"
-//#include "../../define/texture_define.h"
+#include "../../define/texture_define.h"
+#include "../../physics/collisionUtils.h"
 
 //*************************************************************************
 //macro defintions
@@ -68,6 +69,7 @@ void Player::Init()
 {
 	//player init
 	_player = new Cube(TEXTURE_MESH_SHADER_NAME);
+	_player->SetTexture(BOX2_TEXTURE, MATERIAL_DIFFUSE);
 	//light
 	Vec4 col = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	lightDef light;
@@ -122,9 +124,6 @@ void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 	{
 		camRot.y -= CAM_SPEED;
 	}
-	//clamp pitch values so camera doesn't jump
-	_rot.x = MathUtil::Clamp(_rot.x, 45.0f, -45.0f);
-	_rot.z = MathUtil::Clamp(_rot.z, 45.0f, -45.0f);
 	//set player position
 	_player->SetPosition(_pos);
 	_light->SetPosition(_pos);
@@ -141,6 +140,7 @@ void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 		cam->SetPosition(camPos);
 		cam->SetTarget(_target);
 		_target.y = 0.0f;//set y to 0 so player doesn't move up or down
+		_target.Normalize(); //re-normalize to get player xz-target direction
 	}
 }
 
