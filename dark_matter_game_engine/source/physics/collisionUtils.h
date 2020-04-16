@@ -41,6 +41,6 @@ namespace ColDetUtils
 	//*************************************************************************
 	// Definitions
 	//*************************************************************************
-	bool linePolygonHitCheck(Vec3 p0, Vec3 p1, Vec3 p2, Vec3 pos0, Vec3 pos1);
+	bool linePolygonHitCheck(const Vec3& p0, const Vec3& p1, const Vec3& p2, const Vec3& pos0, const Vec3& pos1);
 }
 #endif

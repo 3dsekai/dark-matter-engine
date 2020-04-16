@@ -45,6 +45,7 @@
 //*************************************************************************
 #define PLAYER_SPEED (0.1f) //player movement speed
 #define CAM_SPEED (2.0f) //camera movement speed
+#define CAM_DIST_FROM_PLAYER (10.0f) //distance of camera from the player
 //*************************************************************************
 //constructor
 //*************************************************************************
@@ -133,7 +134,7 @@ void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 		//get camera position
 		cam->AddYawPitch(camRot.y, camRot.x);
 		Vec3 camPos = cam->GetSphericalCoords();
-		camPos = (camPos * 10.0f) + _pos;
+		camPos = (camPos * CAM_DIST_FROM_PLAYER) + _pos;
 		//get camera target
 		_target = (_pos - camPos).GetNormalizedVec();
 		//set camera
