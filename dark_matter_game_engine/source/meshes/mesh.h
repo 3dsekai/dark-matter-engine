@@ -33,6 +33,7 @@
 #include "../define/material_define.h"
 #include "../draw/renderMesh.h"
 #include "../math_lib/quat.h"
+#include "../math_lib/vec2.h"
 
 class Vec3;
 //*************************************************************************
@@ -40,6 +41,8 @@ class Vec3;
 //*************************************************************************
 class Mesh
 {
+using RM = RenderMesh;
+
 public:
 	Mesh(const char* shaderName,
 			 const Vec3& pos = Vec3(0.0f, 0.0f, 0.0f),
@@ -47,9 +50,8 @@ public:
 			 const Vec3& scale = Vec3(1.0f, 1.0f, 1.0f));
 	~Mesh();
 
-public:
 	//mesh initialization
-	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum);
+	virtual void Init(const char* meshName, const std::vector<RM::Vertex>& vertices, const std::vector<uint32_t>& indices);
 
 	virtual void Draw();
 	virtual void Delete();
@@ -65,11 +67,15 @@ public:
 	void SetTexture(const char* texName, MATERIAL_TYPE type);
 
 protected:
-	RenderMesh::MeshRenderParam* _mDrawParam;	//mesh render parameters
+	RM::MeshRenderParam* _mDrawParam;	//mesh render parameters
+	std::string _meshName;
 
 	Vec3 _pos;					//position
 	Vec3 _scale;				//scale
 	Quat _rot;					//rotation
+
+	std::vector<RM::Vertex> _vertices; //mesh vertices
+	std::vector<uint32_t> _indices; //mesh indicies
 };
 
 #endif

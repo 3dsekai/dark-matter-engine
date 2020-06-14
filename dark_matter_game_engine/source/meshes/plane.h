@@ -32,8 +32,8 @@
 // Includes
 //*************************************************************************
 #include <GL/glew.h>
-#include "../math_lib/quat.h"
 #include "mesh.h"
+#include "../draw/renderMesh.h"
 
 //*************************************************************************
 // Plane Class
@@ -48,7 +48,7 @@ public:
 	~Plane();
 
 protected:
-	virtual void Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum) override;
+//	virtual void Init(const char* meshName, const std::vector<RenderMesh::Vertex>& vertices, const std::vector<uint32_t>& indices) override;
 };
 
 #endif

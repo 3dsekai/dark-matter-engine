@@ -33,8 +33,10 @@
 //*************************************************************************
 #include <vector>
 #include <GL/glew.h>
+#include "../math_lib/vec2.h"
 #include "../math_lib/vec4.h"
 #include "../define/material_define.h"
+class Vec2;
 class Vec4;
 class Mat4;
 
@@ -74,12 +76,21 @@ struct MeshRenderParam
 	//mesh parameters
 	MeshParam mesh;
 };
+//vertex parameters
+struct Vertex
+{
+	Vec3 pos; //vertex position
+	Vec2 tex_coord; //texture coords
+	Vec3 normal; //vertex normal
+	Vec3 tangent; //tangent
+	Vec3 bitangent; //bitangent
+};
 
 public:
 	RenderMesh() {};
 	~RenderMesh() {};
 
-	static void InitMesh(const float* vertices, const uint32_t* indices, MeshParam* mParam, const std::vector<VAParams>& va);
+	static void InitMesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, MeshParam* mParam, const std::vector<VAParams>& va);
 	static void DrawMesh(const Mat4& model, const MeshRenderParam& mDrawParam);
 	static void DeleteMesh(MeshParam* mParam);
 };

@@ -72,7 +72,7 @@ void GameObjManager::Init()
 	AddNewGameObject(new Floor);
 	//AddNewGameObject(new Lamp);
 	//AddNewGameObject(new MultBoxes);
-	//AddNewGameObject(new Nanosuit);
+	AddNewGameObject(new Nanosuit);
 }
 
 //*************************************************************************

@@ -32,8 +32,9 @@
 #include <ostream>
 #include "modelResourceLib.h"
 #include "../meshes/mesh.h"
-#include "../define/material_define.h"
+#include "../draw/renderMesh.h"
 #include "../resource/textureManager.h"
+#include "../define/material_define.h"
 #include "../define/shader_define.h"
 
 //global variables
@@ -94,15 +95,20 @@ void lib_aiProcessNode(aiNode *aiNode, const aiScene *aiScene, std::vector<Mesh*
 //*************************************************************************
 Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 {
-	std::vector<float> vertices;
+	std::vector<RenderMesh::Vertex> vertices;
 	std::vector<uint32_t> indices;
 
+	vertices.reserve(aiMesh->mNumVertices);
 	for (unsigned int i = 0; i < aiMesh->mNumVertices; i++)
 	{
+		RenderMesh::Vertex vtx;
 		// positions
-		vertices.push_back(aiMesh->mVertices[i].x);
-		vertices.push_back(aiMesh->mVertices[i].y);
-		vertices.push_back(aiMesh->mVertices[i].z);
+		vtx.pos.x = aiMesh->mVertices[i].x;
+		vtx.pos.y = aiMesh->mVertices[i].y;
+		vtx.pos.z = aiMesh->mVertices[i].z;
+		//vertices.push_back(aiMesh->mVertices[i].x);
+		//vertices.push_back(aiMesh->mVertices[i].y);
+		//vertices.push_back(aiMesh->mVertices[i].z);
 		// texture coordinates
 		float texCoords[2] = { 0.0f, 0.0f };
 		if (aiMesh->mTextureCoords[0])
@@ -110,20 +116,32 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 			texCoords[0] = aiMesh->mTextureCoords[0][i].x;
 			texCoords[1] = aiMesh->mTextureCoords[0][i].y;
 		}
-		vertices.push_back(texCoords[0]);
-		vertices.push_back(texCoords[1]);
+		vtx.tex_coord.x = texCoords[0];
+		vtx.tex_coord.y = texCoords[1];
+		//vertices.push_back(texCoords[0]);
+		//vertices.push_back(texCoords[1]);
 		// normals
-		vertices.push_back(aiMesh->mNormals[i].x);
-		vertices.push_back(aiMesh->mNormals[i].y);
-		vertices.push_back(aiMesh->mNormals[i].z);
+		vtx.normal.x = aiMesh->mNormals[i].x;
+		vtx.normal.y = aiMesh->mNormals[i].y;
+		vtx.normal.z = aiMesh->mNormals[i].z;
+		//vertices.push_back(aiMesh->mNormals[i].x);
+		//vertices.push_back(aiMesh->mNormals[i].y);
+		//vertices.push_back(aiMesh->mNormals[i].z);
 		// tangent
-		vertices.push_back(aiMesh->mTangents[i].x);
-		vertices.push_back(aiMesh->mTangents[i].y);
-		vertices.push_back(aiMesh->mTangents[i].z);
+		vtx.tangent.x = aiMesh->mTangents[i].x;
+		vtx.tangent.y = aiMesh->mTangents[i].y;
+		vtx.tangent.z = aiMesh->mTangents[i].z;
+		//vertices.push_back(aiMesh->mTangents[i].x);
+		//vertices.push_back(aiMesh->mTangents[i].y);
+		//vertices.push_back(aiMesh->mTangents[i].z);
 		// bitangent
-		vertices.push_back(aiMesh->mBitangents[i].x);
-		vertices.push_back(aiMesh->mBitangents[i].y);
-		vertices.push_back(aiMesh->mBitangents[i].z);
+		vtx.bitangent.x = aiMesh->mBitangents[i].x;
+		vtx.bitangent.y = aiMesh->mBitangents[i].y;
+		vtx.bitangent.z = aiMesh->mBitangents[i].z;
+		//vertices.push_back(aiMesh->mBitangents[i].x);
+		//vertices.push_back(aiMesh->mBitangents[i].y);
+		//vertices.push_back(aiMesh->mBitangents[i].z);
+		vertices.push_back(vtx);
 	}
 	for (uint32_t j = 0; j < aiMesh->mNumFaces; j++)
 	{
@@ -149,9 +167,15 @@ Mesh* lib_aiProcessMesh(aiMesh *aiMesh, const aiScene *aiScene)
 	Mesh* mesh = new Mesh(TEXTURE_MESH_SHADER_NAME);
 	
 	std::string meshName = g_modelName + "_mesh" + std::to_string(++meshNum);
-	mesh->Init(meshName.c_str(), vertices.data(), indices.data(), vertices.size(), indices.size());
-	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++) { mesh->SetTexture(it->texName.c_str(), it->type); }
-	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++) { mesh->SetTexture(it->texName.c_str(), it->type); }
+	mesh->Init(meshName.c_str(), vertices, indices);
+	for (auto it = diffuseMaps.begin(); it != diffuseMaps.end(); it++)
+	{
+		mesh->SetTexture(it->texName.c_str(), it->type);
+	}
+	for (auto it = specularMaps.begin(); it != specularMaps.end(); it++)
+	{
+		mesh->SetTexture(it->texName.c_str(), it->type);
+	}
 	return mesh;
 }
 

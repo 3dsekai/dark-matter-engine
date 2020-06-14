@@ -38,6 +38,7 @@
 //*************************************************************************
 #define CUBE_ATTRIBUTE_NUM (192)
 #define CUBE_INDICES_NUM (36)
+#define CUBE_STRIDE_LENGTH (8)
 
 //*************************************************************************
 // constants definitions
@@ -112,51 +113,66 @@ namespace
 Cube::Cube(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3& scale) :
 	Mesh(shaderName, pos, rot, scale)
 {
-	Init("cube", cubeVerts, cubeIdx, CUBE_ATTRIBUTE_NUM, CUBE_INDICES_NUM);
-}
+	int vtx_num = CUBE_ATTRIBUTE_NUM/CUBE_STRIDE_LENGTH;
+	//set mesh data
+	_meshName = "cube";
+	_mDrawParam->mesh.vertNum = vtx_num;
+	_mDrawParam->mesh.idxNum = CUBE_INDICES_NUM;
 
-//*************************************************************************
-// Class: Cube
-// Function Name: Init
-// Explanation: Initialize cube
-//*************************************************************************
-void Cube::Init(const char* meshName, const float* vertices, const uint32_t* indices, int vertNum, int idxNum)
-{
-	if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
+	//fill in vertices
+	_vertices.reserve(CUBE_ATTRIBUTE_NUM);
+	for(int i = 0; i < vtx_num; i++)
 	{
-		std::vector<RenderMesh::VAParams> va;
-		{ //position coordinates
-			RenderMesh::VAParams va1;
-			va1.size = 3; //size of attribute
-			va1.type = GL_FLOAT; //vertex attribute type
-			va1.norm = GL_FALSE; //vertex attribute normalization bool
-			va1.stride = 8*sizeof(float); //size of vertex stride
-			va1.offset = 0; //offset attribute
-			va.push_back(va1);
-		}
-		{ //texture coordinates
-			RenderMesh::VAParams va2;
-			va2.size = 2;
-			va2.type = GL_FLOAT;
-			va2.norm = GL_FALSE;
-			va2.stride = 8*sizeof(float);
-			va2.offset = 3*sizeof(float);
-			va.push_back(va2);
-		}
-		{ //normals
-			RenderMesh::VAParams va3;
-			va3.size = 3;
-			va3.type = GL_FLOAT;
-			va3.norm = GL_FALSE;
-			va3.stride = 8*sizeof(float);
-			va3.offset = 5*sizeof(float);
-			va.push_back(va3);
-		}
-
-		//initialize the mesh for rendering
-		MeshManager::GetInstance()->InitMesh(meshName, vertices, indices, vertNum, idxNum, va);
-		MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh);
+		int offset = i*CUBE_STRIDE_LENGTH;
+		RenderMesh::Vertex vtx;
+		//position
+		vtx.pos.x = cubeVerts[offset];
+		vtx.pos.y = cubeVerts[offset+1];
+		vtx.pos.z = cubeVerts[offset+2];
+		// texture coordinates
+		vtx.tex_coord.x = cubeVerts[offset+3];
+		vtx.tex_coord.y = cubeVerts[offset+4];
+		// normals
+		vtx.normal.x = cubeVerts[offset+5];
+		vtx.normal.y = cubeVerts[offset+6];
+		vtx.normal.z = cubeVerts[offset+7];
+		_vertices.push_back(vtx);
 	}
+
+	//fill in indices
+	_indices = std::vector<uint32_t>(cubeIdx, cubeIdx+sizeof(cubeIdx)/sizeof(uint32_t));
+
+	//prepare vertex attributes
+	std::vector<RenderMesh::VAParams> va;
+	{ //position coordinates
+		RenderMesh::VAParams va1;
+		va1.size = 3; //size of attribute
+		va1.type = GL_FLOAT; //vertex attribute type
+		va1.norm = GL_FALSE; //vertex attribute normalization bool
+		va1.stride = sizeof(RenderMesh::Vertex); //size of vertex stride
+		va1.offset = 0; //offset attribute
+		va.push_back(va1);
+	}
+	{ //texture coordinates
+		RenderMesh::VAParams va2;
+		va2.size = 2;
+		va2.type = GL_FLOAT;
+		va2.norm = GL_FALSE;
+		va2.stride = sizeof(RenderMesh::Vertex);
+		va2.offset = offsetof(RenderMesh::Vertex, RenderMesh::Vertex::tex_coord);
+		va.push_back(va2);
+	}
+	{ //normals
+		RenderMesh::VAParams va3;
+		va3.size = 3;
+		va3.type = GL_FLOAT;
+		va3.norm = GL_FALSE;
+		va3.stride = sizeof(RenderMesh::Vertex);
+		va3.offset = offsetof(RenderMesh::Vertex, RenderMesh::Vertex::normal);
+		va.push_back(va3);
+	}
+	//initialize the mesh for rendering
+	RenderMesh::InitMesh(_vertices, _indices, &_mDrawParam->mesh, va);
 }
 
 //*************************************************************************
@@ -169,3 +185,47 @@ Cube::~Cube()
 {
 	Delete();
 }
+//*************************************************************************
+// Class: Cube
+// Function Name: Init
+// Explanation: Initialize cube
+//*************************************************************************
+//void Cube::Init(const char* meshName, const std::vector<RenderMesh::Vertex>& vertices, const std::vector<uint32_t>& indices)
+//{
+	//prepare vertex attributes
+	//if(MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh) == false)
+	//{
+	//	std::vector<RenderMesh::VAParams> va;
+	//	{ //position coordinates
+	//		RenderMesh::VAParams va1;
+	//		va1.size = 3; //size of attribute
+	//		va1.type = GL_FLOAT; //vertex attribute type
+	//		va1.norm = GL_FALSE; //vertex attribute normalization bool
+	//		va1.stride = 8*sizeof(float); //size of vertex stride
+	//		va1.offset = 0; //offset attribute
+	//		va.push_back(va1);
+	//	}
+	//	{ //texture coordinates
+	//		RenderMesh::VAParams va2;
+	//		va2.size = 2;
+	//		va2.type = GL_FLOAT;
+	//		va2.norm = GL_FALSE;
+	//		va2.stride = 8*sizeof(float);
+	//		va2.offset = 3*sizeof(float);
+	//		va.push_back(va2);
+	//	}
+	//	{ //normals
+	//		RenderMesh::VAParams va3;
+	//		va3.size = 3;
+	//		va3.type = GL_FLOAT;
+	//		va3.norm = GL_FALSE;
+	//		va3.stride = 8*sizeof(float);
+	//		va3.offset = 5*sizeof(float);
+	//		va.push_back(va3);
+	//	}
+	//	//initialize the mesh for rendering
+	//	RenderMesh::InitMesh(_vertices.data(), _indices.data(), &_mDrawParam->mesh, va);
+	//	MeshManager::GetInstance()->InitMesh(meshName, vertices, indices, vertNum, idxNum, va);
+	//	MeshManager::GetInstance()->GetMesh(meshName, &_mDrawParam->mesh);
+	//}
+//}

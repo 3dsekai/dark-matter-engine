@@ -45,7 +45,7 @@
 // const int* indices: the mesh's indices
 // Explanation: initializes the mesh for rendering
 //*************************************************************************
-void RenderMesh::InitMesh(const float* vertices, const uint32_t* indices, MeshParam* mParam, const std::vector<VAParams>& va)
+void RenderMesh::InitMesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, MeshParam* mParam, const std::vector<VAParams>& va)
 {
 	if(mParam != nullptr)
 	{
@@ -61,11 +61,11 @@ void RenderMesh::InitMesh(const float* vertices, const uint32_t* indices, MeshPa
 	
 		//bind the vertex data to the position vertex buffer object
 		glBindBuffer(GL_ARRAY_BUFFER, buffObj[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*mParam->vertNum, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
 	
 		//bind the index data to the element buffer object
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffObj[1]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*mParam->idxNum, indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*indices.size(), &indices[0], GL_STATIC_DRAW);
 	
 		//set vertex attributes
 		for(unsigned int i = 0; i < va.size(); i++)
