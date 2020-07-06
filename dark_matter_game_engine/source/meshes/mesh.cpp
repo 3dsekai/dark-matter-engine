@@ -62,11 +62,6 @@ Mesh::Mesh(const char* shaderName, const Vec3& pos, const Quat& rot, const Vec3&
 		_mDrawParam->material.specMaterialNum = 0;
 		_mDrawParam->material.shininess = 64;
 	}
-	//initialize textures
-	SetTexture(BLACK_TEXTURE, MATERIAL_DIFFUSE);
-	SetTexture(BLACK_TEXTURE, MATERIAL_SPECULAR);
-	_mDrawParam->material.diffMaterialNum = 0;
-	_mDrawParam->material.specMaterialNum = 0;
 };
 
 Mesh::~Mesh()

@@ -74,8 +74,9 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 
 .PHONY: clean
 
+# remove directories and their contents recursively
 clean:
-	$(RM) -r $(BUILD_DIR) # remove directories and their contents recursively
+	$(RM) -r $(BUILD_DIR)
 
 -include $(DEP)
 

@@ -71,6 +71,7 @@ void Player::Init()
 	//player init
 	_player = new Cube(TEXTURE_MESH_SHADER_NAME);
 	_player->SetTexture(BOX2_TEXTURE, MATERIAL_DIFFUSE);
+	_player->SetTexture(BOX2_SPEC_TEX, MATERIAL_SPECULAR);
 	//light
 	Vec4 col = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	lightDef light;
@@ -127,7 +128,7 @@ void Player::Update(const Mouse& mouse, const Keyboard& keyboard, Camera* cam)
 	}
 	//set player position
 	_player->SetPosition(_pos);
-	_light->SetPosition(_pos);
+	_light->SetPosition(_pos+3.0f); //push light down slightly from player position
 	//move cam
 	if (cam != nullptr)
 	{
