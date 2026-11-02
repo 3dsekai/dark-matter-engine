@@ -51,8 +51,6 @@ class Mat3;
 class Mat4
 {
 public:
-	Mat4() = default;
-	~Mat4() = default;
 
 	//operator overloads
 	Mat4& operator =(const Mat4& mat);

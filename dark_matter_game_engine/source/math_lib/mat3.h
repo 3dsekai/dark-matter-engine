@@ -46,10 +46,6 @@ class Mat3
 {
 public:
 
-	//default constructors
-	Mat3() = default;
-	~Mat3() = default;
-
 	//operator overloads
 	Mat3& operator =(const Mat3& mat);
 	Mat3 operator *(float k) const;

@@ -34,6 +34,7 @@
 #include <map>
 #include <GL/glew.h>
 #include "../define/texture_define.h"
+#include <string>
 
 //*************************************************************************
 // Texture Manager Class
