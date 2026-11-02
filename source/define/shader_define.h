@@ -44,10 +44,10 @@
 //*************************************************************************
 //#ifdef __linux__ //linux
 //#else //windows
-#define SOLID_MESH_VERTEX_SHADER   ("dark-matter-engine/dark_matter_game_engine/source/shaders/solid_mesh/solid_mesh.vert")
-#define SOLID_MESH_FRAGMENT_SHADER ("dark-matter-engine/dark_matter_game_engine/source/shaders/solid_mesh/solid_mesh.frag")
-#define TEXTURE_MESH_VERTEX_SHADER   ("dark-matter-engine/dark_matter_game_engine/source/shaders/tex_mesh/tex_mesh.vert")
-#define TEXTURE_MESH_FRAGMENT_SHADER ("dark-matter-engine/dark_matter_game_engine/source/shaders/tex_mesh/tex_mesh.frag")
-#define COLORED_CUBE_VERTEX_SHADER   ("dark-matter-engine/dark_matter_game_engine/source/shaders/color_cube/colored_cube.vert")
-#define COLORED_CUBE_FRAGMENT_SHADER ("dark-matter-engine/dark_matter_game_engine/source/shaders/color_cube/colored_cube.frag")
+#define SOLID_MESH_VERTEX_SHADER   ("dark-matter-engine/source/shaders/solid_mesh/solid_mesh.vert")
+#define SOLID_MESH_FRAGMENT_SHADER ("dark-matter-engine/source/shaders/solid_mesh/solid_mesh.frag")
+#define TEXTURE_MESH_VERTEX_SHADER   ("dark-matter-engine/source/shaders/tex_mesh/tex_mesh.vert")
+#define TEXTURE_MESH_FRAGMENT_SHADER ("dark-matter-engine/source/shaders/tex_mesh/tex_mesh.frag")
+#define COLORED_CUBE_VERTEX_SHADER   ("dark-matter-engine/source/shaders/color_cube/colored_cube.vert")
+#define COLORED_CUBE_FRAGMENT_SHADER ("dark-matter-engine/source/shaders/color_cube/colored_cube.frag")
 //#endif

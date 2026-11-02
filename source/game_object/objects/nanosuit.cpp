@@ -62,7 +62,7 @@ Nanosuit::~Nanosuit()
 //*************************************************************************
 void Nanosuit::Init()
 {
-	_nanosuit = new Model(TEXTURE_MESH_SHADER_NAME, "dark-matter-engine/dark_matter_game_engine/resources/models/nanosuit/nanosuit.obj");
+	_nanosuit = new Model(TEXTURE_MESH_SHADER_NAME, "dark-matter-engine/resources/models/nanosuit/nanosuit.obj");
 }
 
 //*************************************************************************
